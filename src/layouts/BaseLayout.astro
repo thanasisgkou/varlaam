@@ -10,8 +10,9 @@ interface Props {
   image?: string;
 }
 
-const { title, description = 'Η επίσημη ιστοσελίδα του χωριού Βαρλαάμ Ιωαννίνων', image } = Astro.props;
-const fullTitle = title === 'Αρχική' ? 'Βαρλαάμ Ιωαννίνων' : `${title} | Βαρλαάμ Ιωαννίνων`;
+const { title, description = 'Η επίσημη ιστοσελίδα του χωριού Βαρλαάμ Ιωαννίνων - Ήπειρος, Ελλάδα. Να μη συγχέεται με τη Μονή Βαρλαάμ Μετεώρων.', image } = Astro.props;
+const fullTitle = title === 'Αρχική' ? 'Βαρλαάμ Ιωαννίνων — Χωριό στην Ήπειρο' : `${title} | Βαρλαάμ Ιωαννίνων — Χωριό Ηπείρου`;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!DOCTYPE html>
@@ -20,11 +21,40 @@ const fullTitle = title === 'Αρχική' ? 'Βαρλαάμ Ιωαννίνων'
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content={description} />
+  <meta name="keywords" content="Βαρλαάμ Ιωαννίνων, χωριό Βαρλαάμ, Βαρλαάμ Ηπείρου, Ήπειρος, Ιωάννινα, σύλλογος Βαρλαάμ" />
+  <link rel="canonical" href={canonicalURL} />
+  <meta property="og:type" content="website" />
   <meta property="og:title" content={fullTitle} />
   <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:locale" content="el_GR" />
+  <meta property="og:site_name" content="Βαρλαάμ Ιωαννίνων" />
   {image && <meta property="og:image" content={image} />}
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <title>{fullTitle}</title>
+
+  <!-- Structured Data: Local Organization - NOT the Meteora monastery -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "CivicStructure",
+    "name": "Βαρλαάμ Ιωαννίνων",
+    "alternateName": ["Varlaam Ioannina", "Βαρλαάμ Ηπείρου", "Χωριό Βαρλαάμ"],
+    "description": "Το χωριό Βαρλαάμ στον νομό Ιωαννίνων, Ήπειρος, Ελλάδα. Να μη συγχέεται με τη Μονή Βαρλαάμ Μετεώρων.",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Βαρλαάμ",
+      "addressRegion": "Ιωάννινα",
+      "postalCode": "455 00",
+      "addressCountry": "GR"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 39.4207967,
+      "longitude": 20.8934205
+    },
+    "url": "https://varlaam.netlify.app",
+    "sameAs": []
+  })} />
 </head>
 <body class="min-h-screen flex flex-col">
   <div class="noise-overlay" aria-hidden="true"></div>
