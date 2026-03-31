@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const news = await getCollection('news');
+  return news.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<BaseLayout title={entry.data.title} description={entry.data.excerpt}>
+
+  <!-- Hero Banner -->
+  <section class="relative py-28 md:py-36 bg-gradient-to-br from-charcoal via-stone-dark to-olive-dark overflow-hidden">
+    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 40% 50%, rgba(193,154,107,0.3) 0%, transparent 50%);"></div>
+    <div class="relative z-10 container mx-auto px-4 text-center max-w-4xl">
+      <div class="flex items-center justify-center mb-6 animate-fade-in">
+        <span class="block w-12 h-px bg-gold-warm/50"></span>
+        <span class="mx-4 text-gold-warm/70 text-sm font-accent tracking-[0.3em] uppercase">Νέα</span>
+        <span class="block w-12 h-px bg-gold-warm/50"></span>
+      </div>
+      <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 animate-fade-up">
+        {entry.data.title}
+      </h1>
+      <div class="flex items-center justify-center gap-4 text-gold-light/70 font-accent animate-fade-up" style="animation-delay: 0.2s;">
+        <time datetime={entry.data.date.toISOString()}>
+          {entry.data.date.toLocaleDateString('el-GR', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </time>
+        <span class="w-1 h-1 rounded-full bg-gold-warm/40"></span>
+        <span>{entry.data.author}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Article Content -->
+  <section class="py-20 bg-parchment">
+    <div class="container mx-auto px-4 max-w-3xl">
+      <!-- Back Link -->
+      <a href="/news" class="inline-flex items-center text-olive-dark hover:text-terracotta transition-colors font-accent mb-12 group">
+        <svg class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+        Πίσω στα Νέα
+      </a>
+
+      <!-- Article Body -->
+      <article class="animate-on-scroll bg-white rounded-xl shadow-sm border border-stone-warm/10 p-8 md:p-12">
+        <div class="prose prose-lg max-w-none
+          prose-headings:font-display prose-headings:text-charcoal
+          prose-p:font-body prose-p:text-charcoal/80 prose-p:leading-relaxed
+          prose-a:text-olive-dark prose-a:underline-offset-4 hover:prose-a:text-terracotta
+          prose-strong:text-charcoal prose-strong:font-semibold
+          prose-blockquote:border-terracotta/40 prose-blockquote:bg-parchment/50 prose-blockquote:rounded-r-lg prose-blockquote:py-1
+          prose-img:rounded-lg prose-img:shadow-md">
+          <Content />
+        </div>
+      </article>
+
+      <!-- Navigation -->
+      <div class="mt-12 pt-8 border-t border-stone-warm/20 text-center">
+        <a href="/news" class="btn-secondary">
+          &larr; Όλα τα Νέα
+        </a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

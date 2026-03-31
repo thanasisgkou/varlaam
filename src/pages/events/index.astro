@@ -1,0 +1,147 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allEvents = (await getCollection('events')).sort(
+  (a, b) => a.data.date.valueOf() - b.data.date.valueOf()
+);
+
+const now = new Date();
+const upcomingEvents = allEvents.filter((e) => e.data.date >= now);
+const pastEvents = allEvents.filter((e) => e.data.date < now).reverse();
+---
+
+<BaseLayout title="Εκδηλώσεις" description="Εκδηλώσεις και δράσεις του χωριού Βαρλαάμ Ιωαννίνων">
+
+  <!-- Hero Banner -->
+  <section class="relative py-28 md:py-36 bg-gradient-to-br from-charcoal via-stone-dark to-olive-dark overflow-hidden">
+    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 70% 30%, rgba(183,65,14,0.3) 0%, transparent 50%);"></div>
+    <div class="relative z-10 container mx-auto px-4 text-center">
+      <div class="flex items-center justify-center mb-6 animate-fade-in">
+        <span class="block w-12 h-px bg-gold-warm/50"></span>
+        <span class="mx-4 text-gold-warm/70 text-sm font-accent tracking-[0.3em] uppercase">Πρόγραμμα</span>
+        <span class="block w-12 h-px bg-gold-warm/50"></span>
+      </div>
+      <h1 class="font-display text-5xl md:text-7xl font-bold text-white mb-6 animate-fade-up">Εκδηλώσεις</h1>
+      <p class="font-accent text-xl text-gold-light/80 max-w-2xl mx-auto animate-fade-up" style="animation-delay: 0.2s;">
+        Γιορτές, πανηγύρια και πολιτιστικές δράσεις
+      </p>
+    </div>
+  </section>
+
+  <!-- Upcoming Events -->
+  <section class="py-24 bg-parchment">
+    <div class="container mx-auto px-4 max-w-5xl">
+      <div class="animate-on-scroll text-center mb-16">
+        <h2 class="section-title">Επερχόμενες Εκδηλώσεις</h2>
+        <p class="section-subtitle">Μην χάσετε τις επόμενες δράσεις μας</p>
+        <div class="divider mx-auto mt-6"></div>
+      </div>
+
+      {upcomingEvents.length > 0 ? (
+        <div class="space-y-6">
+          {upcomingEvents.map((event, index) => (
+            <article class="animate-on-scroll" style={`animation-delay: ${index * 0.1}s;`}>
+              <a href={`/events/${event.slug}`} class="card flex flex-col md:flex-row overflow-hidden group">
+                <!-- Date Badge -->
+                <div class="flex-shrink-0 w-full md:w-36 bg-gradient-to-br from-terracotta to-terracotta-light flex flex-col items-center justify-center p-6 text-white">
+                  <span class="font-display text-4xl font-bold leading-none">
+                    {event.data.date.getDate()}
+                  </span>
+                  <span class="font-accent text-sm uppercase tracking-wider mt-1">
+                    {event.data.date.toLocaleDateString('el-GR', { month: 'short' })}
+                  </span>
+                  <span class="font-body text-xs opacity-80 mt-1">
+                    {event.data.date.getFullYear()}
+                  </span>
+                </div>
+
+                <!-- Content -->
+                <div class="flex-1 p-6 md:p-8">
+                  <h3 class="font-display text-xl md:text-2xl text-charcoal group-hover:text-olive-dark transition-colors mb-3">
+                    {event.data.title}
+                  </h3>
+
+                  <div class="flex flex-wrap items-center gap-4 mb-4 text-sm">
+                    <span class="inline-flex items-center gap-1.5 text-charcoal/60 font-body">
+                      <svg class="w-4 h-4 text-terracotta/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                      </svg>
+                      {event.data.location}
+                    </span>
+                    <span class="inline-flex items-center gap-1.5 text-charcoal/60 font-body">
+                      <svg class="w-4 h-4 text-terracotta/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                      </svg>
+                      {event.data.date.toLocaleDateString('el-GR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                    </span>
+                  </div>
+
+                  <p class="font-body text-charcoal/70 leading-relaxed line-clamp-2">
+                    {event.data.excerpt}
+                  </p>
+                </div>
+
+                <!-- Arrow -->
+                <div class="hidden md:flex items-center pr-6">
+                  <svg class="w-5 h-5 text-charcoal/30 group-hover:text-olive-dark group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                  </svg>
+                </div>
+              </a>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-16 animate-on-scroll">
+          <svg class="w-16 h-16 mx-auto text-stone-warm/40 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+          </svg>
+          <h3 class="font-display text-2xl text-charcoal/60 mb-2">Δεν υπάρχουν επερχόμενες εκδηλώσεις</h3>
+          <p class="font-body text-charcoal/50">Ελέγξτε ξανά σύντομα για νέες εκδηλώσεις!</p>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- Past Events -->
+  {pastEvents.length > 0 && (
+    <section class="py-24 bg-white">
+      <div class="container mx-auto px-4 max-w-5xl">
+        <div class="animate-on-scroll text-center mb-16">
+          <h2 class="section-title">Προηγούμενες Εκδηλώσεις</h2>
+          <p class="section-subtitle">Δείτε τι έχει προηγηθεί</p>
+          <div class="divider mx-auto mt-6"></div>
+        </div>
+
+        <div class="space-y-4">
+          {pastEvents.map((event, index) => (
+            <article class="animate-on-scroll" style={`animation-delay: ${index * 0.08}s;`}>
+              <a href={`/events/${event.slug}`} class="flex items-center gap-6 p-5 rounded-xl border border-stone-warm/15 hover:border-stone-warm/30 hover:bg-parchment/50 transition-all group">
+                <div class="flex-shrink-0 w-14 h-14 rounded-lg bg-stone-warm/10 flex flex-col items-center justify-center">
+                  <span class="font-display text-lg font-bold text-charcoal/60 leading-none">
+                    {event.data.date.getDate()}
+                  </span>
+                  <span class="font-accent text-[10px] uppercase text-charcoal/40 tracking-wider">
+                    {event.data.date.toLocaleDateString('el-GR', { month: 'short' })}
+                  </span>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <h3 class="font-display text-lg text-charcoal/70 group-hover:text-charcoal transition-colors truncate">
+                    {event.data.title}
+                  </h3>
+                  <p class="font-body text-sm text-charcoal/50 truncate">{event.data.location}</p>
+                </div>
+                <svg class="w-4 h-4 text-charcoal/20 group-hover:text-olive-dark transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+</BaseLayout>

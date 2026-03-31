@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Source+Sans+3:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply font-body text-charcoal bg-parchment;
+    font-size: 17px;
+    line-height: 1.7;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+    line-height: 1.2;
+  }
+
+  ::selection {
+    @apply bg-terracotta/30 text-charcoal;
+  }
+}
+
+@layer components {
+  .section-title {
+    @apply font-display text-4xl md:text-5xl font-bold text-charcoal relative inline-block;
+  }
+
+  .section-title::after {
+    content: '';
+    @apply block w-16 h-1 bg-terracotta mt-4 rounded-full;
+  }
+
+  .section-subtitle {
+    @apply font-accent text-xl md:text-2xl text-stone-dark italic mt-3;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-8 py-3.5 bg-olive text-white font-body font-semibold
+           rounded-sm tracking-wide uppercase text-sm
+           transition-all duration-300
+           hover:bg-olive-dark hover:shadow-lg hover:shadow-olive/20 hover:-translate-y-0.5
+           active:translate-y-0;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-8 py-3.5 bg-transparent text-charcoal font-body font-semibold
+           border-2 border-charcoal rounded-sm tracking-wide uppercase text-sm
+           transition-all duration-300
+           hover:bg-charcoal hover:text-parchment hover:-translate-y-0.5
+           active:translate-y-0;
+  }
+
+  .btn-secondary-light {
+    @apply inline-flex items-center gap-2 px-8 py-3.5 bg-transparent text-white font-body font-semibold
+           border-2 border-white/60 rounded-sm tracking-wide uppercase text-sm
+           transition-all duration-300
+           hover:bg-white hover:text-charcoal hover:-translate-y-0.5
+           active:translate-y-0;
+  }
+
+  /* Back to top button */
+  .back-to-top {
+    @apply fixed bottom-8 right-8 w-12 h-12 rounded-full bg-olive text-white shadow-lg
+           flex items-center justify-center
+           transition-all duration-300 z-50
+           hover:bg-olive-dark hover:shadow-xl hover:-translate-y-1;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .back-to-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Lightbox */
+  .lightbox-overlay {
+    @apply fixed inset-0 bg-charcoal/90 z-50 flex items-center justify-center p-4;
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .lightbox-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Page transition */
+  @keyframes pageIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  main {
+    animation: pageIn 0.5s ease-out;
+  }
+
+  .card {
+    @apply bg-white rounded-sm shadow-md overflow-hidden
+           transition-all duration-500
+           hover:shadow-xl hover:-translate-y-1;
+  }
+
+  .card-image {
+    @apply w-full h-56 object-cover;
+  }
+
+  .divider {
+    @apply w-full h-px bg-gradient-to-r from-transparent via-stone-warm to-transparent my-12;
+  }
+
+  .noise-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.02;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #C67D4A 0%, #C9A84C 100%);
+  }
+
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

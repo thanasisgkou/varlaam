@@ -1,0 +1,84 @@
+local_backend: true
+
+backend:
+  name: git-gateway
+  branch: main
+
+locale: 'el'
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "news"
+    label: "Νέα & Ανακοινώσεις"
+    folder: "src/content/news"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Τίτλος", name: "title", widget: "string" }
+      - { label: "Ημερομηνία", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Περίληψη", name: "excerpt", widget: "string" }
+      - { label: "Εικόνα", name: "image", widget: "image", required: false }
+      - { label: "Συντάκτης", name: "author", widget: "string", default: "Σύλλογος Βαρλαάμ" }
+      - { label: "Κείμενο", name: "body", widget: "markdown" }
+
+  - name: "events"
+    label: "Εκδηλώσεις"
+    folder: "src/content/events"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Τίτλος", name: "title", widget: "string" }
+      - { label: "Ημερομηνία", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Τέλος", name: "endDate", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, required: false }
+      - { label: "Τοποθεσία", name: "location", widget: "string" }
+      - { label: "Περίληψη", name: "excerpt", widget: "string" }
+      - { label: "Εικόνα", name: "image", widget: "image", required: false }
+      - { label: "Κείμενο", name: "body", widget: "markdown" }
+
+  - name: "gallery"
+    label: "Γκαλερί"
+    folder: "src/content/gallery"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - { label: "Τίτλος", name: "title", widget: "string" }
+      - label: "Κατηγορία"
+        name: "category"
+        widget: "select"
+        options:
+          - { label: "Το Χωριό", value: "village" }
+          - { label: "Εκδηλώσεις", value: "events" }
+          - { label: "Παλιές Φωτογραφίες", value: "old-photos" }
+          - { label: "Φύση", value: "nature" }
+      - { label: "Εικόνα", name: "image", widget: "image" }
+      - { label: "Περιγραφή", name: "description", widget: "string", required: false }
+      - { label: "Ημερομηνία", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, required: false }
+
+  - name: "diaspora-stories"
+    label: "Ιστορίες Αποδήμων"
+    folder: "src/content/diaspora-stories"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Όνομα", name: "name", widget: "string" }
+      - { label: "Τοποθεσία", name: "location", widget: "string" }
+      - { label: "Ημερομηνία", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Περίληψη", name: "excerpt", widget: "string" }
+      - { label: "Φωτογραφία", name: "image", widget: "image", required: false }
+      - { label: "Ιστορία", name: "body", widget: "markdown" }
+
+  - name: "diaspora-bulletin"
+    label: "Πίνακας Ανακοινώσεων Αποδήμων"
+    folder: "src/content/diaspora-bulletin"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Τίτλος", name: "title", widget: "string" }
+      - { label: "Συντάκτης", name: "author", widget: "string" }
+      - { label: "Ημερομηνία", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Εγκεκριμένο", name: "approved", widget: "boolean", default: false }
+      - { label: "Κείμενο", name: "body", widget: "markdown" }

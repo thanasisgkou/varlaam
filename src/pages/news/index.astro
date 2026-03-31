@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allNews = (await getCollection('news')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<BaseLayout title="Νέα" description="Τα τελευταία νέα και ανακοινώσεις από το χωριό Βαρλαάμ Ιωαννίνων">
+
+  <!-- Hero Banner -->
+  <section class="relative py-28 md:py-36 bg-gradient-to-br from-charcoal via-stone-dark to-olive-dark overflow-hidden">
+    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 50%, rgba(193,154,107,0.4) 0%, transparent 50%);"></div>
+    <div class="relative z-10 container mx-auto px-4 text-center">
+      <div class="flex items-center justify-center mb-6 animate-fade-in">
+        <span class="block w-12 h-px bg-gold-warm/50"></span>
+        <span class="mx-4 text-gold-warm/70 text-sm font-accent tracking-[0.3em] uppercase">Ενημέρωση</span>
+        <span class="block w-12 h-px bg-gold-warm/50"></span>
+      </div>
+      <h1 class="font-display text-5xl md:text-7xl font-bold text-white mb-6 animate-fade-up">Νέα</h1>
+      <p class="font-accent text-xl text-gold-light/80 max-w-2xl mx-auto animate-fade-up" style="animation-delay: 0.2s;">
+        Ανακοινώσεις, ειδήσεις και νέα από το Βαρλαάμ
+      </p>
+    </div>
+  </section>
+
+  <!-- News Grid -->
+  <section class="py-24 bg-parchment">
+    <div class="container mx-auto px-4 max-w-6xl">
+
+      {allNews.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {allNews.map((post, index) => (
+            <article class="animate-on-scroll card group" style={`animation-delay: ${index * 0.1}s;`}>
+              <!-- Image -->
+              <div class="relative h-52 overflow-hidden bg-gradient-to-br from-stone-warm/30 to-olive/20">
+                {post.data.image ? (
+                  <img
+                    src={post.data.image}
+                    alt={post.data.title}
+                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="flex items-center justify-center h-full">
+                    <svg class="w-12 h-12 text-stone-warm/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                  </div>
+                )}
+                <div class="absolute inset-0 bg-olive-dark/0 group-hover:bg-olive-dark/10 transition-colors duration-300"></div>
+              </div>
+
+              <div class="p-6">
+                <div class="flex items-center gap-3 mb-3">
+                  <time class="text-sm text-terracotta font-accent" datetime={post.data.date.toISOString()}>
+                    {post.data.date.toLocaleDateString('el-GR', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  </time>
+                  <span class="w-1 h-1 rounded-full bg-stone-warm/40"></span>
+                  <span class="text-sm text-charcoal/50 font-body">{post.data.author}</span>
+                </div>
+
+                <h2 class="font-display text-xl text-charcoal mb-3 group-hover:text-olive-dark transition-colors">
+                  <a href={`/news/${post.slug}`} class="hover:underline decoration-terracotta/30 underline-offset-4">
+                    {post.data.title}
+                  </a>
+                </h2>
+
+                <p class="font-body text-charcoal/70 text-sm leading-relaxed line-clamp-3 mb-4">
+                  {post.data.excerpt}
+                </p>
+
+                <a href={`/news/${post.slug}`} class="inline-flex items-center text-sm font-accent text-olive-dark hover:text-terracotta transition-colors group/link">
+                  Διαβάστε περισσότερα
+                  <svg class="w-4 h-4 ml-1 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                  </svg>
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-16">
+          <svg class="w-16 h-16 mx-auto text-stone-warm/40 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+          </svg>
+          <h3 class="font-display text-2xl text-charcoal/60 mb-2">Δεν υπάρχουν νέα ακόμα</h3>
+          <p class="font-body text-charcoal/50">Μείνετε συντονισμένοι για τα τελευταία νέα μας!</p>
+        </div>
+      )}
+
+    </div>
+  </section>
+
+</BaseLayout>

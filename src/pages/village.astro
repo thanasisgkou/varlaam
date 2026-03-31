@@ -1,0 +1,337 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Το Χωριό μας" description="Ανακαλύψτε την ιστορία, τη γεωγραφία και τα αξιοθέατα του Βαρλαάμ Ιωαννίνων">
+
+  <!-- Hero Banner -->
+  <section class="relative py-32 md:py-40 bg-gradient-to-br from-charcoal via-stone-dark to-olive-dark overflow-hidden">
+    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 30% 50%, rgba(193,154,107,0.4) 0%, transparent 50%), radial-gradient(circle at 70% 50%, rgba(107,142,35,0.3) 0%, transparent 50%);"></div>
+    <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;80&quot; height=&quot;80&quot; viewBox=&quot;0 0 80 80&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; stroke=&quot;%23c19a6b&quot; stroke-opacity=&quot;0.06&quot; stroke-width=&quot;1&quot;%3E%3Cpath d=&quot;M0 40h80M40 0v80&quot;/%3E%3C/g%3E%3C/svg%3E');"></div>
+
+    <div class="relative z-10 container mx-auto px-4 text-center">
+      <div class="flex items-center justify-center mb-6 animate-fade-in">
+        <span class="block w-12 h-px bg-gold-warm/50"></span>
+        <span class="mx-4 text-gold-warm/70 text-sm font-accent tracking-[0.3em] uppercase">Βαρλαάμ Ιωαννίνων</span>
+        <span class="block w-12 h-px bg-gold-warm/50"></span>
+      </div>
+      <h1 class="font-display text-5xl md:text-7xl font-bold text-white mb-6 animate-fade-up">
+        Το Χωριό μας
+      </h1>
+      <p class="font-accent text-xl text-gold-light/80 max-w-2xl mx-auto animate-fade-up" style="animation-delay: 0.2s;">
+        Ένα ταξίδι στην ιστορία και την ψυχή της Ηπείρου
+      </p>
+    </div>
+  </section>
+
+  <!-- History Section -->
+  <section class="py-24 bg-parchment">
+    <div class="container mx-auto px-4 max-w-4xl">
+      <div class="animate-on-scroll">
+        <div class="text-center mb-16">
+          <h2 class="section-title">Ιστορία</h2>
+          <p class="section-subtitle">Από τα βάθη των αιώνων μέχρι σήμερα</p>
+          <div class="divider mx-auto mt-6"></div>
+        </div>
+
+        <div class="prose prose-lg max-w-none">
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
+            <!-- Left: Decorative Timeline -->
+            <div class="md:col-span-2 hidden md:flex flex-col items-center">
+              <div class="w-px h-full bg-gradient-to-b from-terracotta/0 via-terracotta/40 to-terracotta/0 relative">
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-terracotta/60"></div>
+                <div class="absolute top-1/3 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-terracotta/40"></div>
+                <div class="absolute top-2/3 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-terracotta/30"></div>
+                <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-terracotta/20"></div>
+              </div>
+            </div>
+
+            <!-- Right: Content -->
+            <div class="md:col-span-10 space-y-8">
+              <div class="animate-on-scroll">
+                <h3 class="font-display text-2xl text-charcoal mb-4 flex items-center gap-3">
+                  <span class="text-terracotta font-accent text-lg">15ος αι.</span>
+                  <span class="w-8 h-px bg-terracotta/30"></span>
+                  Πρώτες Αναφορές
+                </h3>
+                <p class="font-body text-charcoal/80 leading-relaxed">
+                  Οι πρώτες ιστορικές αναφορές για το Βαρλαάμ χρονολογούνται στα χρόνια
+                  της Οθωμανικής κυριαρχίας. Το χωριό πήρε το όνομά του, σύμφωνα με την παράδοση,
+                  από τον μοναχό Βαρλαάμ που ίδρυσε τον πρώτο ναό στην περιοχή. Η στρατηγική
+                  θέση του χωριού στις πλαγιές του βουνού το έκανε ιδανικό καταφύγιο.
+                </p>
+              </div>
+
+              <div class="animate-on-scroll" style="animation-delay: 0.15s;">
+                <h3 class="font-display text-2xl text-charcoal mb-4 flex items-center gap-3">
+                  <span class="text-terracotta font-accent text-lg">18ος-19ος αι.</span>
+                  <span class="w-8 h-px bg-terracotta/30"></span>
+                  Ακμή και Παραδόσεις
+                </h3>
+                <p class="font-body text-charcoal/80 leading-relaxed">
+                  Κατά τους 18ο και 19ο αιώνα, το Βαρλαάμ γνώρισε περίοδο ακμής. Οι κάτοικοι
+                  ασχολούνταν κυρίως με την κτηνοτροφία και τη γεωργία. Τα πέτρινα σπίτια
+                  που χτίστηκαν εκείνη την εποχή αποτελούν αρχιτεκτονικά κοσμήματα και
+                  αντικατοπτρίζουν τη μαστοριά των ηπειρωτών τεχνιτών. Η κοινωνική ζωή
+                  οργανωνόταν γύρω από την εκκλησία και την πλατεία του χωριού.
+                </p>
+              </div>
+
+              <div class="animate-on-scroll" style="animation-delay: 0.3s;">
+                <h3 class="font-display text-2xl text-charcoal mb-4 flex items-center gap-3">
+                  <span class="text-terracotta font-accent text-lg">20ός αι.</span>
+                  <span class="w-8 h-px bg-terracotta/30"></span>
+                  Αγώνες και Μετανάστευση
+                </h3>
+                <p class="font-body text-charcoal/80 leading-relaxed">
+                  Ο 20ός αιώνας σημαδεύτηκε από τους εθνικούς αγώνες και τις μεγάλες
+                  μεταναστευτικές κινήσεις. Πολλοί Βαρλαμιώτες αναγκάστηκαν να μεταναστεύσουν
+                  στην Αθήνα, τη Θεσσαλονίκη και το εξωτερικό αναζητώντας καλύτερη ζωή.
+                  Παρ' όλα αυτά, οι δεσμοί με το χωριό παρέμειναν ισχυροί, και κάθε καλοκαίρι
+                  οι απόδημοι επέστρεφαν για τα πανηγύρια και τις γιορτές.
+                </p>
+              </div>
+
+              <div class="animate-on-scroll" style="animation-delay: 0.45s;">
+                <h3 class="font-display text-2xl text-charcoal mb-4 flex items-center gap-3">
+                  <span class="text-terracotta font-accent text-lg">Σήμερα</span>
+                  <span class="w-8 h-px bg-terracotta/30"></span>
+                  Το Βαρλαάμ Ζει
+                </h3>
+                <p class="font-body text-charcoal/80 leading-relaxed">
+                  Σήμερα, το Βαρλαάμ συνεχίζει να αποτελεί ζωντανό χωριό με ενεργό σύλλογο
+                  που διοργανώνει εκδηλώσεις, συντηρεί τα μνημεία και κρατά ζωντανή τη
+                  παράδοση. Νέες πρωτοβουλίες για τον τουρισμό και τη βιώσιμη ανάπτυξη
+                  δίνουν νέα πνοή στο χωριό, ενώ η κοινότητα των αποδήμων παραμένει ενεργή
+                  και αφοσιωμένη.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Geography / Location Section -->
+  <section class="py-24 bg-white">
+    <div class="container mx-auto px-4 max-w-6xl">
+      <div class="animate-on-scroll text-center mb-16">
+        <h2 class="section-title">Γεωγραφία &amp; Τοποθεσία</h2>
+        <p class="section-subtitle">Στην καρδιά της Ηπείρου</p>
+        <div class="divider mx-auto mt-6"></div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="animate-on-scroll animate-slide-in-left">
+          <div class="space-y-6">
+            <p class="font-body text-charcoal/80 leading-relaxed text-lg">
+              Το Βαρλαάμ βρίσκεται στον νομό Ιωαννίνων, στην περιφέρεια Ηπείρου, σε
+              υψόμετρο περίπου 850 μέτρων. Περιβάλλεται από καταπράσινα βουνά και πλούσια
+              βλάστηση, προσφέροντας εκπληκτική θέα στην ηπειρωτική ύπαιθρο.
+            </p>
+
+            <div class="grid grid-cols-2 gap-4">
+              <div class="bg-parchment rounded-lg p-4 text-center">
+                <div class="font-display text-2xl text-olive-dark font-bold">~850μ</div>
+                <div class="font-body text-sm text-charcoal/60 mt-1">Υψόμετρο</div>
+              </div>
+              <div class="bg-parchment rounded-lg p-4 text-center">
+                <div class="font-display text-2xl text-olive-dark font-bold">25χλμ</div>
+                <div class="font-body text-sm text-charcoal/60 mt-1">Από Ιωάννινα</div>
+              </div>
+              <div class="bg-parchment rounded-lg p-4 text-center">
+                <div class="font-display text-2xl text-olive-dark font-bold">Ορεινό</div>
+                <div class="font-body text-sm text-charcoal/60 mt-1">Ανάγλυφο</div>
+              </div>
+              <div class="bg-parchment rounded-lg p-4 text-center">
+                <div class="font-display text-2xl text-olive-dark font-bold">Ήπειρος</div>
+                <div class="font-body text-sm text-charcoal/60 mt-1">Περιφέρεια</div>
+              </div>
+            </div>
+
+            <p class="font-body text-charcoal/80 leading-relaxed">
+              Η πρόσβαση γίνεται μέσω του επαρχιακού οδικού δικτύου από τα Ιωάννινα.
+              Η διαδρομή είναι γραφική, περνώντας μέσα από παραδοσιακά χωριά και πανέμορφα
+              τοπία της ηπειρωτικής υπαίθρου.
+            </p>
+          </div>
+        </div>
+
+        <div class="animate-on-scroll animate-slide-in-right">
+          <div class="rounded-xl overflow-hidden shadow-lg border border-stone-warm/20">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1287!2d20.8887209!3d39.4201989!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x135bf75da7e49ded%3A0xa1fe3b9befbd1a88!2zzpLOsc-BzrvOsc6szrzOuiA0NTUgMDAsIM6VzrvOu86szrTOsQ!5e0!3m2!1sel!2sgr"
+              width="100%"
+              height="400"
+              style="border:0;"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Χάρτης Βαρλαάμ Ιωαννίνων"
+            ></iframe>
+          </div>
+          <p class="text-center text-sm text-charcoal/50 font-body mt-3">
+            Βαρλαάμ, Νομός Ιωαννίνων, Ήπειρος
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Landmarks Section -->
+  <section class="py-24 bg-parchment">
+    <div class="container mx-auto px-4 max-w-6xl">
+      <div class="animate-on-scroll text-center mb-16">
+        <h2 class="section-title">Αξιοθέατα &amp; Τοπόσημα</h2>
+        <p class="section-subtitle">Τα σημεία αναφοράς του χωριού μας</p>
+        <div class="divider mx-auto mt-6"></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Church -->
+        <div class="animate-on-scroll card group" style="animation-delay: 0.1s;">
+          <div class="relative h-56 bg-gradient-to-br from-gold-warm/20 to-terracotta/10 flex items-center justify-center">
+            <div class="text-center">
+              <svg class="w-16 h-16 mx-auto text-terracotta/50 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1">
+                <path d="M12 2L8 6H4v2l-2 2v10h8v-6h4v6h8V10l-2-2V6h-4L12 2z"/>
+                <path d="M12 6v4M10 8h4"/>
+              </svg>
+              <span class="text-sm text-stone-warm/70 font-accent">Εκκλησία</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-xl text-charcoal mb-3 group-hover:text-olive-dark transition-colors">
+              Ιερός Ναός
+            </h3>
+            <p class="font-body text-charcoal/70 text-sm leading-relaxed">
+              Ο ιστορικός ιερός ναός του χωριού αποτελεί αρχιτεκτονικό στολίδι με
+              βυζαντινές αγιογραφίες και ξυλόγλυπτο τέμπλο. Χτίστηκε τον 18ο αιώνα
+              και αποτελεί κέντρο λατρείας και πολιτιστικής ταυτότητας.
+            </p>
+          </div>
+        </div>
+
+        <!-- Plateia -->
+        <div class="animate-on-scroll card group" style="animation-delay: 0.2s;">
+          <div class="relative h-56 bg-gradient-to-br from-olive/20 to-stone-warm/10 flex items-center justify-center">
+            <div class="text-center">
+              <svg class="w-16 h-16 mx-auto text-olive/50 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1">
+                <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/>
+                <circle cx="12" cy="11" r="2"/>
+              </svg>
+              <span class="text-sm text-stone-warm/70 font-accent">Πλατεία</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-xl text-charcoal mb-3 group-hover:text-olive-dark transition-colors">
+              Κεντρική Πλατεία
+            </h3>
+            <p class="font-body text-charcoal/70 text-sm leading-relaxed">
+              Η πλατεία του χωριού, σκιασμένη από αιωνόβια πλατάνια, αποτελεί τον
+              τόπο συνάντησης των κατοίκων. Εδώ γίνονται τα πανηγύρια, οι γιορτές
+              και οι κοινωνικές εκδηλώσεις του χωριού.
+            </p>
+          </div>
+        </div>
+
+        <!-- Fountain -->
+        <div class="animate-on-scroll card group" style="animation-delay: 0.3s;">
+          <div class="relative h-56 bg-gradient-to-br from-stone-warm/20 to-olive/10 flex items-center justify-center">
+            <div class="text-center">
+              <svg class="w-16 h-16 mx-auto text-stone-warm/50 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1">
+                <path d="M12 3v7M8 7c0-2.2 1.8-4 4-4s4 1.8 4 4"/>
+                <path d="M5 13h14M7 13v5a2 2 0 002 2h6a2 2 0 002-2v-5"/>
+                <path d="M12 10v3"/>
+              </svg>
+              <span class="text-sm text-stone-warm/70 font-accent">Βρύση</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-xl text-charcoal mb-3 group-hover:text-olive-dark transition-colors">
+              Η Βρύση του Χωριού
+            </h3>
+            <p class="font-body text-charcoal/70 text-sm leading-relaxed">
+              Η πέτρινη βρύση στο κέντρο του χωριού, με τα κρυστάλλινα νερά της,
+              αποτελεί σύμβολο ζωής και φιλοξενίας. Κατασκευάστηκε με παραδοσιακές
+              τεχνικές και εξακολουθεί να τρέχει μέχρι σήμερα.
+            </p>
+          </div>
+        </div>
+
+        <!-- Stone Houses -->
+        <div class="animate-on-scroll card group" style="animation-delay: 0.4s;">
+          <div class="relative h-56 bg-gradient-to-br from-terracotta/15 to-stone-warm/10 flex items-center justify-center">
+            <div class="text-center">
+              <svg class="w-16 h-16 mx-auto text-terracotta/40 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1">
+                <path d="M3 21h18M4 21V10l8-7 8 7v11"/>
+                <rect x="9" y="14" width="6" height="7"/>
+                <rect x="10" y="10" width="4" height="3"/>
+              </svg>
+              <span class="text-sm text-stone-warm/70 font-accent">Αρχιτεκτονική</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-xl text-charcoal mb-3 group-hover:text-olive-dark transition-colors">
+              Πέτρινα Αρχοντικά
+            </h3>
+            <p class="font-body text-charcoal/70 text-sm leading-relaxed">
+              Τα παραδοσιακά πέτρινα σπίτια του Βαρλαάμ αντικατοπτρίζουν την
+              αρχιτεκτονική κληρονομιά της Ηπείρου. Χτισμένα με τοπική πέτρα και
+              ξύλο, αποπνέουν μια ζεστασιά που αντέχει στον χρόνο.
+            </p>
+          </div>
+        </div>
+
+        <!-- Paths -->
+        <div class="animate-on-scroll card group" style="animation-delay: 0.5s;">
+          <div class="relative h-56 bg-gradient-to-br from-olive/15 to-gold-warm/10 flex items-center justify-center">
+            <div class="text-center">
+              <svg class="w-16 h-16 mx-auto text-olive/50 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1">
+                <path d="M4 20C4 20 8 16 8 12S4 4 4 4"/>
+                <path d="M14 20c0 0 4-4 4-8s-4-8-4-8"/>
+                <path d="M9 4l2 8-2 8"/>
+              </svg>
+              <span class="text-sm text-stone-warm/70 font-accent">Μονοπάτια</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-xl text-charcoal mb-3 group-hover:text-olive-dark transition-colors">
+              Πεζοπορικά Μονοπάτια
+            </h3>
+            <p class="font-body text-charcoal/70 text-sm leading-relaxed">
+              Τα παραδοσιακά μονοπάτια γύρω από το Βαρλαάμ προσφέρουν μοναδικές
+              εμπειρίες πεζοπορίας μέσα στη φύση, με θέα στα βουνά και τις κοιλάδες
+              της Ηπείρου.
+            </p>
+          </div>
+        </div>
+
+        <!-- Cemetery / Memorial -->
+        <div class="animate-on-scroll card group" style="animation-delay: 0.6s;">
+          <div class="relative h-56 bg-gradient-to-br from-gold-warm/15 to-terracotta/10 flex items-center justify-center">
+            <div class="text-center">
+              <svg class="w-16 h-16 mx-auto text-gold-warm/50 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                <path d="M2 17l10 5 10-5"/>
+                <path d="M2 12l10 5 10-5"/>
+              </svg>
+              <span class="text-sm text-stone-warm/70 font-accent">Μνημεία</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-xl text-charcoal mb-3 group-hover:text-olive-dark transition-colors">
+              Μνημείο Ηρώων
+            </h3>
+            <p class="font-body text-charcoal/70 text-sm leading-relaxed">
+              Το μνημείο στη μνήμη των ηρώων του χωριού που έπεσαν στους εθνικούς
+              αγώνες αποτελεί τόπο μνήμης και τιμής. Κάθε εθνική επέτειο τελείται
+              εδώ η δοξολογία και η κατάθεση στεφάνων.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

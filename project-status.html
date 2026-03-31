@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Βαρλαάμ — Project Status Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --olive: #4A5D23;
+    --olive-light: #6B7F3A;
+    --terracotta: #C67D4A;
+    --gold: #C9A84C;
+    --gold-light: #E2C97E;
+    --stone: #D4C5A9;
+    --charcoal: #2C2C2C;
+    --parchment: #FAF7F0;
+    --red: #C44D3F;
+    --green: #3D8B4F;
+    --amber: #D4943A;
+    --bg: #F5F0E8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--charcoal);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, var(--charcoal) 0%, #1a2a10 50%, #2a1a0a 100%);
+    padding: 80px 40px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(201,168,76,0.03) 40px, rgba(201,168,76,0.03) 80px);
+  }
+  .hero-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-badge {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 6px 18px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+  .hero .subtitle {
+    font-size: 18px;
+    color: var(--stone);
+    max-width: 600px;
+  }
+  .hero-meta {
+    margin-top: 32px;
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .hero-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255,255,255,0.6);
+    font-size: 13px;
+  }
+  .hero-meta-item strong { color: rgba(255,255,255,0.9); }
+
+  /* Layout */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* Section */
+  .section {
+    padding: 48px 0;
+    border-bottom: 1px solid rgba(44,44,44,0.08);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--charcoal);
+    margin-bottom: 20px;
+  }
+
+  /* Stats row */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin: 40px 0;
+  }
+  .stat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px 20px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--olive);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: #888;
+    margin-top: 6px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* Feature list */
+  .features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 20px 0;
+  }
+  .feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: white;
+    padding: 16px;
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .feature-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: white;
+  }
+  .feature-icon.done { background: var(--green); }
+  .feature-icon.warn { background: var(--amber); }
+  .feature-icon.miss { background: var(--red); }
+  .feature-name {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.3;
+  }
+  .feature-desc {
+    font-size: 12px;
+    color: #777;
+    margin-top: 2px;
+  }
+
+  /* Tech stack */
+  .tech-pills {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 16px 0;
+  }
+  .tech-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: white;
+    border: 1px solid rgba(0,0,0,0.08);
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .tech-pill .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  /* Pages table */
+  .pages-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .pages-table th {
+    background: var(--charcoal);
+    color: white;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 14px 16px;
+    text-align: left;
+    font-weight: 600;
+  }
+  .pages-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    font-size: 14px;
+  }
+  .pages-table tr:last-child td { border-bottom: none; }
+  .pages-table tr:hover td { background: rgba(74,93,35,0.03); }
+  .route { font-family: monospace; font-size: 12px; color: var(--olive); background: rgba(74,93,35,0.08); padding: 2px 8px; border-radius: 4px; }
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .badge-ok { background: rgba(61,139,79,0.1); color: var(--green); }
+  .badge-warn { background: rgba(212,148,58,0.1); color: var(--amber); }
+  .badge-miss { background: rgba(196,77,63,0.1); color: var(--red); }
+
+  /* Admin section */
+  .admin-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .admin-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .admin-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .admin-card ul {
+    list-style: none;
+    padding: 0;
+  }
+  .admin-card li {
+    padding: 6px 0;
+    font-size: 13px;
+    color: #555;
+    border-bottom: 1px solid rgba(0,0,0,0.03);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .admin-card li:last-child { border-bottom: none; }
+  .admin-card li::before { content: '→'; color: var(--olive); font-weight: 700; }
+
+  /* Checklist */
+  .checklist {
+    margin: 20px 0;
+  }
+  .check-group-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 28px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid;
+  }
+  .check-group-title.critical { color: var(--red); border-color: var(--red); }
+  .check-group-title.high { color: var(--amber); border-color: var(--amber); }
+  .check-group-title.medium { color: var(--olive); border-color: var(--olive); }
+
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    background: white;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .check-bullet {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 12px;
+    color: white;
+    margin-top: 1px;
+  }
+  .check-bullet.red { background: var(--red); }
+  .check-bullet.amber { background: var(--amber); }
+  .check-bullet.green { background: var(--olive); }
+  .check-text { font-size: 14px; }
+  .check-text strong { font-weight: 600; }
+  .check-text .detail { color: #888; font-size: 12px; display: block; margin-top: 2px; }
+  .check-text code {
+    background: rgba(0,0,0,0.05);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: monospace;
+  }
+
+  /* Summary banner */
+  .summary-banner {
+    background: linear-gradient(135deg, var(--charcoal), #1a2a10);
+    border-radius: 16px;
+    padding: 40px;
+    margin: 32px 0;
+    color: white;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 40px;
+  }
+  .summary-banner h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .summary-banner p {
+    color: var(--stone);
+    font-size: 14px;
+    max-width: 480px;
+  }
+  .progress-ring {
+    width: 120px;
+    height: 120px;
+    position: relative;
+  }
+  .progress-ring svg {
+    transform: rotate(-90deg);
+  }
+  .progress-ring .track {
+    fill: none;
+    stroke: rgba(255,255,255,0.1);
+    stroke-width: 8;
+  }
+  .progress-ring .fill {
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 314;
+    stroke-dashoffset: 78; /* 75% = 314 * 0.25 */
+    transition: stroke-dashoffset 1s ease;
+  }
+  .progress-ring .pct {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: white;
+  }
+
+  .footer-note {
+    text-align: center;
+    padding: 40px;
+    font-size: 12px;
+    color: #aaa;
+  }
+
+  @media (max-width: 700px) {
+    .hero { padding: 48px 20px 40px; }
+    .hero h1 { font-size: 36px; }
+    .container { padding: 0 20px; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .features, .admin-grid { grid-template-columns: 1fr; }
+    .summary-banner { grid-template-columns: 1fr; text-align: center; }
+    .progress-ring { margin: 0 auto; }
+    .hero-meta { gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Project Status Report</div>
+    <h1>Βαρλαάμ <em>Ιωαννίνων</em></h1>
+    <p class="subtitle">Αναφορά κατάστασης project — Τι έχει γίνει, τι μένει, πώς δουλεύει το admin.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><strong>Ημερομηνία:</strong> 28 Μαρτίου 2026</div>
+      <div class="hero-meta-item"><strong>Stack:</strong> Astro + Tailwind + Netlify CMS</div>
+      <div class="hero-meta-item"><strong>URL:</strong> varlaam.netlify.app</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- OVERVIEW -->
+  <div class="section">
+    <div class="section-label">Επισκόπηση</div>
+    <div class="section-title">Τι έχουμε φτιάξει</div>
+    <p style="color:#555; max-width:700px; margin-bottom:8px;">Ένα πλήρες static site για το χωριό Βαρλαάμ με Astro, Tailwind CSS, και Netlify CMS για διαχείριση περιεχομένου. Ελληνικό UI παντού, responsive design, animations, και admin panel.</p>
+
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-number">8</div>
+        <div class="stat-label">Σελίδες</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">5</div>
+        <div class="stat-label">CMS Collections</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">3</div>
+        <div class="stat-label">Netlify Forms</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">10</div>
+        <div class="stat-label">Content Files</div>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top:32px;">Tech Stack</div>
+    <div class="tech-pills">
+      <span class="tech-pill"><span class="dot" style="background:#FF5D01"></span> Astro 5.7</span>
+      <span class="tech-pill"><span class="dot" style="background:#06B6D4"></span> Tailwind CSS 3.4</span>
+      <span class="tech-pill"><span class="dot" style="background:#C67D4A"></span> Decap CMS (Netlify CMS)</span>
+      <span class="tech-pill"><span class="dot" style="background:#00C7B7"></span> Netlify Hosting</span>
+      <span class="tech-pill"><span class="dot" style="background:#3178C6"></span> TypeScript</span>
+      <span class="tech-pill"><span class="dot" style="background:#333"></span> Git Gateway Auth</span>
+    </div>
+  </div>
+
+  <!-- PAGES -->
+  <div class="section">
+    <div class="section-label">Σελίδες &amp; Λειτουργίες</div>
+    <div class="section-title">Τι υπάρχει στο site</div>
+
+    <table class="pages-table">
+      <thead>
+        <tr>
+          <th>Σελίδα</th>
+          <th>Route</th>
+          <th>Τι κάνει</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Αρχική</strong></td>
+          <td><span class="route">/</span></td>
+          <td>Hero, τελευταία νέα, stats χωριού, CTAs</td>
+          <td><span class="badge badge-ok">OK</span></td>
+        </tr>
+        <tr>
+          <td><strong>Το Χωριό</strong></td>
+          <td><span class="route">/village/</span></td>
+          <td>Ιστορία (15ος-20ός αι.), timeline, αξιοθέατα, χάρτης</td>
+          <td><span class="badge badge-warn">Χάρτης</span></td>
+        </tr>
+        <tr>
+          <td><strong>Σύλλογος</strong></td>
+          <td><span class="route">/association/</span></td>
+          <td>Αποστολή, ΔΣ (7 μέλη), 4 δράσεις</td>
+          <td><span class="badge badge-warn">Dummy data</span></td>
+        </tr>
+        <tr>
+          <td><strong>Νέα (λίστα)</strong></td>
+          <td><span class="route">/news/</span></td>
+          <td>Grid νέων, ταξινόμηση κατά ημερομηνία</td>
+          <td><span class="badge badge-ok">OK</span></td>
+        </tr>
+        <tr>
+          <td><strong>Νέα (άρθρο)</strong></td>
+          <td><span class="route">/news/[slug]</span></td>
+          <td>Πλήρες άρθρο, metadata, back link</td>
+          <td><span class="badge badge-ok">OK</span></td>
+        </tr>
+        <tr>
+          <td><strong>Εκδηλώσεις (λίστα)</strong></td>
+          <td><span class="route">/events/</span></td>
+          <td>Upcoming &amp; past, φίλτρα, event cards</td>
+          <td><span class="badge badge-ok">OK</span></td>
+        </tr>
+        <tr>
+          <td><strong>Εκδηλώσεις (detail)</strong></td>
+          <td><span class="route">/events/[slug]</span></td>
+          <td>Πλήρης εκδήλωση, τοποθεσία, status</td>
+          <td><span class="badge badge-ok">OK</span></td>
+        </tr>
+        <tr>
+          <td><strong>Γκαλερί</strong></td>
+          <td><span class="route">/gallery/</span></td>
+          <td>Photo grid, 4 κατηγορίες, JS filtering</td>
+          <td><span class="badge badge-miss">Χωρίς εικόνες</span></td>
+        </tr>
+        <tr>
+          <td><strong>Απόδημοι</strong></td>
+          <td><span class="route">/diaspora/</span></td>
+          <td>Ιστορίες, bulletin board, newsletter form</td>
+          <td><span class="badge badge-warn">Λίγο content</span></td>
+        </tr>
+        <tr>
+          <td><strong>Επικοινωνία</strong></td>
+          <td><span class="route">/contact/</span></td>
+          <td>Contact form (Netlify), χάρτης, τηλέφωνα</td>
+          <td><span class="badge badge-miss">Dummy τηλ.</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FEATURES STATUS -->
+  <div class="section">
+    <div class="section-label">Feature Check</div>
+    <div class="section-title">Τι δουλεύει, τι θέλει δουλειά</div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon done">✓</div>
+        <div>
+          <div class="feature-name">Responsive Design</div>
+          <div class="feature-desc">Mobile-first, δουλεύει σε όλα τα breakpoints</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon done">✓</div>
+        <div>
+          <div class="feature-name">Greek UI</div>
+          <div class="feature-desc">Πλήρης ελληνική μετάφραση, lang="el"</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon done">✓</div>
+        <div>
+          <div class="feature-name">Content Collections</div>
+          <div class="feature-desc">Type-safe schema με Astro Content Collections</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon done">✓</div>
+        <div>
+          <div class="feature-name">CMS Admin Panel</div>
+          <div class="feature-desc">Decap CMS στο /admin, 5 collections</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon done">✓</div>
+        <div>
+          <div class="feature-name">Animations</div>
+          <div class="feature-desc">Scroll-triggered, fadeIn, slideIn, hover effects</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon done">✓</div>
+        <div>
+          <div class="feature-name">Contact Form</div>
+          <div class="feature-desc">Netlify Forms integration, validation</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon done">✓</div>
+        <div>
+          <div class="feature-name">SEO Meta Tags</div>
+          <div class="feature-desc">Title, description, OG tags ανά σελίδα</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon done">✓</div>
+        <div>
+          <div class="feature-name">Gallery Filtering</div>
+          <div class="feature-desc">Client-side JS filtering σε 4 κατηγορίες</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon warn">!</div>
+        <div>
+          <div class="feature-name">Εικόνες Gallery</div>
+          <div class="feature-desc">Τα 4 items δείχνουν σε placeholder paths που δεν υπάρχουν</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon warn">!</div>
+        <div>
+          <div class="feature-name">Google Maps</div>
+          <div class="feature-desc">Placeholder coordinates (0x0) στο village &amp; contact</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon miss">✗</div>
+        <div>
+          <div class="feature-name">Σελίδα 404</div>
+          <div class="feature-desc">Δεν υπάρχει custom 404 page</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon miss">✗</div>
+        <div>
+          <div class="feature-name">Sitemap &amp; Robots.txt</div>
+          <div class="feature-desc">Λείπουν — χρειάζονται για SEO</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN PANEL -->
+  <div class="section">
+    <div class="section-label">Διαχείριση</div>
+    <div class="section-title">Πώς δουλεύει το Admin Panel</div>
+    <p style="color:#555; margin-bottom:20px;">Το admin panel είναι στο <code style="background:rgba(0,0,0,0.05); padding:2px 8px; border-radius:4px;">/admin</code> και τρέχει με <strong>Decap CMS</strong> (πρώην Netlify CMS). Χρησιμοποιεί Git Gateway backend — δηλαδή κάθε αλλαγή γίνεται commit στο Git repo και trigger αυτόματο rebuild στο Netlify.</p>
+
+    <div class="admin-grid">
+      <div class="admin-card">
+        <h4>📰 Νέα &amp; Ανακοινώσεις</h4>
+        <ul>
+          <li>Τίτλος, ημερομηνία, περίληψη</li>
+          <li>Εικόνα (upload μέσω CMS)</li>
+          <li>Συντάκτης (default: Σύλλογος Βαρλαάμ)</li>
+          <li>Κείμενο σε Markdown editor</li>
+          <li>Αποθηκεύεται σε <code>src/content/news/</code></li>
+        </ul>
+      </div>
+      <div class="admin-card">
+        <h4>🎉 Εκδηλώσεις</h4>
+        <ul>
+          <li>Τίτλος, ημερομηνία έναρξης/λήξης</li>
+          <li>Τοποθεσία, περίληψη</li>
+          <li>Εικόνα (optional)</li>
+          <li>Κείμενο σε Markdown</li>
+          <li>Αποθηκεύεται σε <code>src/content/events/</code></li>
+        </ul>
+      </div>
+      <div class="admin-card">
+        <h4>🖼️ Γκαλερί</h4>
+        <ul>
+          <li>Τίτλος, κατηγορία (dropdown)</li>
+          <li>Κατηγορίες: Χωριό, Εκδηλώσεις, Παλιές Φωτ., Φύση</li>
+          <li>Upload εικόνας</li>
+          <li>Περιγραφή (optional)</li>
+          <li>Αποθηκεύεται σε <code>src/content/gallery/</code> (JSON)</li>
+        </ul>
+      </div>
+      <div class="admin-card">
+        <h4>🌍 Απόδημοι</h4>
+        <ul>
+          <li><strong>Ιστορίες:</strong> Όνομα, τοποθεσία, περίληψη, κείμενο</li>
+          <li><strong>Πίνακας Ανακοινώσεων:</strong> Τίτλος, συντάκτης</li>
+          <li>Πεδίο «Εγκεκριμένο» (boolean) για moderation</li>
+          <li>Upload σε <code>diaspora-stories/</code> &amp; <code>diaspora-bulletin/</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="background:white; border-radius:12px; padding:24px; margin-top:16px; border: 1px solid rgba(0,0,0,0.04);">
+      <h4 style="font-size:14px; font-weight:700; margin-bottom:12px;">🔐 Πρόσβαση στο Admin</h4>
+      <p style="font-size:14px; color:#555; line-height:1.7;">
+        <strong>1.</strong> Πηγαίνεις στο <code>varlaam.netlify.app/admin</code><br>
+        <strong>2.</strong> Κάνεις login μέσω GitHub (Git Gateway)<br>
+        <strong>3.</strong> Βλέπεις τις 5 collections (Νέα, Εκδηλώσεις, Γκαλερί, Ιστορίες, Ανακοινώσεις)<br>
+        <strong>4.</strong> Δημιουργείς/επεξεργάζεσαι content με visual editor<br>
+        <strong>5.</strong> Πατάς "Publish" → γίνεται Git commit → auto rebuild → live σε ~1 λεπτό<br><br>
+        <em style="color:#999;">Σημείωση: Πρέπει να ενεργοποιηθεί το Git Gateway στο Netlify dashboard (Settings → Identity → Git Gateway).</em>
+      </p>
+    </div>
+  </div>
+
+  <!-- CONTENT STATUS -->
+  <div class="section">
+    <div class="section-label">Περιεχόμενο</div>
+    <div class="section-title">Τι content υπάρχει τώρα</div>
+
+    <table class="pages-table">
+      <thead>
+        <tr>
+          <th>Τύπος</th>
+          <th>Αρχεία</th>
+          <th>Δείγματα</th>
+          <th>Σχόλιο</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Νέα</strong></td>
+          <td>3 markdown</td>
+          <td>welcome.md, road-works.md, easter-celebration.md</td>
+          <td><span class="badge badge-warn">Δοκιμαστικά</span></td>
+        </tr>
+        <tr>
+          <td><strong>Εκδηλώσεις</strong></td>
+          <td>2 markdown</td>
+          <td>panigiri.md, cleanup.md</td>
+          <td><span class="badge badge-warn">Δοκιμαστικά</span></td>
+        </tr>
+        <tr>
+          <td><strong>Γκαλερί</strong></td>
+          <td>4 JSON</td>
+          <td>old-church, old-photo-1, panigiri-photo, village-square</td>
+          <td><span class="badge badge-miss">Χωρίς εικόνες</span></td>
+        </tr>
+        <tr>
+          <td><strong>Ιστορίες Αποδήμων</strong></td>
+          <td>1 markdown</td>
+          <td>maria-athens.md</td>
+          <td><span class="badge badge-warn">Μόνο 1</span></td>
+        </tr>
+        <tr>
+          <td><strong>Πίνακας Ανακοινώσεων</strong></td>
+          <td>0</td>
+          <td>—</td>
+          <td><span class="badge badge-miss">Κενό</span></td>
+        </tr>
+        <tr>
+          <td><strong>Εικόνες (uploads)</strong></td>
+          <td>0</td>
+          <td>—</td>
+          <td><span class="badge badge-miss">Κενό</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- PROGRESS BANNER -->
+  <div class="summary-banner">
+    <div>
+      <h3>Ετοιμότητα για Go-Live</h3>
+      <p>Ο κώδικας και η δομή είναι ολοκληρωμένα. Αυτό που λείπει κυρίως είναι πραγματικό content (φωτογραφίες, κείμενα, στοιχεία επικοινωνίας) και μερικά τεχνικά fixes.</p>
+    </div>
+    <div class="progress-ring">
+      <svg width="120" height="120" viewBox="0 0 120 120">
+        <circle class="track" cx="60" cy="60" r="50"/>
+        <circle class="fill" cx="60" cy="60" r="50"/>
+      </svg>
+      <div class="pct">75%</div>
+    </div>
+  </div>
+
+  <!-- WHAT'S LEFT -->
+  <div class="section">
+    <div class="section-label">Τι μένει</div>
+    <div class="section-title">Checklist για Go-Live</div>
+
+    <div class="checklist">
+      <div class="check-group-title critical">Κρίσιμα — Πρέπει να γίνουν</div>
+
+      <div class="check-item">
+        <div class="check-bullet red">1</div>
+        <div class="check-text">
+          <strong>Προσθήκη πραγματικών φωτογραφιών</strong>
+          <span class="detail">Τα 4 gallery items δείχνουν σε <code>/images/placeholder-*.jpg</code> που δεν υπάρχουν. Χρειάζονται φωτογραφίες του χωριού στον φάκελο <code>public/images/</code></span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-bullet red">2</div>
+        <div class="check-text">
+          <strong>Αντικατάσταση dummy τηλεφώνων</strong>
+          <span class="detail">Στη σελίδα επικοινωνίας: <code>26510 XXXXX</code> σε Κοινότητα, Ιατρείο, Εκκλησία — χρειάζονται τα πραγματικά νούμερα</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-bullet red">3</div>
+        <div class="check-text">
+          <strong>Fix Google Maps embeds</strong>
+          <span class="detail">Placeholder coordinates <code>0x0</code> στις σελίδες village και contact. Χρειάζεται σωστό embed URL από Google Maps</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-bullet red">4</div>
+        <div class="check-text">
+          <strong>Πραγματικά μέλη ΔΣ</strong>
+          <span class="detail">Τα 7 μέλη στο <code>association.astro</code> είναι hardcoded dummy ονόματα (Γεώργιος Παππάς, Ελένη Κωστοπούλου κτλ.) — χρειάζονται τα πραγματικά</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-bullet red">5</div>
+        <div class="check-text">
+          <strong>Ενεργοποίηση Git Gateway</strong>
+          <span class="detail">Στο Netlify Dashboard: Settings → Identity → Enable → Git Gateway enable. Χωρίς αυτό δεν δουλεύει το /admin</span>
+        </div>
+      </div>
+
+      <div class="check-group-title high">Υψηλή προτεραιότητα</div>
+
+      <div class="check-item">
+        <div class="check-bullet amber">6</div>
+        <div class="check-text">
+          <strong>Πραγματικό content (νέα, εκδηλώσεις, ιστορίες)</strong>
+          <span class="detail">Υπάρχουν μόνο 3 νέα, 2 εκδηλώσεις, 1 ιστορία — χρειάζονται τουλάχιστον 5-10 ανά κατηγορία για να μη φαίνεται κενό</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-bullet amber">7</div>
+        <div class="check-text">
+          <strong>Spam protection στα forms</strong>
+          <span class="detail">Contact, newsletter, bulletin — χρειάζονται honeypot fields ή reCAPTCHA για προστασία από spam</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-bullet amber">8</div>
+        <div class="check-text">
+          <strong>Custom 404 page</strong>
+          <span class="detail">Δεν υπάρχει <code>src/pages/404.astro</code> — θα βγάζει default Astro 404</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-bullet amber">9</div>
+        <div class="check-text">
+          <strong>Favicon</strong>
+          <span class="detail">Αναφέρεται <code>favicon.svg</code> αλλά πρέπει να επιβεβαιωθεί ότι δείχνει σωστό εικονίδιο</span>
+        </div>
+      </div>
+
+      <div class="check-group-title medium">Μεσαία προτεραιότητα</div>
+
+      <div class="check-item">
+        <div class="check-bullet green">10</div>
+        <div class="check-text">
+          <strong>Sitemap &amp; robots.txt</strong>
+          <span class="detail">Προσθήκη <code>@astrojs/sitemap</code> integration + <code>public/robots.txt</code> για SEO</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-bullet green">11</div>
+        <div class="check-text">
+          <strong>Πραγματικό λογότυπο</strong>
+          <span class="detail">Τώρα εμφανίζεται ένα κυκλικό "B" — χρειάζεται SVG/PNG λογότυπο του Συλλόγου</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-bullet green">12</div>
+        <div class="check-text">
+          <strong>Analytics</strong>
+          <span class="detail">Προσθήκη Google Analytics ή Plausible/Fathom για tracking επισκεψιμότητας</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-bullet green">13</div>
+        <div class="check-text">
+          <strong>Feedback στα forms</strong>
+          <span class="detail">Success/error messages μετά την υποβολή — τώρα δεν φαίνεται τίποτα</span>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-bullet green">14</div>
+        <div class="check-text">
+          <strong>Test animations σε mobile</strong>
+          <span class="detail">Πολλαπλά animations μαζί μπορεί να κάνουν lag σε παλιά κινητά</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILE STRUCTURE -->
+  <div class="section">
+    <div class="section-label">Αρχιτεκτονική</div>
+    <div class="section-title">Δομή αρχείων</div>
+    <div style="background:var(--charcoal); border-radius:12px; padding:24px 28px; font-family:monospace; font-size:13px; color:#ccc; line-height:2; overflow-x:auto;">
+<span style="color:var(--gold)">varlaam/</span>
+├── <span style="color:var(--gold)">src/</span>
+│   ├── <span style="color:var(--gold)">pages/</span>          <span style="color:#666">← 8 σελίδες + dynamic routes</span>
+│   │   ├── index.astro, village.astro, association.astro
+│   │   ├── gallery.astro, diaspora.astro, contact.astro
+│   │   ├── <span style="color:var(--gold)">news/</span>     index.astro + [slug].astro
+│   │   └── <span style="color:var(--gold)">events/</span>   index.astro + [slug].astro
+│   ├── <span style="color:var(--gold)">components/</span>     Header.astro, Footer.astro
+│   ├── <span style="color:var(--gold)">layouts/</span>        BaseLayout.astro
+│   ├── <span style="color:var(--gold)">content/</span>       <span style="color:#666">← CMS content files</span>
+│   │   ├── config.ts  <span style="color:#666">← schema definitions</span>
+│   │   ├── <span style="color:var(--gold)">news/</span>      3 .md files
+│   │   ├── <span style="color:var(--gold)">events/</span>    2 .md files
+│   │   ├── <span style="color:var(--gold)">gallery/</span>   4 .json files
+│   │   └── <span style="color:var(--gold)">diaspora-stories/</span> 1 .md file
+│   └── <span style="color:var(--gold)">styles/</span>        global.css <span style="color:#666">← animations &amp; utilities</span>
+├── <span style="color:var(--gold)">public/</span>
+│   ├── <span style="color:var(--gold)">images/uploads/</span> <span style="color:var(--red)">← κενό! χρειάζεται content</span>
+│   └── favicon.svg
+├── <span style="color:var(--gold)">dist/</span>              <span style="color:#666">← built site</span>
+│   └── <span style="color:var(--gold)">admin/</span>         config.yml + index.html
+├── astro.config.mjs
+├── tailwind.config.mjs  <span style="color:#666">← custom χρώματα &amp; fonts</span>
+├── netlify.toml         <span style="color:#666">← deploy config</span>
+└── package.json
+    </div>
+  </div>
+
+</div>
+
+<div class="footer-note">
+  Βαρλαάμ Ιωαννίνων — Project Status Report — Μάρτιος 2026
+</div>
+
+</body>
+</html>

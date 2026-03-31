@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:el.wikipedia.org)",
+      "WebFetch(domain:www.agon.gr)",
+      "WebFetch(domain:www.gtp.gr)",
+      "Bash(npm create:*)",
+      "Bash(npx astro:*)",
+      "Bash(npm search:*)"
+    ]
+  }
+}
