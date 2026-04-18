@@ -1,0 +1,31 @@
+---
+---
+<button
+  id="lang-toggle"
+  class="px-3 py-1.5 text-xs font-body font-semibold tracking-wider uppercase rounded-sm border border-charcoal/30 text-charcoal/70 hover:bg-charcoal hover:text-parchment transition-colors"
+  aria-label="Αλλαγή γλώσσας / Change language"
+>
+  <span data-lang="el">EN</span>
+  <span data-lang="en">EL</span>
+</button>
+
+<script is:inline>
+  (function () {
+    const KEY = 'varlaam-lang';
+    const apply = (lang) => {
+      document.documentElement.lang = lang;
+      localStorage.setItem(KEY, lang);
+    };
+    const stored = localStorage.getItem(KEY);
+    if (stored === 'el' || stored === 'en') apply(stored);
+
+    document.addEventListener('click', (e) => {
+      const target = e.target;
+      if (!target || !(target instanceof Element)) return;
+      const btn = target.closest('#lang-toggle');
+      if (!btn) return;
+      const current = document.documentElement.lang || 'el';
+      apply(current === 'el' ? 'en' : 'el');
+    });
+  })();
+</script>

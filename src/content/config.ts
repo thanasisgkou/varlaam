@@ -27,10 +27,32 @@ const gallery = defineCollection({
   type: 'data',
   schema: z.object({
     title: z.string(),
-    category: z.enum(['village', 'events', 'old-photos', 'nature']),
+    titleEn: z.string().optional(),
+    category: z.enum(['village', 'events', 'old-photos', 'nature', 'attractions']),
+    theme: z.string().optional(),
+    year: z.number().optional(),
     image: z.string(),
     description: z.string().optional(),
+    descriptionEn: z.string().optional(),
     date: z.coerce.date().optional(),
+  }),
+});
+
+const attractions = defineCollection({
+  type: 'data',
+  schema: z.object({
+    slug: z.string(),
+    title: z.string(),
+    titleEn: z.string(),
+    order: z.number().default(0),
+    summary: z.string(),
+    summaryEn: z.string(),
+    body: z.string(),
+    bodyEn: z.string(),
+    gps: z.object({ lat: z.number(), lng: z.number() }).optional(),
+    externalUrl: z.string().optional(),
+    photoFolder: z.string(),
+    photoCount: z.number().default(0),
   }),
 });
 
@@ -59,6 +81,7 @@ export const collections = {
   news,
   events,
   gallery,
+  attractions,
   'diaspora-stories': diasporaStories,
   'diaspora-bulletin': diasporaBulletin,
 };

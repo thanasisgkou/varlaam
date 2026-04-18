@@ -1,208 +1,222 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
 
-const allPhotos = await getCollection('gallery');
+type EventAlbum = {
+  slug: string;
+  year: number;
+  theme: 'feast' | 'celebration' | 'village' | 'other';
+  title: string;
+  titleEn: string;
+  description: string;
+  descriptionEn: string;
+  folder: string;
+  prefix: string;
+  count: number;
+};
 
-const categories = [
-  { id: 'all', label: 'Όλα' },
-  { id: 'village', label: 'Το Χωριό' },
-  { id: 'events', label: 'Εκδηλώσεις' },
-  { id: 'old-photos', label: 'Παλιές Φωτο' },
-  { id: 'nature', label: 'Φύση' },
+const events: EventAlbum[] = [
+  {
+    slug: 'kopi-pitas-athina-2026',
+    year: 2026,
+    theme: 'celebration',
+    title: 'Κοπή Πίτας — Αθήνα',
+    titleEn: 'Cutting of the New Year Cake — Athens',
+    description: 'Η ετήσια κοπή της πρωτοχρονιάτικης πίτας του Συλλόγου για τους αποδήμους στην Αθήνα — μια συνάντηση αγάπης και αναμνήσεων.',
+    descriptionEn: 'The annual New Year cake-cutting event organised by the Association in Athens for the diaspora — a gathering of warmth and memories.',
+    folder: '/images/events/2026/kopi-pitas-athina',
+    prefix: 'kpa',
+    count: 12,
+  },
+  {
+    slug: 'kopi-pitas-varlaam-2026',
+    year: 2026,
+    theme: 'celebration',
+    title: 'Κοπή Πίτας — Βαρλαάμ',
+    titleEn: 'Cutting of the New Year Cake — Varlaam',
+    description: 'Η κοπή της πίτας στο ίδιο το χωριό, με τους κατοίκους και όσους επέλεξαν να γιορτάσουν στον τόπο τους.',
+    descriptionEn: 'The cake-cutting celebration held in the village itself, bringing together residents and visitors.',
+    folder: '/images/events/2026/kopi-pitas-varlaam',
+    prefix: 'kpv',
+    count: 6,
+  },
+  {
+    slug: 'mpirmpilato-2026',
+    year: 2026,
+    theme: 'feast',
+    title: 'Μπιρμπιλάτο',
+    titleEn: 'Mpirmpilato Feast',
+    description: 'Παραδοσιακή εκδήλωση του χωριού, μια παλιά τοπική συνήθεια που αναβιώνει κάθε χρόνο με φαγητό, μουσική και χορό.',
+    descriptionEn: 'A traditional village gathering — a cherished local custom revived each year with food, music and dance.',
+    folder: '/images/events/2026/mpirmpilato',
+    prefix: 'mpirmpilato',
+    count: 8,
+  },
+  {
+    slug: 'pasxa-2026',
+    year: 2026,
+    theme: 'feast',
+    title: 'Πάσχα στο Βαρλαάμ',
+    titleEn: 'Easter in Varlaam',
+    description: 'Οι εορτασμοί του Πάσχα στο χωριό — η ατμόσφαιρα της Μεγάλης Εβδομάδας, η Ανάσταση και το παραδοσιακό γλέντι.',
+    descriptionEn: 'Easter celebrations in the village — the atmosphere of Holy Week, the Resurrection and the traditional feast.',
+    folder: '/images/events/2026/pasxa',
+    prefix: 'pasxa',
+    count: 4,
+  },
 ];
 
-const categoryLabels: Record<string, string> = {
-  village: 'Το Χωριό',
-  events: 'Εκδηλώσεις',
-  'old-photos': 'Παλιές Φωτο',
-  nature: 'Φύση',
-};
+const years = [...new Set(events.map((e) => e.year))].sort((a, b) => b - a);
+const themes = [
+  { id: 'all', el: 'Όλες οι κατηγορίες', en: 'All themes' },
+  { id: 'feast', el: 'Πανηγύρια & Γιορτές', en: 'Feasts & Festivals' },
+  { id: 'celebration', el: 'Εκδηλώσεις Συλλόγου', en: 'Association events' },
+  { id: 'village', el: 'Το Χωριό', en: 'The Village' },
+];
 ---
 
-<BaseLayout title="Φωτογραφίες" description="Φωτογραφικό αρχείο του χωριού Βαρλαάμ Ιωαννίνων - Εικόνες από το χωριό, τις εκδηλώσεις και τη φύση">
+<BaseLayout title="Φωτογραφίες" description="Φωτογραφικό αρχείο του χωριού Βαρλαάμ — εκδηλώσεις χωρισμένες θεματολογικά και χρονολογικά">
 
-  <!-- Hero Banner -->
   <section class="relative py-28 md:py-36 bg-gradient-to-br from-charcoal via-stone-dark to-olive-dark overflow-hidden">
     <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 60% 40%, rgba(193,154,107,0.4) 0%, transparent 50%);"></div>
     <div class="relative z-10 container mx-auto px-4 text-center">
       <div class="flex items-center justify-center mb-6 animate-fade-in">
         <span class="block w-12 h-px bg-gold-warm/50"></span>
-        <span class="mx-4 text-gold-warm/70 text-sm font-accent tracking-[0.3em] uppercase">Αρχείο</span>
+        <span class="mx-4 text-gold-warm/70 text-sm font-accent tracking-[0.3em] uppercase">
+          <span data-lang="el">Αρχείο</span><span data-lang="en">Archive</span>
+        </span>
         <span class="block w-12 h-px bg-gold-warm/50"></span>
       </div>
-      <h1 class="font-display text-5xl md:text-7xl font-bold text-white mb-6 animate-fade-up">Φωτογραφίες</h1>
+      <h1 class="font-display text-5xl md:text-7xl font-bold text-white mb-6 animate-fade-up">
+        <span data-lang="el">Φωτογραφίες</span>
+        <span data-lang="en">Photos</span>
+      </h1>
       <p class="font-accent text-xl text-gold-light/80 max-w-2xl mx-auto animate-fade-up" style="animation-delay: 0.2s;">
-        Στιγμές και αναμνήσεις από το Βαρλαάμ
+        <span data-lang="el">Εκδηλώσεις χωρισμένες θεματολογικά και χρονολογικά</span>
+        <span data-lang="en">Events organised by theme and by year</span>
       </p>
     </div>
   </section>
 
-  <!-- Gallery Section -->
-  <section class="py-24 bg-parchment">
+  <section class="py-20 bg-parchment">
     <div class="container mx-auto px-4 max-w-6xl">
 
-      <!-- Filter Buttons -->
-      <div class="animate-on-scroll flex flex-wrap justify-center gap-3 mb-16">
-        {categories.map((cat) => (
-          <button
-            class="gallery-filter px-6 py-2.5 rounded-full font-accent text-sm tracking-wide transition-all duration-300 border border-stone-warm/30 hover:border-terracotta/50 hover:bg-terracotta/10 hover:text-terracotta data-[active=true]:bg-terracotta data-[active=true]:text-white data-[active=true]:border-terracotta"
-            data-category={cat.id}
-            data-active={cat.id === 'all' ? 'true' : 'false'}
-          >
-            {cat.label}
+      <!-- Filters -->
+      <div class="animate-on-scroll space-y-6 mb-14">
+        <div class="flex flex-wrap items-center justify-center gap-3">
+          <span class="font-accent text-sm text-charcoal/60 uppercase tracking-wider mr-2">
+            <span data-lang="el">Έτος:</span><span data-lang="en">Year:</span>
+          </span>
+          <button class="gallery-year-filter px-5 py-2 rounded-full font-accent text-sm tracking-wide transition-all duration-300 border border-stone-warm/30 hover:border-terracotta/50 hover:bg-terracotta/10 hover:text-terracotta data-[active=true]:bg-terracotta data-[active=true]:text-white data-[active=true]:border-terracotta" data-year="all" data-active="true">
+            <span data-lang="el">Όλα</span><span data-lang="en">All</span>
           </button>
-        ))}
-      </div>
-
-      <!-- Photo Grid -->
-      {allPhotos.length > 0 ? (
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery-grid">
-          {allPhotos.map((photo, index) => (
-            <div
-              class="animate-on-scroll gallery-item group cursor-pointer"
-              data-category={photo.data.category}
-              data-image={photo.data.image || ''}
-              style={`animation-delay: ${index * 0.1}s;`}
-            >
-              <div class="relative overflow-hidden rounded-xl shadow-md border border-stone-warm/10 bg-white">
-                <!-- Image -->
-                <div class="relative h-64 overflow-hidden bg-gradient-to-br from-stone-warm/20 to-olive/15">
-                  {photo.data.image ? (
-                    <img
-                      src={photo.data.image}
-                      alt={photo.data.title}
-                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div class="flex items-center justify-center h-full">
-                      <svg class="w-14 h-14 text-stone-warm/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                      </svg>
-                    </div>
-                  )}
-                  <!-- Hover Overlay -->
-                  <div class="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/50 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                    <svg class="w-10 h-10 text-white scale-75 group-hover:scale-100 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
-                    </svg>
-                  </div>
-                </div>
-
-                <!-- Info -->
-                <div class="p-4">
-                  <div class="flex items-center justify-between">
-                    <h3 class="font-display text-base text-charcoal group-hover:text-olive-dark transition-colors">
-                      {photo.data.title}
-                    </h3>
-                    <span class="text-xs font-accent text-terracotta/70 bg-terracotta/10 px-2 py-1 rounded-full">
-                      {categoryLabels[photo.data.category] || photo.data.category}
-                    </span>
-                  </div>
-                  {photo.data.description && (
-                    <p class="font-body text-sm text-charcoal/60 mt-2 line-clamp-2">{photo.data.description}</p>
-                  )}
-                </div>
-              </div>
-            </div>
+          {years.map((y) => (
+            <button class="gallery-year-filter px-5 py-2 rounded-full font-accent text-sm tracking-wide transition-all duration-300 border border-stone-warm/30 hover:border-terracotta/50 hover:bg-terracotta/10 hover:text-terracotta data-[active=true]:bg-terracotta data-[active=true]:text-white data-[active=true]:border-terracotta" data-year={y} data-active="false">
+              {y}
+            </button>
           ))}
         </div>
-      ) : (
-        <div class="text-center py-16">
-          <svg class="w-16 h-16 mx-auto text-stone-warm/40 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-          </svg>
-          <h3 class="font-display text-2xl text-charcoal/60 mb-2">Δεν υπάρχουν φωτογραφίες ακόμα</h3>
-          <p class="font-body text-charcoal/50">Το φωτογραφικό μας αρχείο θα εμπλουτιστεί σύντομα!</p>
+
+        <div class="flex flex-wrap items-center justify-center gap-3">
+          <span class="font-accent text-sm text-charcoal/60 uppercase tracking-wider mr-2">
+            <span data-lang="el">Θέμα:</span><span data-lang="en">Theme:</span>
+          </span>
+          {themes.map((t) => (
+            <button class="gallery-theme-filter px-5 py-2 rounded-full font-accent text-sm tracking-wide transition-all duration-300 border border-stone-warm/30 hover:border-olive/50 hover:bg-olive/10 hover:text-olive-dark data-[active=true]:bg-olive data-[active=true]:text-white data-[active=true]:border-olive" data-theme={t.id} data-active={t.id === 'all' ? 'true' : 'false'}>
+              <span data-lang="el">{t.el}</span>
+              <span data-lang="en">{t.en}</span>
+            </button>
+          ))}
         </div>
-      )}
+      </div>
+
+      <!-- Event Albums -->
+      <div class="space-y-20" id="gallery-albums">
+        {events.map((e) => {
+          const photos = Array.from({ length: e.count }, (_, i) => `${e.folder}/${e.prefix}-${String(i + 1).padStart(2, '0')}.jpg`);
+          return (
+            <article class="album animate-on-scroll" data-year={e.year} data-theme={e.theme} id={e.slug}>
+              <div class="flex flex-wrap items-baseline justify-between gap-4 mb-6 pb-4 border-b border-stone-warm/30">
+                <div>
+                  <h2 class="font-display text-2xl md:text-3xl font-bold text-charcoal">
+                    <span data-lang="el">{e.title}</span>
+                    <span data-lang="en">{e.titleEn}</span>
+                  </h2>
+                  <p class="font-accent text-sm text-terracotta mt-1 tracking-wider">{e.year}</p>
+                </div>
+                <span class="text-xs font-accent text-charcoal/50 bg-white px-3 py-1 rounded-full border border-stone-warm/30">
+                  {e.count} <span data-lang="el">φωτογραφίες</span><span data-lang="en">photos</span>
+                </span>
+              </div>
+
+              <p class="font-body text-charcoal/70 max-w-3xl mb-6 leading-relaxed">
+                <span data-lang="el">{e.description}</span>
+                <span data-lang="en">{e.descriptionEn}</span>
+              </p>
+
+              <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                {photos.map((src, i) => (
+                  <a href={src} target="_blank" class="group block aspect-square overflow-hidden rounded-sm bg-stone-warm/20 shadow-sm">
+                    <img
+                      src={src}
+                      alt={`${e.title} — ${i + 1}`}
+                      loading="lazy"
+                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                  </a>
+                ))}
+              </div>
+            </article>
+          );
+        })}
+      </div>
+
+      <div id="gallery-empty" class="hidden text-center py-16">
+        <p class="font-body text-charcoal/60 text-lg">
+          <span data-lang="el">Δεν υπάρχουν φωτογραφίες για αυτά τα φίλτρα.</span>
+          <span data-lang="en">No photos match the selected filters.</span>
+        </p>
+      </div>
 
     </div>
   </section>
 
-  <!-- Lightbox Modal -->
-  <div id="lightbox" class="lightbox-overlay" role="dialog" aria-modal="true">
-    <button id="lightbox-close" class="absolute top-6 right-6 text-white/70 hover:text-white transition-colors z-10" aria-label="Κλείσιμο">
-      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-      </svg>
-    </button>
-    <div class="max-w-4xl w-full text-center">
-      <div id="lightbox-image" class="w-full max-h-[70vh] rounded-xl overflow-hidden mb-4 flex items-center justify-center bg-stone-warm/10">
-        <!-- Image injected by JS -->
-      </div>
-      <h3 id="lightbox-title" class="font-display text-xl text-white"></h3>
-      <p id="lightbox-desc" class="font-body text-sm text-white/60 mt-2"></p>
-    </div>
-  </div>
-
   <script>
-    // Gallery filter functionality
-    const filterButtons = document.querySelectorAll('.gallery-filter');
-    const galleryItems = document.querySelectorAll('.gallery-item');
+    const yearBtns = document.querySelectorAll('.gallery-year-filter');
+    const themeBtns = document.querySelectorAll('.gallery-theme-filter');
+    const albums = document.querySelectorAll<HTMLElement>('.album');
+    const emptyMsg = document.getElementById('gallery-empty');
 
-    filterButtons.forEach((button) => {
-      button.addEventListener('click', () => {
-        const category = button.getAttribute('data-category');
+    let activeYear: string = 'all';
+    let activeTheme: string = 'all';
 
-        filterButtons.forEach((btn) => btn.setAttribute('data-active', 'false'));
-        button.setAttribute('data-active', 'true');
-
-        galleryItems.forEach((item) => {
-          const itemCategory = item.getAttribute('data-category');
-          if (category === 'all' || itemCategory === category) {
-            (item as HTMLElement).style.display = '';
-            item.classList.add('animate-scale-in');
-          } else {
-            (item as HTMLElement).style.display = 'none';
-            item.classList.remove('animate-scale-in');
-          }
-        });
+    function apply() {
+      let visible = 0;
+      albums.forEach((a) => {
+        const y = a.dataset.year || '';
+        const t = a.dataset.theme || '';
+        const ok = (activeYear === 'all' || activeYear === y) && (activeTheme === 'all' || activeTheme === t);
+        a.style.display = ok ? '' : 'none';
+        if (ok) visible++;
       });
-    });
-
-    // Lightbox functionality
-    const lightbox = document.getElementById('lightbox');
-    const lightboxTitle = document.getElementById('lightbox-title');
-    const lightboxDesc = document.getElementById('lightbox-desc');
-    const lightboxClose = document.getElementById('lightbox-close');
-
-    const lightboxImageContainer = document.getElementById('lightbox-image');
-
-    galleryItems.forEach((item) => {
-      item.addEventListener('click', () => {
-        const title = item.querySelector('h3')?.textContent || '';
-        const desc = item.querySelector('p')?.textContent || '';
-        const imageSrc = (item as HTMLElement).dataset.image || '';
-
-        if (lightboxTitle) lightboxTitle.textContent = title;
-        if (lightboxDesc) lightboxDesc.textContent = desc;
-
-        if (lightboxImageContainer) {
-          if (imageSrc) {
-            lightboxImageContainer.innerHTML = `<img src="${imageSrc}" alt="${title}" class="max-w-full max-h-[70vh] object-contain rounded-xl" />`;
-          } else {
-            lightboxImageContainer.innerHTML = `<svg class="w-20 h-20 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>`;
-          }
-        }
-
-        lightbox?.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      });
-    });
-
-    function closeLightbox() {
-      lightbox?.classList.remove('active');
-      document.body.style.overflow = '';
+      if (emptyMsg) emptyMsg.classList.toggle('hidden', visible > 0);
     }
 
-    lightboxClose?.addEventListener('click', closeLightbox);
-    lightbox?.addEventListener('click', (e) => {
-      if (e.target === lightbox) closeLightbox();
+    yearBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        yearBtns.forEach((b) => b.setAttribute('data-active', 'false'));
+        btn.setAttribute('data-active', 'true');
+        activeYear = btn.getAttribute('data-year') || 'all';
+        apply();
+      });
     });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeLightbox();
+
+    themeBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        themeBtns.forEach((b) => b.setAttribute('data-active', 'false'));
+        btn.setAttribute('data-active', 'true');
+        activeTheme = btn.getAttribute('data-theme') || 'all';
+        apply();
+      });
     });
   </script>
 

@@ -2,134 +2,93 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const boardMembers = [
-  { name: 'Γεώργιος Παππάς', role: 'Πρόεδρος', description: 'Ηγείται του συλλόγου από το 2020 με όραμα και αφοσίωση.' },
-  { name: 'Ελένη Κωστοπούλου', role: 'Αντιπρόεδρος', description: 'Υπεύθυνη πολιτιστικών εκδηλώσεων και δημοσίων σχέσεων.' },
-  { name: 'Δημήτριος Τσούκας', role: 'Γραμματέας', description: 'Διαχειρίζεται τη γραμματεία και τις επικοινωνίες του συλλόγου.' },
-  { name: 'Μαρία Βασιλείου', role: 'Ταμίας', description: 'Υπεύθυνη οικονομικής διαχείρισης και διαφάνειας.' },
-  { name: 'Νικόλαος Ζέρβας', role: 'Μέλος Δ.Σ.', description: 'Υπεύθυνος τεχνικών έργων και υποδομών.' },
-  { name: 'Αθανάσιος Μπάρκας', role: 'Μέλος Δ.Σ.', description: 'Υπεύθυνος νεολαίας και αθλητικών δραστηριοτήτων.' },
-  { name: 'Βασιλική Δήμου', role: 'Μέλος Δ.Σ.', description: 'Υπεύθυνη κοινωνικών δράσεων και εθελοντισμού.' },
+  { name: 'Κατσανάκης Παναγιώτης', nameEn: 'Panagiotis Katsanakis', role: 'Πρόεδρος', roleEn: 'President' },
+  { name: 'Κούκος Αλέξανδρος', nameEn: 'Alexandros Koukos', role: 'Αντιπρόεδρος', roleEn: 'Vice-President' },
+  { name: 'Σαμπού Γεωργία', nameEn: 'Georgia Sampou', role: 'Γενική Γραμματέας', roleEn: 'General Secretary' },
+  { name: 'Γκουλιαδίτης Αλέξανδρος', nameEn: 'Alexandros Gkouliaditis', role: 'Ταμίας', roleEn: 'Treasurer' },
+  { name: 'Βέλλιος Παναγιώτης', nameEn: 'Panagiotis Vellios', role: 'Έφορος', roleEn: 'Curator' },
+  { name: 'Καμμένος Παναγιώτης', nameEn: 'Panagiotis Kammenos', role: 'Μέλος Δ.Σ.', roleEn: 'Board Member' },
+  { name: 'Αγγελόπουλος Βασίλης', nameEn: 'Vassilis Angelopoulos', role: 'Μέλος Δ.Σ.', roleEn: 'Board Member' },
 ];
 ---
 
-<BaseLayout title="Ο Σύλλογος" description="Ο Σύλλογος Βαρλαάμ Ιωαννίνων - Αποστολή, ιστορία και διοικητικό συμβούλιο">
+<BaseLayout title="Ο Σύλλογος" description="Πολιτιστικός και Μορφωτικός Σύλλογος Βαρλαάμ Ιωαννίνων — Αποστολή και Διοικητικό Συμβούλιο">
 
-  <!-- Hero Banner -->
   <section class="relative py-28 md:py-36 bg-gradient-to-br from-charcoal via-stone-dark to-olive-dark overflow-hidden">
     <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 50% 50%, rgba(193,154,107,0.4) 0%, transparent 50%);"></div>
     <div class="relative z-10 container mx-auto px-4 text-center">
       <div class="flex items-center justify-center mb-6 animate-fade-in">
         <span class="block w-12 h-px bg-gold-warm/50"></span>
-        <span class="mx-4 text-gold-warm/70 text-sm font-accent tracking-[0.3em] uppercase">Σύλλογος</span>
+        <span class="mx-4 text-gold-warm/70 text-sm font-accent tracking-[0.3em] uppercase">
+          <span data-lang="el">Σύλλογος</span><span data-lang="en">Association</span>
+        </span>
         <span class="block w-12 h-px bg-gold-warm/50"></span>
       </div>
-      <h1 class="font-display text-5xl md:text-7xl font-bold text-white mb-6 animate-fade-up">Ο Σύλλογος</h1>
-      <p class="font-accent text-xl text-gold-light/80 max-w-2xl mx-auto animate-fade-up" style="animation-delay: 0.2s;">
-        Ενώνοντας κατοίκους και απόδημους με αγάπη για το Βαρλαάμ
+      <h1 class="font-display text-5xl md:text-7xl font-bold text-white mb-6 animate-fade-up">
+        <span data-lang="el">Ο Σύλλογος</span>
+        <span data-lang="en">The Association</span>
+      </h1>
+      <p class="font-accent text-xl text-gold-light/80 max-w-3xl mx-auto animate-fade-up" style="animation-delay: 0.2s;">
+        <span data-lang="el">Πολιτιστικός και Μορφωτικός Σύλλογος Βαρλαάμ Ιωαννίνων</span>
+        <span data-lang="en">Cultural and Educational Association of Varlaam, Ioannina</span>
       </p>
     </div>
   </section>
 
-  <!-- Mission Section -->
   <section class="py-24 bg-parchment">
     <div class="container mx-auto px-4 max-w-4xl">
-      <div class="animate-on-scroll text-center mb-16">
-        <h2 class="section-title">Σκοπός &amp; Αποστολή</h2>
-        <p class="section-subtitle">Τι μας κινητοποιεί</p>
+      <div class="animate-on-scroll text-center mb-12">
+        <h2 class="section-title">
+          <span data-lang="el">Σκοπός &amp; Δομή</span>
+          <span data-lang="en">Purpose &amp; Structure</span>
+        </h2>
         <div class="divider mx-auto mt-6"></div>
       </div>
 
-      <div class="animate-on-scroll">
-        <div class="bg-white rounded-xl shadow-sm border border-stone-warm/10 p-8 md:p-12 relative overflow-hidden">
-          <!-- Decorative Corner -->
-          <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-terracotta/5 to-transparent"></div>
-          <div class="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-olive/5 to-transparent"></div>
-
-          <div class="space-y-6 relative z-10">
-            <p class="font-body text-lg text-charcoal/80 leading-relaxed">
-              Ο Σύλλογος Βαρλαάμ Ιωαννίνων ιδρύθηκε με σκοπό τη διατήρηση και προώθηση
-              της πολιτιστικής κληρονομιάς του χωριού μας. Λειτουργεί ως γέφυρα μεταξύ
-              των μόνιμων κατοίκων και των αποδήμων, ενισχύοντας τους δεσμούς με τον τόπο.
-            </p>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-              <div class="flex gap-4 items-start">
-                <div class="flex-shrink-0 w-10 h-10 rounded-full bg-olive/10 flex items-center justify-center">
-                  <svg class="w-5 h-5 text-olive-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                  </svg>
-                </div>
-                <div>
-                  <h4 class="font-display text-base text-charcoal mb-1">Πολιτιστική Διατήρηση</h4>
-                  <p class="font-body text-sm text-charcoal/70">Προστασία παραδόσεων, εθίμων και αρχιτεκτονικής κληρονομιάς</p>
-                </div>
-              </div>
-
-              <div class="flex gap-4 items-start">
-                <div class="flex-shrink-0 w-10 h-10 rounded-full bg-olive/10 flex items-center justify-center">
-                  <svg class="w-5 h-5 text-olive-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                  </svg>
-                </div>
-                <div>
-                  <h4 class="font-display text-base text-charcoal mb-1">Κοινωνικές Εκδηλώσεις</h4>
-                  <p class="font-body text-sm text-charcoal/70">Διοργάνωση πανηγυριών, γιορτών και πολιτιστικών δράσεων</p>
-                </div>
-              </div>
-
-              <div class="flex gap-4 items-start">
-                <div class="flex-shrink-0 w-10 h-10 rounded-full bg-olive/10 flex items-center justify-center">
-                  <svg class="w-5 h-5 text-olive-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                  </svg>
-                </div>
-                <div>
-                  <h4 class="font-display text-base text-charcoal mb-1">Σύνδεση Αποδήμων</h4>
-                  <p class="font-body text-sm text-charcoal/70">Ενίσχυση δεσμών με τους Βαρλαμιώτες του εξωτερικού</p>
-                </div>
-              </div>
-
-              <div class="flex gap-4 items-start">
-                <div class="flex-shrink-0 w-10 h-10 rounded-full bg-olive/10 flex items-center justify-center">
-                  <svg class="w-5 h-5 text-olive-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                  </svg>
-                </div>
-                <div>
-                  <h4 class="font-display text-base text-charcoal mb-1">Βιώσιμη Ανάπτυξη</h4>
-                  <p class="font-body text-sm text-charcoal/70">Πρωτοβουλίες για τουρισμό, υποδομές και ποιότητα ζωής</p>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div class="animate-on-scroll bg-white rounded-xl shadow-sm border border-stone-warm/10 p-8 md:p-12 space-y-6">
+        <div data-lang="el" class="font-body text-lg text-charcoal/80 leading-relaxed space-y-4">
+          <p>Ο Πολιτιστικός και Μορφωτικός Σύλλογος Βαρλαάμ Ιωαννίνων ενώνει κατοίκους και αποδήμους, με σκοπό τη διατήρηση της πολιτιστικής κληρονομιάς του χωριού, τη διοργάνωση εκδηλώσεων και την προβολή του τόπου.</p>
+          <p>Ο Σύλλογος αποτελείται από <strong>εφταμελές Διοικητικό Συμβούλιο</strong> με <strong>διετή θητεία</strong>. Το σημερινό Δ.Σ. προέκυψε από τις εκλογές που πραγματοποιήθηκαν τον <strong>Σεπτέμβριο του 2025</strong>.</p>
+        </div>
+        <div data-lang="en" class="font-body text-lg text-charcoal/80 leading-relaxed space-y-4">
+          <p>The Cultural and Educational Association of Varlaam, Ioannina unites residents and the diaspora around the goal of preserving the village's cultural heritage, organising events, and promoting the region.</p>
+          <p>The Association is governed by a <strong>seven-member Board</strong> with a <strong>two-year term</strong>. The current Board emerged from the elections held in <strong>September 2025</strong>.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Board Members Section -->
   <section class="py-24 bg-white">
     <div class="container mx-auto px-4 max-w-6xl">
       <div class="animate-on-scroll text-center mb-16">
-        <h2 class="section-title">Διοικητικό Συμβούλιο</h2>
-        <p class="section-subtitle">Οι άνθρωποι πίσω από τον Σύλλογο</p>
+        <h2 class="section-title">
+          <span data-lang="el">Διοικητικό Συμβούλιο</span>
+          <span data-lang="en">Board of Directors</span>
+        </h2>
+        <p class="section-subtitle">
+          <span data-lang="el">Θητεία 2025 — 2027</span>
+          <span data-lang="en">Term 2025 — 2027</span>
+        </p>
         <div class="divider mx-auto mt-6"></div>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {boardMembers.map((member, index) => (
-          <div class="animate-on-scroll text-center group" style={`animation-delay: ${index * 0.1}s;`}>
+        {boardMembers.map((m, i) => (
+          <div class="animate-on-scroll text-center group" style={`animation-delay: ${i * 0.08}s;`}>
             <div class="card p-6 h-full">
-              <!-- Avatar Placeholder -->
               <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-stone-warm/30 to-olive/20 flex items-center justify-center group-hover:from-terracotta/20 group-hover:to-olive/20 transition-all duration-300">
                 <svg class="w-10 h-10 text-stone-warm/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                 </svg>
               </div>
-
-              <h3 class="font-display text-lg text-charcoal mb-1">{member.name}</h3>
-              <span class="inline-block text-sm font-accent text-terracotta mb-3">{member.role}</span>
-              <p class="font-body text-sm text-charcoal/60 leading-relaxed">{member.description}</p>
+              <h3 class="font-display text-lg text-charcoal mb-1">
+                <span data-lang="el">{m.name}</span>
+                <span data-lang="en">{m.nameEn}</span>
+              </h3>
+              <span class="inline-block text-sm font-accent text-terracotta">
+                <span data-lang="el">{m.role}</span>
+                <span data-lang="en">{m.roleEn}</span>
+              </span>
             </div>
           </div>
         ))}
@@ -137,101 +96,19 @@ const boardMembers = [
     </div>
   </section>
 
-  <!-- Association History Section -->
-  <section class="py-24 bg-parchment">
-    <div class="container mx-auto px-4 max-w-4xl">
-      <div class="animate-on-scroll text-center mb-16">
-        <h2 class="section-title">Ιστορία του Συλλόγου</h2>
-        <p class="section-subtitle">Η πορεία μας μέσα στον χρόνο</p>
-        <div class="divider mx-auto mt-6"></div>
-      </div>
-
-      <div class="animate-on-scroll space-y-12">
-        <!-- Timeline Items -->
-        <div class="flex gap-6 items-start">
-          <div class="flex-shrink-0 w-16 text-center">
-            <span class="font-display text-2xl font-bold text-terracotta">1985</span>
-          </div>
-          <div class="flex-shrink-0 flex flex-col items-center">
-            <div class="w-3 h-3 rounded-full bg-terracotta"></div>
-            <div class="w-px h-full bg-terracotta/20 mt-2"></div>
-          </div>
-          <div class="pb-8">
-            <h3 class="font-display text-xl text-charcoal mb-2">Ίδρυση</h3>
-            <p class="font-body text-charcoal/70 leading-relaxed">
-              Ο Σύλλογος Βαρλαάμ Ιωαννίνων ιδρύθηκε από μια ομάδα αφοσιωμένων κατοίκων
-              και αποδήμων, με στόχο τη διατήρηση της πολιτιστικής ταυτότητας του χωριού
-              και την ενίσχυση των κοινωνικών δεσμών.
-            </p>
-          </div>
-        </div>
-
-        <div class="flex gap-6 items-start">
-          <div class="flex-shrink-0 w-16 text-center">
-            <span class="font-display text-2xl font-bold text-terracotta">1990</span>
-          </div>
-          <div class="flex-shrink-0 flex flex-col items-center">
-            <div class="w-3 h-3 rounded-full bg-terracotta/70"></div>
-            <div class="w-px h-full bg-terracotta/20 mt-2"></div>
-          </div>
-          <div class="pb-8">
-            <h3 class="font-display text-xl text-charcoal mb-2">Πρώτες Δράσεις</h3>
-            <p class="font-body text-charcoal/70 leading-relaxed">
-              Αρχίζουν οι πρώτες οργανωμένες πολιτιστικές εκδηλώσεις. Ο Σύλλογος αναλαμβάνει
-              την αναστήλωση του ιερού ναού και τη διαμόρφωση της κεντρικής πλατείας.
-            </p>
-          </div>
-        </div>
-
-        <div class="flex gap-6 items-start">
-          <div class="flex-shrink-0 w-16 text-center">
-            <span class="font-display text-2xl font-bold text-terracotta">2005</span>
-          </div>
-          <div class="flex-shrink-0 flex flex-col items-center">
-            <div class="w-3 h-3 rounded-full bg-terracotta/50"></div>
-            <div class="w-px h-full bg-terracotta/20 mt-2"></div>
-          </div>
-          <div class="pb-8">
-            <h3 class="font-display text-xl text-charcoal mb-2">Επέκταση Δραστηριοτήτων</h3>
-            <p class="font-body text-charcoal/70 leading-relaxed">
-              Ο Σύλλογος επεκτείνει τις δραστηριότητές του με τη δημιουργία φωτογραφικού
-              αρχείου, την καταγραφή προφορικής ιστορίας και τη σύνδεση με αποδήμους
-              σε Ελλάδα και εξωτερικό.
-            </p>
-          </div>
-        </div>
-
-        <div class="flex gap-6 items-start">
-          <div class="flex-shrink-0 w-16 text-center">
-            <span class="font-display text-2xl font-bold text-terracotta">2024</span>
-          </div>
-          <div class="flex-shrink-0 flex flex-col items-center">
-            <div class="w-3 h-3 rounded-full bg-terracotta/40"></div>
-          </div>
-          <div>
-            <h3 class="font-display text-xl text-charcoal mb-2">Ψηφιακή Εποχή</h3>
-            <p class="font-body text-charcoal/70 leading-relaxed">
-              Δημιουργία της επίσημης ιστοσελίδας του χωριού, εκσυγχρονισμός της
-              επικοινωνίας και νέες πρωτοβουλίες για βιώσιμο τουρισμό και ανάπτυξη.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Join CTA -->
   <section class="py-20 bg-gradient-to-br from-olive-dark to-charcoal">
     <div class="container mx-auto px-4 max-w-3xl text-center animate-on-scroll">
       <h2 class="font-display text-3xl md:text-4xl font-bold text-white mb-4">
-        Γίνετε μέλος του Συλλόγου
+        <span data-lang="el">Γίνετε μέλος του Συλλόγου</span>
+        <span data-lang="en">Become a member</span>
       </h2>
       <p class="font-body text-lg text-stone-warm/80 mb-8 leading-relaxed">
-        Κάθε Βαρλαμιώτης μπορεί να συμβάλει. Επικοινωνήστε μαζί μας για να μάθετε
-        πώς μπορείτε να γίνετε μέλος και να στηρίξετε τις δράσεις μας.
+        <span data-lang="el">Κάθε Βαρλαμιώτης μπορεί να συμβάλει. Επικοινωνήστε μαζί μας για να μάθετε πώς μπορείτε να γίνετε μέλος και να στηρίξετε τις δράσεις μας.</span>
+        <span data-lang="en">Every person with ties to Varlaam can contribute. Contact us to learn how you can join and support our work.</span>
       </p>
       <a href="/contact" class="btn-primary text-lg px-8 py-4">
-        Επικοινωνία
+        <span data-lang="el">Επικοινωνία</span>
+        <span data-lang="en">Contact</span>
       </a>
     </div>
   </section>

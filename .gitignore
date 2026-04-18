@@ -7,3 +7,7 @@ dist
 .DS_Store
 Thumbs.db
 public/images/uploads
+
+# Local working files (source photos & reference docs)
+foto/
+*.docx

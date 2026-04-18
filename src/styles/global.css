@@ -154,3 +154,7 @@
     text-wrap: balance;
   }
 }
+
+/* i18n: show/hide translations based on <html lang="..."> */
+html[lang="el"] [data-lang="en"] { display: none !important; }
+html[lang="en"] [data-lang="el"] { display: none !important; }

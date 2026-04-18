@@ -45,11 +45,13 @@ const latestNews = (await getCollection('news'))
       </p>
 
       <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style="animation-delay: 0.6s;">
-        <a href="/village" class="btn-primary text-lg px-8 py-4">
-          Ανακαλύψτε το χωριό
+        <a href="/attractions" class="btn-primary text-lg px-8 py-4">
+          <span data-lang="el">Ανακαλύψτε το χωριό</span>
+          <span data-lang="en">Discover the village</span>
         </a>
-        <a href="/diaspora" class="btn-secondary-light text-lg px-8 py-4">
-          Απόδημοι
+        <a href="/gallery" class="btn-secondary-light text-lg px-8 py-4">
+          <span data-lang="el">Φωτογραφίες</span>
+          <span data-lang="en">Photos</span>
         </a>
       </div>
     </div>
@@ -78,22 +80,52 @@ const latestNews = (await getCollection('news'))
           <span class="block w-8 h-px bg-terracotta/40"></span>
         </div>
 
-        <h2 class="section-title">Καλώς ήρθατε</h2>
-        <p class="section-subtitle mb-8">στο Βαρλαάμ Ιωαννίνων</p>
+        <h2 class="section-title">
+          <span data-lang="el">Καλώς ήρθατε</span>
+          <span data-lang="en">Welcome</span>
+        </h2>
+        <p class="section-subtitle mb-8">
+          <span data-lang="el">στο Βαρλαάμ Ιωαννίνων</span>
+          <span data-lang="en">to Varlaam, Ioannina</span>
+        </p>
 
         <div class="divider mx-auto mb-12"></div>
 
-        <p class="font-body text-lg text-charcoal/80 leading-relaxed max-w-3xl mx-auto mb-8">
-          Το Βαρλαάμ είναι ένα γραφικό χωριό του νομού Ιωαννίνων, χτισμένο στις πλαγιές
-          της Ηπειρωτικής γης. Με ιστορία που χάνεται στα βάθη των αιώνων, το χωριό μας
-          αντιπροσωπεύει την αυθεντική ηπειρωτική παράδοση, τη φιλοξενία και τον σεβασμό
-          στη φύση και τον πολιτισμό.
-        </p>
-        <p class="font-body text-lg text-charcoal/80 leading-relaxed max-w-3xl mx-auto">
-          Από τα πέτρινα σπίτια και τα γραφικά σοκάκια μέχρι τα πανέμορφα τοπία και τις
-          ζωντανές παραδόσεις, το Βαρλαάμ συνεχίζει να αποτελεί τόπο αγάπης και νοσταλγίας
-          για κατοίκους και απόδημους.
-        </p>
+        <div data-lang="el" class="space-y-6 text-left font-body text-lg text-charcoal/80 leading-relaxed">
+          <p>Το Βαρλαάμ βρίσκεται στις ανατολικές πλαγιές του όρους Ξηροβούνι, ανατολικά του ποταμού Λούρου, και απέχει 32,5 χιλιόμετρα νότια από την πόλη των Ιωαννίνων.</p>
+          <p>Ο Γάλλος περιηγητής Φρανσουά Πουκεβίλ αναφέρει ότι το 1813, την περίοδο της τουρκοκρατίας, κατοικείτο από 60 ελληνικές οικογένειες. Στα οθωμανικά κατάστιχα του 1895 το χωριό αναφέρεται με το όνομα <em>Βαρλάμι</em>, ως τσιφλίκι του καζά Ιωαννίνων με 200 κατοίκους.</p>
+          <p>Ως οικισμός συστάθηκε το 1919 με το ΦΕΚ 184Α - 19/08/1919 και ορίστηκε έδρα της ομώνυμης κοινότητας. Σύμφωνα με το σχέδιο Καλλικράτης — και την τροποποίησή του Κλεισθένης Ι — αποτελεί την κοινότητα Βαρλαάμ που ανήκει στη δημοτική ενότητα Αγίου Δημητρίου του Δήμου Δωδώνης. Σύμφωνα με την απογραφή 2011, ο πληθυσμός του ανέρχεται σε 112 κατοίκους.</p>
+        </div>
+
+        <div data-lang="en" class="space-y-6 text-left font-body text-lg text-charcoal/80 leading-relaxed">
+          <p>Varlaam is located on the eastern slopes of Mount Xirovouni, east of the Louros River, 32.5 kilometers south of the city of Ioannina.</p>
+          <p>The French traveler François Pouqueville reports that in 1813, during the period of Ottoman rule, it was inhabited by 60 Greek families. In the Ottoman records of 1895, the village is mentioned under the name <em>Varlami</em>, as a manor of the Ioannina kaza with 200 residents.</p>
+          <p>It was established as a settlement in 1919 with Government Gazette 184A - 19/08/1919 and was designated the seat of the homonymous community. According to the Kallikratis plan — and its Cleisthenes I modification — it constitutes the community of Varlaam, belonging to the municipal unit of Agios Dimitrios of the Municipality of Dodoni. According to the 2011 census, it has a population of 112 residents.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Drone Video Section -->
+  <section class="py-20 bg-charcoal">
+    <div class="container mx-auto px-4 max-w-5xl">
+      <div class="animate-on-scroll text-center mb-10">
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-white mb-3">
+          <span data-lang="el">Το Βαρλαάμ από ψηλά</span>
+          <span data-lang="en">Varlaam from above</span>
+        </h2>
+        <div class="w-16 h-px bg-gradient-to-r from-transparent via-gold-warm to-transparent mx-auto"></div>
+      </div>
+      <div class="animate-on-scroll relative w-full rounded-sm overflow-hidden shadow-2xl" style="aspect-ratio: 16 / 9;">
+        <iframe
+          class="absolute inset-0 w-full h-full"
+          src="https://www.youtube-nocookie.com/embed/0zj4Gfb29zM"
+          title="Βαρλαάμ Ιωαννίνων — Drone video"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
       </div>
     </div>
   </section>
@@ -102,8 +134,14 @@ const latestNews = (await getCollection('news'))
   <section class="py-24 bg-white">
     <div class="container mx-auto px-4 max-w-6xl">
       <div class="animate-on-scroll text-center mb-16">
-        <h2 class="section-title">Τελευταία Νέα</h2>
-        <p class="section-subtitle">Ενημερωθείτε για τα τελευταία νέα του χωριού μας</p>
+        <h2 class="section-title">
+          <span data-lang="el">Ανακοινώσεις</span>
+          <span data-lang="en">Announcements</span>
+        </h2>
+        <p class="section-subtitle">
+          <span data-lang="el">Ενημερωθείτε για τα τελευταία νέα του χωριού μας</span>
+          <span data-lang="en">Stay up to date with the latest from the village</span>
+        </p>
         <div class="divider mx-auto mt-6"></div>
       </div>
 
@@ -154,7 +192,8 @@ const latestNews = (await getCollection('news'))
 
       <div class="text-center mt-12 animate-on-scroll">
         <a href="/news" class="btn-secondary">
-          Όλα τα νέα &rarr;
+          <span data-lang="el">Όλες οι ανακοινώσεις →</span>
+          <span data-lang="en">All announcements →</span>
         </a>
       </div>
     </div>
@@ -205,19 +244,21 @@ const latestNews = (await getCollection('news'))
           </div>
 
           <h2 class="font-display text-3xl md:text-4xl font-bold text-charcoal mb-4">
-            Είστε Απόδημος Βαρλαάμ;
+            <span data-lang="el">Είστε Απόδημος Βαρλαάμ;</span>
+            <span data-lang="en">Are you from the Varlaam diaspora?</span>
           </h2>
           <p class="font-body text-lg text-charcoal/70 mb-8 max-w-2xl mx-auto leading-relaxed">
-            Ό,που κι αν βρίσκεστε στον κόσμο, το Βαρλαάμ θα είναι πάντα το σπίτι σας.
-            Μείνετε συνδεδεμένοι με τις ρίζες σας, μοιραστείτε τις ιστορίες σας και
-            συμβάλετε στο μέλλον του χωριού μας.
+            <span data-lang="el">Όπου κι αν βρίσκεστε στον κόσμο, το Βαρλαάμ θα είναι πάντα το σπίτι σας. Μείνετε συνδεδεμένοι με τις ρίζες σας, μοιραστείτε τις ιστορίες σας και συμβάλετε στο μέλλον του χωριού μας.</span>
+            <span data-lang="en">Wherever in the world you are, Varlaam will always be home. Stay connected to your roots, share your stories, and help shape the village's future.</span>
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="/diaspora" class="btn-primary">
-              Κοινότητα Αποδήμων
+              <span data-lang="el">Κοινότητα Αποδήμων</span>
+              <span data-lang="en">Diaspora Community</span>
             </a>
             <a href="/contact" class="btn-secondary">
-              Επικοινωνήστε μαζί μας
+              <span data-lang="el">Επικοινωνήστε μαζί μας</span>
+              <span data-lang="en">Get in touch</span>
             </a>
           </div>
         </div>

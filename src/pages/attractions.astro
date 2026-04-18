@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const attractions = (await getCollection('attractions'))
+  .map((e) => e.data)
+  .sort((a, b) => a.order - b.order);
+
+const PREFIX_MAP: Record<string, string> = {
+  'agios-nikolaos': 'agios-nikolaos',
+  'koimisis-theotokou': 'koimisis',
+  'kastro-pente-pigadia': 'kastro',
+  'louros': 'louros',
+  'mouseio-xani-emin-aga': 'mouseio',
+  'xirovouni': 'xirovouni',
+};
+
+function firstPhoto(folder: string, count: number, slug: string): string | null {
+  if (!folder || !count) return null;
+  const prefix = PREFIX_MAP[slug];
+  if (!prefix) return null;
+  return `${folder}/${prefix}-01.jpg`;
+}
+
+function photosFor(a: { slug: string; photoFolder: string; photoCount: number }): string[] {
+  const prefix = PREFIX_MAP[a.slug];
+  if (!prefix) return [];
+  return Array.from({ length: a.photoCount }, (_, i) => `${a.photoFolder}/${prefix}-${String(i + 1).padStart(2, '0')}.jpg`);
+}
+---
+
+<BaseLayout title="Αξιοθέατα" description="Τα αξιοθέατα του Βαρλαάμ και της ευρύτερης περιοχής της Ηπείρου">
+
+  <section class="relative pt-40 pb-16 bg-gradient-to-br from-charcoal via-stone-dark to-olive-dark">
+    <div class="container mx-auto px-4 max-w-5xl text-center">
+      <div class="flex items-center justify-center mb-6">
+        <span class="block w-12 h-px bg-gold-warm/60"></span>
+        <span class="mx-4 text-gold-warm/80 text-sm font-accent tracking-[0.3em] uppercase">
+          <span data-lang="el">Ήπειρος</span><span data-lang="en">Epirus</span>
+        </span>
+        <span class="block w-12 h-px bg-gold-warm/60"></span>
+      </div>
+      <h1 class="font-display text-5xl md:text-7xl font-bold text-white mb-6">
+        <span data-lang="el">Αξιοθέατα</span>
+        <span data-lang="en">Attractions</span>
+      </h1>
+      <p class="font-accent text-xl md:text-2xl text-stone-warm/90 max-w-2xl mx-auto">
+        <span data-lang="el">Το χωριό και η ευρύτερη περιοχή</span>
+        <span data-lang="en">The village and the surrounding area</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="py-20 bg-parchment">
+    <div class="container mx-auto px-4 max-w-6xl space-y-24">
+      {attractions.map((a, i) => {
+        const cover = firstPhoto(a.photoFolder, a.photoCount, a.slug);
+        return (
+          <article class="animate-on-scroll grid grid-cols-1 lg:grid-cols-2 gap-10 items-center" id={a.slug}>
+            <div class:list={['relative group', i % 2 === 1 ? 'lg:order-2' : '']}>
+              {cover ? (
+                <a href={`#${a.slug}-gallery`} class="block overflow-hidden rounded-sm shadow-xl">
+                  <img src={cover} alt={a.title} class="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+                </a>
+              ) : (
+                <div class="w-full h-80 rounded-sm bg-gradient-to-br from-stone-warm/40 to-olive/30 flex items-center justify-center">
+                  <svg class="w-16 h-16 text-stone-dark/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 21l6-6 4 4 8-8m-6-5h6v6"/></svg>
+                </div>
+              )}
+            </div>
+
+            <div class:list={[i % 2 === 1 ? 'lg:order-1' : '']}>
+              <span class="font-accent text-sm text-terracotta tracking-[0.3em] uppercase">
+                {String(a.order).padStart(2, '0')}
+              </span>
+              <h2 class="font-display text-3xl md:text-4xl font-bold text-charcoal mt-3 mb-4">
+                <span data-lang="el">{a.title}</span>
+                <span data-lang="en">{a.titleEn}</span>
+              </h2>
+              <p class="font-accent italic text-lg text-stone-dark mb-6">
+                <span data-lang="el">{a.summary}</span>
+                <span data-lang="en">{a.summaryEn}</span>
+              </p>
+
+              <div class="font-body text-charcoal/80 leading-relaxed whitespace-pre-line">
+                <div data-lang="el">{a.body}</div>
+                <div data-lang="en">{a.bodyEn}</div>
+              </div>
+
+              {(a.gps || a.externalUrl) && (
+                <div class="mt-6 flex flex-wrap items-center gap-4 text-sm">
+                  {a.gps && (
+                    <a href={`https://www.google.com/maps?q=${a.gps.lat},${a.gps.lng}`} target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-olive-dark hover:text-terracotta transition-colors">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                      {a.gps.lat}, {a.gps.lng}
+                    </a>
+                  )}
+                  {a.externalUrl && (
+                    <a href={a.externalUrl} target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-olive-dark hover:text-terracotta transition-colors">
+                      <span data-lang="el">Περισσότερα →</span>
+                      <span data-lang="en">More info →</span>
+                    </a>
+                  )}
+                </div>
+              )}
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4 max-w-6xl">
+      <h2 class="font-display text-3xl text-charcoal text-center mb-12">
+        <span data-lang="el">Γκαλερί Αξιοθέατων</span>
+        <span data-lang="en">Attractions Gallery</span>
+      </h2>
+      {attractions.filter(a => a.photoCount > 0).map((a) => {
+        const photos = photosFor(a);
+        return (
+          <div id={`${a.slug}-gallery`} class="mb-12">
+            <h3 class="font-display text-xl text-charcoal mb-4">
+              <span data-lang="el">{a.title}</span>
+              <span data-lang="en">{a.titleEn}</span>
+            </h3>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+              {photos.map((p, idx) => (
+                <a href={p} target="_blank" class="block aspect-square overflow-hidden rounded-sm bg-stone-warm/20 group">
+                  <img src={p} alt={`${a.title} ${idx + 1}`} loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                </a>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+
+</BaseLayout>

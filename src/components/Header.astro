@@ -1,15 +1,16 @@
 ---
+import LangToggle from './LangToggle.astro';
 const currentPath = Astro.url.pathname;
 
 const navItems = [
-  { label: 'Αρχική', href: '/' },
-  { label: 'Το Χωριό', href: '/village/' },
-  { label: 'Νέα', href: '/news/' },
-  { label: 'Γκαλερί', href: '/gallery/' },
-  { label: 'Σύλλογος', href: '/association/' },
-  { label: 'Εκδηλώσεις', href: '/events/' },
-  { label: 'Απόδημοι', href: '/diaspora/' },
-  { label: 'Επικοινωνία', href: '/contact/' },
+  { el: 'Αρχική', en: 'Home', href: '/' },
+  { el: 'Το Χωριό', en: 'The Village', href: '/village/' },
+  { el: 'Αξιοθέατα', en: 'Attractions', href: '/attractions/' },
+  { el: 'Φωτογραφίες', en: 'Photos', href: '/gallery/' },
+  { el: 'Ανακοινώσεις', en: 'News', href: '/news/' },
+  { el: 'Σύλλογος', en: 'Association', href: '/association/' },
+  { el: 'Απόδημοι', en: 'Diaspora', href: '/diaspora/' },
+  { el: 'Επικοινωνία', en: 'Contact', href: '/contact/' },
 ];
 ---
 
@@ -18,18 +19,22 @@ const navItems = [
 
   <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
     <div class="flex items-center justify-between h-20">
-      <!-- Logo -->
       <a href="/" class="flex items-center gap-3 group">
         <div class="w-10 h-10 rounded-full bg-olive flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
           <span class="text-white font-display font-bold text-lg">B</span>
         </div>
         <div class="flex flex-col">
-          <span class="font-display font-bold text-lg leading-tight text-charcoal" id="logo-text">Βαρλαάμ</span>
-          <span class="font-accent text-xs text-stone-dark italic tracking-wider" id="logo-sub">Ιωαννίνων</span>
+          <span class="font-display font-bold text-lg leading-tight text-charcoal">
+            <span data-lang="el">Βαρλαάμ</span>
+            <span data-lang="en">Varlaam</span>
+          </span>
+          <span class="font-accent text-xs text-stone-dark italic tracking-wider">
+            <span data-lang="el">Ιωαννίνων</span>
+            <span data-lang="en">Ioannina</span>
+          </span>
         </div>
       </a>
 
-      <!-- Desktop Navigation -->
       <nav class="hidden lg:flex items-center gap-1">
         {navItems.map((item) => (
           <a
@@ -41,29 +46,34 @@ const navItems = [
                 : 'text-charcoal/70 hover:text-charcoal hover:bg-stone-warm/20',
             ]}
           >
-            {item.label}
+            <span data-lang="el">{item.el}</span>
+            <span data-lang="en">{item.en}</span>
           </a>
         ))}
+        <div class="ml-2 pl-2 border-l border-charcoal/20">
+          <LangToggle />
+        </div>
       </nav>
 
-      <!-- Mobile Menu Toggle -->
-      <button
-        id="mobile-menu-btn"
-        class="lg:hidden flex flex-col gap-1.5 p-2 group"
-        aria-label="Μενού"
-        aria-expanded="false"
-      >
-        <span class="block w-6 h-0.5 bg-charcoal transition-all duration-300 origin-center group-[.open]:rotate-45 group-[.open]:translate-y-2"></span>
-        <span class="block w-6 h-0.5 bg-charcoal transition-all duration-300 group-[.open]:opacity-0"></span>
-        <span class="block w-6 h-0.5 bg-charcoal transition-all duration-300 origin-center group-[.open]:-rotate-45 group-[.open]:-translate-y-2"></span>
-      </button>
+      <div class="lg:hidden flex items-center gap-2">
+        <LangToggle />
+        <button
+          id="mobile-menu-btn"
+          class="flex flex-col gap-1.5 p-2 group"
+          aria-label="Μενού"
+          aria-expanded="false"
+        >
+          <span class="block w-6 h-0.5 bg-charcoal transition-all duration-300 origin-center group-[.open]:rotate-45 group-[.open]:translate-y-2"></span>
+          <span class="block w-6 h-0.5 bg-charcoal transition-all duration-300 group-[.open]:opacity-0"></span>
+          <span class="block w-6 h-0.5 bg-charcoal transition-all duration-300 origin-center group-[.open]:-rotate-45 group-[.open]:-translate-y-2"></span>
+        </button>
+      </div>
     </div>
   </div>
 
-  <!-- Mobile Menu -->
   <div id="mobile-menu" class="lg:hidden fixed inset-0 top-20 bg-parchment/98 backdrop-blur-xl -translate-x-full transition-transform duration-500 ease-out">
     <nav class="flex flex-col items-center justify-center h-full gap-2 -mt-20">
-      {navItems.map((item, i) => (
+      {navItems.map((item) => (
         <a
           href={item.href}
           class:list={[
@@ -72,9 +82,9 @@ const navItems = [
               ? 'text-terracotta'
               : 'text-charcoal/70 hover:text-charcoal hover:bg-stone-warm/20',
           ]}
-          style={`animation-delay: ${i * 0.05}s`}
         >
-          {item.label}
+          <span data-lang="el">{item.el}</span>
+          <span data-lang="en">{item.en}</span>
         </a>
       ))}
     </nav>
@@ -82,10 +92,7 @@ const navItems = [
 </header>
 
 <script>
-  // Header background on scroll
-  const header = document.getElementById('site-header');
   const headerBg = document.getElementById('header-bg');
-
   function updateHeader() {
     if (window.scrollY > 50) {
       headerBg?.classList.replace('opacity-0', 'opacity-100');
@@ -93,14 +100,11 @@ const navItems = [
       headerBg?.classList.replace('opacity-100', 'opacity-0');
     }
   }
-
   window.addEventListener('scroll', updateHeader, { passive: true });
   updateHeader();
 
-  // Mobile menu
   const menuBtn = document.getElementById('mobile-menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
-
   menuBtn?.addEventListener('click', () => {
     const isOpen = menuBtn.classList.toggle('open');
     menuBtn.setAttribute('aria-expanded', String(isOpen));
