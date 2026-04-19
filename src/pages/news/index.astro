@@ -29,6 +29,18 @@ const allNews = (await getCollection('news')).sort(
   <section class="py-24 bg-parchment">
     <div class="container mx-auto px-4 max-w-6xl">
 
+      <div class="flex justify-end mb-8 -mt-2">
+        <a
+          href="/rss.xml"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-terracotta/40 text-terracotta hover:bg-terracotta hover:text-white transition-colors font-accent text-xs uppercase tracking-wider"
+        >
+          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M6.18 15.64a2.18 2.18 0 012.18 2.18C8.36 19 7.38 20 6.18 20A2.18 2.18 0 014 17.82a2.18 2.18 0 012.18-2.18zM4 4.44A15.56 15.56 0 0119.56 20h-2.83A12.73 12.73 0 004 7.27V4.44zm0 5.66a9.9 9.9 0 019.9 9.9h-2.83A7.07 7.07 0 004 12.93V10.1z"/>
+          </svg>
+          <span>RSS feed</span>
+        </a>
+      </div>
+
       {allNews.length > 0 ? (
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {allNews.map((post, index) => (

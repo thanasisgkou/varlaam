@@ -125,6 +125,124 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </section>
 
+  <!-- Practical info (C·03) -->
+  <section class="py-20 bg-parchment border-t border-stone-warm/20">
+    <div class="container mx-auto px-4 max-w-5xl">
+      <div class="animate-on-scroll text-center mb-12">
+        <h2 class="section-title">
+          <span data-lang="el">Πώς θα έρθετε</span>
+          <span data-lang="en">How to get here</span>
+        </h2>
+        <p class="section-subtitle">
+          <span data-lang="el">Πρακτικές πληροφορίες για την επίσκεψή σας</span>
+          <span data-lang="en">Practical info for your visit</span>
+        </p>
+        <div class="divider mx-auto mt-6"></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 animate-on-scroll">
+        <!-- By car -->
+        <article class="bg-white rounded-xl p-7 border border-stone-warm/15 shadow-sm">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-olive/10 flex items-center justify-center">
+              <svg class="w-6 h-6 text-olive-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 13l2-7h14l2 7M5 13h14M5 13v5h2v-3h10v3h2v-5M7 18h0M17 18h0"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-display text-lg font-semibold text-charcoal">
+                <span data-lang="el">Με αυτοκίνητο</span>
+                <span data-lang="en">By car</span>
+              </h3>
+              <p class="font-body text-sm text-charcoal/80 leading-relaxed mt-2">
+                <span data-lang="el">Από τα Ιωάννινα, ακολουθείστε την Ε.Ο. Ιωαννίνων–Πρέβεζας προς τα νότια για περίπου 32,5 χλμ (≈ 40 λεπτά). Η τελευταία πρόσβαση γίνεται μέσω επαρχιακού δικτύου.</span>
+                <span data-lang="en">From Ioannina, take the Ioannina–Preveza national road southbound for about 32.5 km (≈ 40 minutes). The final stretch is on the provincial road network.</span>
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- By bus -->
+        <article class="bg-white rounded-xl p-7 border border-stone-warm/15 shadow-sm">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-terracotta/10 flex items-center justify-center">
+              <svg class="w-6 h-6 text-terracotta" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 6v6m8-6v6M5 18v-8a2 2 0 012-2h10a2 2 0 012 2v8M5 18h14M5 18l-1 2h16l-1-2M8 15h0M16 15h0"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-display text-lg font-semibold text-charcoal">
+                <span data-lang="el">ΚΤΕΛ Ιωαννίνων</span>
+                <span data-lang="en">KTEL bus (Ioannina)</span>
+              </h3>
+              <p class="font-body text-sm text-charcoal/80 leading-relaxed mt-2">
+                <span data-lang="el">Τοπικά δρομολόγια ΚΤΕΛ συνδέουν τα Ιωάννινα με τα χωριά της δημοτικής ενότητας Αγίου Δημητρίου. Ελέγξτε το εβδομαδιαίο πρόγραμμα στο <a href="https://ktelioannina.gr" target="_blank" rel="noopener" class="text-terracotta hover:underline">ktelioannina.gr</a>.</span>
+                <span data-lang="en">Local KTEL buses connect Ioannina with the villages of the Agios Dimitrios municipal unit. Check the weekly schedule at <a href="https://ktelioannina.gr" target="_blank" rel="noopener" class="text-terracotta hover:underline">ktelioannina.gr</a>.</span>
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Coordinates -->
+        <article class="bg-white rounded-xl p-7 border border-stone-warm/15 shadow-sm">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-gold-warm/10 flex items-center justify-center">
+              <svg class="w-6 h-6 text-gold-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 2v4M12 18v4M2 12h4M18 12h4M12 8a4 4 0 100 8 4 4 0 000-8z"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-display text-lg font-semibold text-charcoal">
+                <span data-lang="el">Συντεταγμένες</span>
+                <span data-lang="en">Coordinates</span>
+              </h3>
+              <p class="font-body text-sm text-charcoal/80 leading-relaxed mt-2">
+                <code class="font-mono text-charcoal bg-parchment px-2 py-1 rounded border border-stone-warm/30 select-all">39.4208° N, 20.8934° E</code>
+              </p>
+              <p class="mt-2">
+                <a
+                  href="https://www.openstreetmap.org/?mlat=39.4208&mlon=20.8934#map=15/39.4208/20.8934"
+                  target="_blank"
+                  rel="noopener"
+                  class="text-sm text-olive-dark hover:text-terracotta font-accent italic"
+                >
+                  <span data-lang="el">Άνοιγμα στο OpenStreetMap →</span>
+                  <span data-lang="en">Open in OpenStreetMap →</span>
+                </a>
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- What to see nearby -->
+        <article class="bg-white rounded-xl p-7 border border-stone-warm/15 shadow-sm">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-kyparissi/10 flex items-center justify-center">
+              <svg class="w-6 h-6" style="color:#2B4A3A" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-display text-lg font-semibold text-charcoal">
+                <span data-lang="el">Στην περιοχή</span>
+                <span data-lang="en">In the area</span>
+              </h3>
+              <p class="font-body text-sm text-charcoal/80 leading-relaxed mt-2">
+                <span data-lang="el">Κοντινά αξιοθέατα: το όρος Ξηροβούνι, ο ποταμός Λούρος, το Κάστρο Πέντε Πηγαδιών, η Αρχαία Ορρά. Δείτε όλα τα <a href="/attractions/" class="text-terracotta hover:underline">αξιοθέατα</a>.</span>
+                <span data-lang="en">Nearby sights: Mount Xirovouni, the Louros river, the Pente Pigadia castle, Ancient Orraon. See all <a href="/attractions/" class="text-terracotta hover:underline">attractions</a>.</span>
+              </p>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <p class="text-center text-sm text-charcoal/70 mt-8 font-body">
+        <span data-lang="el">Καταλύματα &amp; καφενεία: δεν υπάρχει τουριστική υποδομή μέσα στο χωριό. Οι επισκέπτες συνήθως διαμένουν στα Ιωάννινα ή σε κοντινά χωριά.</span>
+        <span data-lang="en">Accommodation &amp; cafés: no tourist infrastructure inside the village. Visitors usually stay in Ioannina or in nearby villages.</span>
+      </p>
+    </div>
+  </section>
+
   <!-- Landmarks Section -->
   <section class="py-24 bg-parchment">
     <div class="container mx-auto px-4 max-w-6xl">
