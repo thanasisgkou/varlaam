@@ -1,0 +1,81 @@
+---
+// Attaches hover/focus tooltips to any element with class "has-tooltip" + data-term
+// using a shared dictionary. Bilingual via data-lang on body <html>.
+---
+
+<script is:inline>
+  (function () {
+    const GLOSSARY = {
+      poukevil: {
+        el: 'François Pouqueville (1770–1838): Γάλλος γιατρός, διπλωμάτης και περιηγητής· υπηρέτησε ως πρόξενος του Ναπολέοντα στην αυλή του Αλή Πασά. Τα χρονικά του αποτελούν πολύτιμη πηγή για την Ήπειρο.',
+        en: 'François Pouqueville (1770–1838): French doctor, diplomat and traveller who served as Napoleon\u2019s consul at the court of Ali Pasha. His chronicles are a valuable source for Epirus.',
+      },
+      kazas: {
+        el: 'Καζάς: οθωμανική διοικητική περιφέρεια, αντίστοιχη περίπου με επαρχία. Υπαγόταν σε μεγαλύτερη μονάδα, το σαντζάκι.',
+        en: 'Kaza: an Ottoman administrative district, roughly equivalent to a county. It belonged to a larger unit, the sanjak.',
+      },
+      tsifliki: {
+        el: 'Τσιφλίκι: μεγάλη αγροτική γαιοκτησία κατά την οθωμανική περίοδο, συνήθως στα χέρια μπέηδων· οι χωρικοί ήταν κολίγοι με υποχρεώσεις στον γαιοκτήμονα.',
+        en: 'Tsifliki: a large rural estate during Ottoman rule, typically owned by a bey; peasants worked as tenants with obligations to the landowner.',
+      },
+      fek: {
+        el: 'ΦΕΚ (Φύλλο Εφημερίδος της Κυβερνήσεως): το επίσημο δημοσιευτικό όργανο του Ελληνικού κράτους — κάθε νόμος και κανονιστική πράξη δημοσιεύεται εκεί.',
+        en: 'FEK (Government Gazette of Greece): the official publication of the Greek state — every law and regulatory act is published there.',
+      },
+      kallikratis: {
+        el: 'Καλλικράτης: Νόμος 3852/2010 που αναδιοργάνωσε την αυτοδιοίκηση, συγχωνεύοντας δήμους και κοινότητες σε μεγαλύτερους δήμους.',
+        en: 'Kallikratis: Law 3852/2010 that restructured local government in Greece by merging municipalities and communities into larger units.',
+      },
+      kleisthenis: {
+        el: 'Κλεισθένης Ι: Νόμος 4555/2018, τροποποίηση του Καλλικράτη — επανέφερε ορισμένους κανόνες εκλογής και κατάργησε τον θεσμό της απλής αναλογικής στον β΄ βαθμό.',
+        en: 'Cleisthenes I: Law 4555/2018, an amendment to Kallikratis that revised electoral rules for local governance.',
+      },
+    };
+
+    const tip = document.createElement('div');
+    tip.className = 'glossary-tip';
+    tip.setAttribute('role', 'tooltip');
+    tip.style.cssText =
+      'position:absolute;max-width:320px;background:#1d1a14;color:#fbf8f2;font:14px/1.5 "Source Sans 3",system-ui,sans-serif;padding:10px 14px;border-radius:6px;box-shadow:0 10px 30px rgba(0,0,0,0.25);z-index:9998;pointer-events:none;opacity:0;transform:translateY(-4px);transition:opacity .15s ease,transform .15s ease;';
+    document.body.appendChild(tip);
+
+    function currentLang() {
+      return document.documentElement.lang === 'en' ? 'en' : 'el';
+    }
+
+    function show(el, term) {
+      const entry = GLOSSARY[term];
+      if (!entry) return;
+      tip.textContent = entry[currentLang()];
+      const r = el.getBoundingClientRect();
+      const top = window.scrollY + r.top - tip.offsetHeight - 10;
+      const left = Math.max(8, Math.min(
+        window.scrollX + r.left + r.width / 2 - tip.offsetWidth / 2,
+        window.scrollX + document.documentElement.clientWidth - tip.offsetWidth - 8
+      ));
+      tip.style.top = top + 'px';
+      tip.style.left = left + 'px';
+      tip.style.opacity = '1';
+      tip.style.transform = 'translateY(0)';
+    }
+
+    function hide() {
+      tip.style.opacity = '0';
+      tip.style.transform = 'translateY(-4px)';
+    }
+
+    function bind(el) {
+      const term = el.getAttribute('data-term');
+      if (!term) return;
+      el.addEventListener('mouseenter', () => show(el, term));
+      el.addEventListener('focus', () => show(el, term));
+      el.addEventListener('mouseleave', hide);
+      el.addEventListener('blur', hide);
+      el.addEventListener('click', (e) => e.preventDefault());
+      el.setAttribute('tabindex', '0');
+      el.setAttribute('aria-describedby', 'glossary-tip');
+    }
+
+    document.querySelectorAll('.has-tooltip[data-term]').forEach(bind);
+  })();
+</script>

@@ -3,16 +3,19 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import BackToTop from '../components/BackToTop.astro';
+import GlossaryTooltips from '../components/GlossaryTooltips.astro';
 
 interface Props {
   title: string;
   description?: string;
   image?: string;
+  jsonLd?: Record<string, unknown>;
 }
 
-const { title, description = 'Η επίσημη ιστοσελίδα του χωριού Βαρλαάμ Ιωαννίνων - Ήπειρος, Ελλάδα. Να μη συγχέεται με τη Μονή Βαρλαάμ Μετεώρων.', image } = Astro.props;
+const { title, description = 'Η επίσημη ιστοσελίδα του χωριού Βαρλαάμ Ιωαννίνων - Ήπειρος, Ελλάδα. Να μη συγχέεται με τη Μονή Βαρλαάμ Μετεώρων.', image, jsonLd } = Astro.props;
 const fullTitle = title === 'Αρχική' ? 'Βαρλαάμ Ιωαννίνων — Χωριό στην Ήπειρο' : `${title} | Βαρλαάμ Ιωαννίνων — Χωριό Ηπείρου`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(image ?? '/images/attractions/xirovouni/xirovouni-01.jpg', Astro.site).toString();
 ---
 
 <!DOCTYPE html>
@@ -28,8 +31,18 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonicalURL} />
   <meta property="og:locale" content="el_GR" />
+  <meta property="og:locale:alternate" content="en_GB" />
   <meta property="og:site_name" content="Βαρλαάμ Ιωαννίνων" />
-  {image && <meta property="og:image" content={image} />}
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Βαρλαάμ Ιωαννίνων — θέα από το Ξηροβούνι" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
+  <meta name="twitter:image:alt" content="Βαρλαάμ Ιωαννίνων — θέα από το Ξηροβούνι" />
+  <meta name="theme-color" content="#7a2e1f" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <title>{fullTitle}</title>
 
@@ -55,6 +68,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     "url": "https://varlaam.netlify.app",
     "sameAs": []
   })} />
+
+  {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
 </head>
 <body class="min-h-screen flex flex-col">
   <div class="noise-overlay" aria-hidden="true"></div>
@@ -64,6 +79,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   </main>
   <Footer />
   <BackToTop />
+  <GlossaryTooltips />
 
   <script>
     // Scroll animation observer

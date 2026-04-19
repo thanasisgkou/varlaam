@@ -60,7 +60,7 @@ function photosFor(a: { slug: string; photoFolder: string; photoCount: number })
             <div class:list={['relative group', i % 2 === 1 ? 'lg:order-2' : '']}>
               {cover ? (
                 <a href={`#${a.slug}-gallery`} class="block overflow-hidden rounded-sm shadow-xl">
-                  <img src={cover} alt={a.title} class="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+                  <img src={cover} alt={`${a.title} — ${a.titleEn}`} class="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
                 </a>
               ) : (
                 <div class="w-full h-80 rounded-sm bg-gradient-to-br from-stone-warm/40 to-olive/30 flex items-center justify-center">
@@ -127,7 +127,7 @@ function photosFor(a: { slug: string; photoFolder: string; photoCount: number })
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
               {photos.map((p, idx) => (
                 <a href={p} target="_blank" class="block aspect-square overflow-hidden rounded-sm bg-stone-warm/20 group">
-                  <img src={p} alt={`${a.title} ${idx + 1}`} loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                  <img src={p} alt={`${a.title} — ${a.titleEn} (${idx + 1})`} loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                 </a>
               ))}
             </div>

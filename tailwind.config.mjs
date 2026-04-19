@@ -7,7 +7,7 @@ export default {
         stone: {
           warm: '#D4C5A9',
           light: '#F5F0E8',
-          dark: '#8B7D6B',
+          dark: '#6F6450',
         },
         olive: {
           light: '#7A8B4A',
@@ -25,6 +25,9 @@ export default {
           warm: '#C9A84C',
           light: '#E8D48B',
         },
+        /* Epirotan tones (H·01) */
+        kerameidi: '#7A2E1F',
+        kyparissi: '#2B4A3A',
       },
       fontFamily: {
         display: ['"Playfair Display"', 'Georgia', 'serif'],

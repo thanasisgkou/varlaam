@@ -1,0 +1,270 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+const IBAN = 'GR54 0110 3590 0000 3590 1865 978';
+const BANK = 'Εθνική Τράπεζα της Ελλάδος';
+const BENEFICIARY = 'Πολιτιστικός και Μορφωτικός Σύλλογος Βαρλαάμ Ιωαννίνων';
+---
+
+<BaseLayout
+  title="Στηρίξτε τον Σύλλογο"
+  description="Δωρεές προς τον Πολιτιστικό και Μορφωτικό Σύλλογο Βαρλαάμ Ιωαννίνων — IBAN, οδηγίες και διαφάνεια για τις δράσεις."
+>
+
+  <div class="pt-20"></div>
+  <Breadcrumbs items={[
+    { el: 'Σύλλογος', en: 'Association', href: '/association/' },
+    { el: 'Στηρίξτε μας', en: 'Support us' },
+  ]} />
+
+  <!-- Hero -->
+  <section class="relative py-20 md:py-28 bg-gradient-to-br from-charcoal via-stone-dark to-olive-dark overflow-hidden">
+    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 40% 50%, rgba(193,154,107,0.4) 0%, transparent 50%);"></div>
+    <div class="relative z-10 container mx-auto px-4 text-center max-w-3xl">
+      <div class="flex items-center justify-center mb-5 animate-fade-in">
+        <span class="block w-12 h-px bg-gold-warm/60"></span>
+        <span class="mx-4 text-gold-warm text-sm font-accent tracking-[0.3em] uppercase">
+          <span data-lang="el">Στήριξη</span><span data-lang="en">Support</span>
+        </span>
+        <span class="block w-12 h-px bg-gold-warm/60"></span>
+      </div>
+      <h1 class="font-display text-4xl md:text-6xl font-bold text-white mb-5 animate-fade-up">
+        <span data-lang="el">Στηρίξτε τον Σύλλογο</span>
+        <span data-lang="en">Support the Association</span>
+      </h1>
+      <p class="font-accent text-lg md:text-xl text-gold-light/90 max-w-2xl mx-auto animate-fade-up" style="animation-delay: 0.2s;">
+        <span data-lang="el">Κάθε δωρεά βοηθά να κρατήσουμε το χωριό ζωντανό — για τους κατοίκους, τους αποδήμους και τις επόμενες γενιές.</span>
+        <span data-lang="en">Every donation helps us keep the village alive — for residents, the diaspora, and generations to come.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- Donate: IBAN + PayPal -->
+  <section class="py-20 bg-parchment">
+    <div class="container mx-auto px-4 max-w-4xl space-y-8">
+
+      <!-- IBAN Card -->
+      <div class="animate-on-scroll bg-white rounded-xl shadow-sm border border-stone-warm/15 p-8 md:p-10">
+        <div class="flex items-start gap-4 mb-6">
+          <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-olive/10 flex items-center justify-center">
+            <svg class="w-6 h-6 text-olive-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M3 10l9-6 9 6M5 10v10h14V10M9 20v-6h6v6"/>
+            </svg>
+          </div>
+          <div>
+            <h2 class="font-display text-2xl md:text-3xl font-bold text-charcoal">
+              <span data-lang="el">Τραπεζική μεταφορά</span>
+              <span data-lang="en">Bank transfer</span>
+            </h2>
+            <p class="font-body text-sm text-charcoal/75 mt-1">
+              <span data-lang="el">Η πιο άμεση και χωρίς προμήθεια οδός.</span>
+              <span data-lang="en">The most direct and fee-free route.</span>
+            </p>
+          </div>
+        </div>
+
+        <dl class="grid grid-cols-1 sm:grid-cols-[auto,1fr] gap-x-8 gap-y-3 font-body text-charcoal">
+          <dt class="text-charcoal/75 font-accent uppercase text-xs tracking-wider sm:pt-1">
+            <span data-lang="el">Τράπεζα</span><span data-lang="en">Bank</span>
+          </dt>
+          <dd>
+            <span data-lang="el">{BANK}</span>
+            <span data-lang="en">National Bank of Greece</span>
+          </dd>
+
+          <dt class="text-charcoal/75 font-accent uppercase text-xs tracking-wider sm:pt-1">
+            <span data-lang="el">Δικαιούχος</span><span data-lang="en">Beneficiary</span>
+          </dt>
+          <dd>
+            <span data-lang="el">{BENEFICIARY}</span>
+            <span data-lang="en">Cultural and Educational Association of Varlaam, Ioannina</span>
+          </dd>
+
+          <dt class="text-charcoal/75 font-accent uppercase text-xs tracking-wider sm:pt-1">IBAN</dt>
+          <dd class="flex flex-wrap items-center gap-3">
+            <code id="iban-value" class="font-mono text-[15px] md:text-base bg-parchment px-3 py-1.5 rounded border border-stone-warm/30 tracking-wider select-all">{IBAN}</code>
+            <button
+              id="iban-copy"
+              type="button"
+              class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-olive/40 text-olive-dark hover:bg-olive hover:text-white transition-colors font-accent text-xs uppercase tracking-wider"
+            >
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+              </svg>
+              <span data-lang="el" class="iban-copy-text">Αντιγραφή</span>
+              <span data-lang="en" class="iban-copy-text">Copy</span>
+            </button>
+          </dd>
+        </dl>
+
+        <p class="mt-5 text-sm text-charcoal/75 font-body">
+          <span data-lang="el">
+            <strong>Αιτιολογία:</strong> «Δωρεά στον Σύλλογο Βαρλαάμ» ή «Εορτή/πανηγύρι 2026» — για πιο εύκολη παρακολούθηση.
+          </span>
+          <span data-lang="en">
+            <strong>Reference:</strong> "Donation to Varlaam Association" or "Feast/event 2026" — for easier tracking.
+          </span>
+        </p>
+      </div>
+
+      <!-- PayPal / International -->
+      <div class="animate-on-scroll bg-white rounded-xl shadow-sm border border-stone-warm/15 p-8 md:p-10">
+        <div class="flex items-start gap-4 mb-4">
+          <div class="flex-shrink-0 w-12 h-12 rounded-lg bg-terracotta/10 flex items-center justify-center">
+            <svg class="w-6 h-6 text-terracotta" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <div>
+            <h2 class="font-display text-2xl md:text-3xl font-bold text-charcoal">
+              <span data-lang="el">Δωρεά από το εξωτερικό</span>
+              <span data-lang="en">Donations from abroad</span>
+            </h2>
+            <p class="font-body text-sm text-charcoal/75 mt-1">
+              <span data-lang="el">Για αποδήμους — PayPal/Revolut όταν ενεργοποιηθεί.</span>
+              <span data-lang="en">For the diaspora — PayPal/Revolut when set up.</span>
+            </p>
+          </div>
+        </div>
+        <p class="font-body text-charcoal/80 leading-relaxed">
+          <span data-lang="el">
+            Ο Σύλλογος εργάζεται για τη δημιουργία λογαριασμού PayPal/Revolut ώστε οι απόδημοι να μπορούν να στηρίζουν άμεσα. Μέχρι τότε, μπορείτε να χρησιμοποιήσετε το <strong>διεθνές IBAN</strong> παραπάνω (SWIFT/BIC: <strong>ETHNGRAA</strong>).
+          </span>
+          <span data-lang="en">
+            The Association is setting up a PayPal/Revolut account so the diaspora can contribute directly. Until then, you can use the <strong>international IBAN</strong> above (SWIFT/BIC: <strong>ETHNGRAA</strong>).
+          </span>
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Transparency -->
+  <section class="py-20 bg-white">
+    <div class="container mx-auto px-4 max-w-4xl">
+      <div class="animate-on-scroll text-center mb-10">
+        <h2 class="section-title">
+          <span data-lang="el">Πού πηγαίνουν οι δωρεές</span>
+          <span data-lang="en">Where the money goes</span>
+        </h2>
+        <p class="section-subtitle">
+          <span data-lang="el">Διαφάνεια στις δράσεις του Συλλόγου</span>
+          <span data-lang="en">Transparency in the Association's work</span>
+        </p>
+        <div class="divider mx-auto mt-6"></div>
+      </div>
+
+      <div class="space-y-6 animate-on-scroll">
+        <article class="flex gap-5 p-6 rounded-xl border border-stone-warm/15 bg-parchment/50">
+          <div class="flex-shrink-0 w-14 h-14 rounded-lg bg-olive/10 flex items-center justify-center">
+            <svg class="w-6 h-6 text-olive-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-display text-lg text-charcoal font-semibold">
+              <span data-lang="el">Διοργάνωση εκδηλώσεων</span>
+              <span data-lang="en">Organising events</span>
+            </h3>
+            <p class="font-body text-charcoal/75 leading-relaxed mt-1">
+              <span data-lang="el">Κοπή πίτας Αθήνα & Βαρλαάμ, Πάσχα, πανηγύρι Δεκαπενταύγουστου, Μπιρμπιλάτο — υλικά, μουσική, φιλοξενία.</span>
+              <span data-lang="en">New Year cake-cuttings in Athens and Varlaam, Easter, the mid-August feast, Mpirmpilato — supplies, music, hospitality.</span>
+            </p>
+          </div>
+        </article>
+
+        <article class="flex gap-5 p-6 rounded-xl border border-stone-warm/15 bg-parchment/50">
+          <div class="flex-shrink-0 w-14 h-14 rounded-lg bg-terracotta/10 flex items-center justify-center">
+            <svg class="w-6 h-6 text-terracotta" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 21v-4a4 4 0 014-4h10a4 4 0 014 4v4M16 3.13a4 4 0 010 7.75M19 21v-2a4 4 0 00-3-3.87M12 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-display text-lg text-charcoal font-semibold">
+              <span data-lang="el">Συντήρηση κοινόχρηστων χώρων</span>
+              <span data-lang="en">Maintaining shared spaces</span>
+            </h3>
+            <p class="font-body text-charcoal/75 leading-relaxed mt-1">
+              <span data-lang="el">Καθαρισμοί, φροντίδα πλατείας, εκκλησίας, μονοπατιών· μικρές εργασίες αποκατάστασης.</span>
+              <span data-lang="en">Cleanups, care for the square, church and paths; small restoration works.</span>
+            </p>
+          </div>
+        </article>
+
+        <article class="flex gap-5 p-6 rounded-xl border border-stone-warm/15 bg-parchment/50">
+          <div class="flex-shrink-0 w-14 h-14 rounded-lg bg-gold-warm/10 flex items-center justify-center">
+            <svg class="w-6 h-6 text-gold-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-display text-lg text-charcoal font-semibold">
+              <span data-lang="el">Προβολή &amp; αρχείο</span>
+              <span data-lang="en">Communication &amp; archives</span>
+            </h3>
+            <p class="font-body text-charcoal/75 leading-relaxed mt-1">
+              <span data-lang="el">Ιστοσελίδα, φωτογραφικό αρχείο, εκτυπώσεις, επικοινωνία με αποδήμους.</span>
+              <span data-lang="en">Website, photo archive, print materials, communication with the diaspora.</span>
+            </p>
+          </div>
+        </article>
+      </div>
+
+      <div class="mt-12 p-6 rounded-xl border border-stone-warm/20 bg-parchment/40 text-sm text-charcoal/75 leading-relaxed animate-on-scroll">
+        <p>
+          <span data-lang="el">
+            <strong>Ετήσιος απολογισμός:</strong> Κάθε χρόνο ο Ταμίας παρουσιάζει λεπτομερή απολογισμό εσόδων/εξόδων στη Γενική Συνέλευση των μελών. Αν θέλετε αντίγραφο του τελευταίου απολογισμού, στείλτε μας email στο <a href="mailto:info@varlaam.gr" class="text-terracotta hover:underline">info@varlaam.gr</a>.
+          </span>
+          <span data-lang="en">
+            <strong>Annual report:</strong> Each year the Treasurer presents a detailed income/expenses report at the members' General Assembly. If you'd like a copy of the latest report, email us at <a href="mailto:info@varlaam.gr" class="text-terracotta hover:underline">info@varlaam.gr</a>.
+          </span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Thanks CTA -->
+  <section class="py-20 bg-gradient-to-br from-olive-dark to-charcoal">
+    <div class="container mx-auto px-4 max-w-3xl text-center animate-on-scroll">
+      <h2 class="font-display text-3xl md:text-4xl font-bold text-white mb-4">
+        <span data-lang="el">Ευχαριστούμε</span>
+        <span data-lang="en">Thank you</span>
+      </h2>
+      <p class="font-body text-lg text-stone-warm/90 leading-relaxed">
+        <span data-lang="el">Κάθε συνεισφορά — μεγάλη ή μικρή — είναι ψηφίδα στη ζωή του χωριού.</span>
+        <span data-lang="en">Every contribution — large or small — is a piece of the village's living mosaic.</span>
+      </p>
+    </div>
+  </section>
+
+  <script is:inline>
+    (function () {
+      const btn = document.getElementById('iban-copy');
+      const val = document.getElementById('iban-value');
+      if (!btn || !val) return;
+      btn.addEventListener('click', async () => {
+        const txt = (val.textContent || '').replace(/\s+/g, '');
+        try {
+          await navigator.clipboard.writeText(txt);
+          const labels = btn.querySelectorAll('.iban-copy-text');
+          const originals = Array.from(labels).map((l) => l.textContent);
+          labels.forEach((l, i) => {
+            l.textContent = document.documentElement.lang === 'en' ? 'Copied!' : 'Αντιγράφηκε!';
+          });
+          setTimeout(() => {
+            labels.forEach((l, i) => (l.textContent = originals[i]));
+          }, 1600);
+        } catch {
+          // fallback: select the IBAN element
+          const range = document.createRange();
+          range.selectNodeContents(val);
+          const sel = window.getSelection();
+          sel?.removeAllRanges();
+          sel?.addRange(range);
+        }
+      });
+    })();
+  </script>
+
+</BaseLayout>

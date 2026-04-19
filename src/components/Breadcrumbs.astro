@@ -1,0 +1,55 @@
+---
+interface Crumb {
+  el: string;
+  en: string;
+  href?: string;
+}
+interface Props {
+  items: Crumb[];
+}
+const { items } = Astro.props;
+const home: Crumb = { el: 'Αρχική', en: 'Home', href: '/' };
+const trail = [home, ...items];
+---
+
+<nav aria-label="Breadcrumbs" class="bg-parchment/60 border-b border-stone-warm/20">
+  <ol
+    class="max-w-6xl mx-auto px-4 md:px-6 py-3 flex flex-wrap items-center gap-2 font-body text-xs tracking-wide text-charcoal/75"
+    itemscope
+    itemtype="https://schema.org/BreadcrumbList"
+  >
+    {trail.map((item, i) => {
+      const isLast = i === trail.length - 1;
+      return (
+        <li
+          class="flex items-center gap-2"
+          itemprop="itemListElement"
+          itemscope
+          itemtype="https://schema.org/ListItem"
+        >
+          {i > 0 && (
+            <span class="text-stone-dark/70" aria-hidden="true">›</span>
+          )}
+          {isLast || !item.href ? (
+            <span class="text-charcoal font-medium" itemprop="name">
+              <span data-lang="el">{item.el}</span>
+              <span data-lang="en">{item.en}</span>
+            </span>
+          ) : (
+            <a
+              href={item.href}
+              class="hover:text-terracotta transition-colors"
+              itemprop="item"
+            >
+              <span itemprop="name">
+                <span data-lang="el">{item.el}</span>
+                <span data-lang="en">{item.en}</span>
+              </span>
+            </a>
+          )}
+          <meta itemprop="position" content={String(i + 1)} />
+        </li>
+      );
+    })}
+  </ol>
+</nav>

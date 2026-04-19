@@ -36,6 +36,19 @@ const pastEvents = allEvents.filter((e) => e.data.date < now).reverse();
         <h2 class="section-title">Επερχόμενες Εκδηλώσεις</h2>
         <p class="section-subtitle">Μην χάσετε τις επόμενες δράσεις μας</p>
         <div class="divider mx-auto mt-6"></div>
+        <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+          <a
+            href="/events/all.ics"
+            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-olive/40 text-olive-dark hover:bg-olive hover:text-white transition-colors font-accent text-sm tracking-wide"
+            download
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+            <span data-lang="el">Προσθήκη στο ημερολόγιο (.ics)</span>
+            <span data-lang="en">Add to calendar (.ics)</span>
+          </a>
+        </div>
       </div>
 
       {upcomingEvents.length > 0 ? (
@@ -63,18 +76,18 @@ const pastEvents = allEvents.filter((e) => e.data.date < now).reverse();
                   </h3>
 
                   <div class="flex flex-wrap items-center gap-4 mb-4 text-sm">
-                    <span class="inline-flex items-center gap-1.5 text-charcoal/60 font-body">
+                    <span class="inline-flex items-center gap-1.5 text-charcoal/75 font-body">
                       <svg class="w-4 h-4 text-terracotta/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                       </svg>
                       {event.data.location}
                     </span>
-                    <span class="inline-flex items-center gap-1.5 text-charcoal/60 font-body">
+                    <span class="inline-flex items-center gap-1.5 text-charcoal/75 font-body">
                       <svg class="w-4 h-4 text-terracotta/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                       </svg>
-                      {event.data.date.toLocaleDateString('el-GR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                      <time datetime={event.data.date.toISOString()}>{event.data.date.toLocaleDateString('el-GR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</time>
                     </span>
                   </div>
 
@@ -98,8 +111,8 @@ const pastEvents = allEvents.filter((e) => e.data.date < now).reverse();
           <svg class="w-16 h-16 mx-auto text-stone-warm/40 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
           </svg>
-          <h3 class="font-display text-2xl text-charcoal/60 mb-2">Δεν υπάρχουν επερχόμενες εκδηλώσεις</h3>
-          <p class="font-body text-charcoal/50">Ελέγξτε ξανά σύντομα για νέες εκδηλώσεις!</p>
+          <h3 class="font-display text-2xl text-charcoal/75 mb-2">Δεν υπάρχουν επερχόμενες εκδηλώσεις</h3>
+          <p class="font-body text-charcoal/70">Ελέγξτε ξανά σύντομα για νέες εκδηλώσεις!</p>
         </div>
       )}
     </div>
@@ -120,10 +133,10 @@ const pastEvents = allEvents.filter((e) => e.data.date < now).reverse();
             <article class="animate-on-scroll" style={`animation-delay: ${index * 0.08}s;`}>
               <a href={`/events/${event.slug}`} class="flex items-center gap-6 p-5 rounded-xl border border-stone-warm/15 hover:border-stone-warm/30 hover:bg-parchment/50 transition-all group">
                 <div class="flex-shrink-0 w-14 h-14 rounded-lg bg-stone-warm/10 flex flex-col items-center justify-center">
-                  <span class="font-display text-lg font-bold text-charcoal/60 leading-none">
+                  <span class="font-display text-lg font-bold text-charcoal/75 leading-none">
                     {event.data.date.getDate()}
                   </span>
-                  <span class="font-accent text-[10px] uppercase text-charcoal/40 tracking-wider">
+                  <span class="font-accent text-[10px] uppercase text-charcoal/70 tracking-wider">
                     {event.data.date.toLocaleDateString('el-GR', { month: 'short' })}
                   </span>
                 </div>
@@ -131,7 +144,7 @@ const pastEvents = allEvents.filter((e) => e.data.date < now).reverse();
                   <h3 class="font-display text-lg text-charcoal/70 group-hover:text-charcoal transition-colors truncate">
                     {event.data.title}
                   </h3>
-                  <p class="font-body text-sm text-charcoal/50 truncate">{event.data.location}</p>
+                  <p class="font-body text-sm text-charcoal/70 truncate">{event.data.location}</p>
                 </div>
                 <svg class="w-4 h-4 text-charcoal/20 group-hover:text-olive-dark transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>

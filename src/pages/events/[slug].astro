@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -28,9 +29,46 @@ const formattedEndDate = entry.data.endDate
       day: 'numeric',
     })
   : null;
+
+const site = Astro.site?.toString().replace(/\/$/, '') ?? 'https://varlaam.netlify.app';
+const eventUrl = `${site}/events/${entry.slug}/`;
+const eventJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Event',
+  name: entry.data.title,
+  description: entry.data.excerpt,
+  startDate: entry.data.date.toISOString(),
+  endDate: (entry.data.endDate ?? new Date(entry.data.date.getTime() + 2 * 60 * 60 * 1000)).toISOString(),
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  eventStatus: 'https://schema.org/EventScheduled',
+  url: eventUrl,
+  image: entry.data.image ? new URL(entry.data.image, site).toString() : `${site}/images/attractions/xirovouni/xirovouni-01.jpg`,
+  location: {
+    '@type': 'Place',
+    name: entry.data.location,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Βαρλαάμ',
+      addressRegion: 'Ιωάννινα',
+      postalCode: '455 00',
+      addressCountry: 'GR',
+    },
+  },
+  organizer: {
+    '@type': 'Organization',
+    name: 'Σύλλογος Βαρλαάμ Ιωαννίνων',
+    url: site,
+  },
+};
 ---
 
-<BaseLayout title={entry.data.title} description={entry.data.excerpt}>
+<BaseLayout title={entry.data.title} description={entry.data.excerpt} jsonLd={eventJsonLd}>
+
+  <div class="pt-20"></div>
+  <Breadcrumbs items={[
+    { el: 'Εκδηλώσεις', en: 'Events', href: '/events/' },
+    { el: entry.data.title, en: entry.data.title },
+  ]} />
 
   <!-- Hero Banner -->
   <section class="relative py-28 md:py-36 bg-gradient-to-br from-charcoal via-stone-dark to-olive-dark overflow-hidden">
@@ -51,12 +89,12 @@ const formattedEndDate = entry.data.endDate
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
           </svg>
-          {formattedDate}
+          <time datetime={entry.data.date.toISOString()}>{formattedDate}</time>
         </span>
-        {formattedEndDate && (
+        {formattedEndDate && entry.data.endDate && (
           <span class="inline-flex items-center gap-2">
             <span class="text-gold-warm/40">&mdash;</span>
-            {formattedEndDate}
+            <time datetime={entry.data.endDate.toISOString()}>{formattedEndDate}</time>
           </span>
         )}
         <span class="inline-flex items-center gap-2">
@@ -73,13 +111,27 @@ const formattedEndDate = entry.data.endDate
   <!-- Event Content -->
   <section class="py-20 bg-parchment">
     <div class="container mx-auto px-4 max-w-3xl">
-      <!-- Back Link -->
-      <a href="/events" class="inline-flex items-center text-olive-dark hover:text-terracotta transition-colors font-accent mb-12 group">
-        <svg class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-        </svg>
-        Πίσω στις Εκδηλώσεις
-      </a>
+      <!-- Back Link + ICS -->
+      <div class="flex flex-wrap items-center justify-between gap-4 mb-12">
+        <a href="/events" class="inline-flex items-center text-olive-dark hover:text-terracotta transition-colors font-accent group">
+          <svg class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+          <span data-lang="el">Πίσω στις Εκδηλώσεις</span>
+          <span data-lang="en">Back to Events</span>
+        </a>
+        <a
+          href={`/events/${entry.slug}.ics`}
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-olive/40 text-olive-dark hover:bg-olive hover:text-white transition-colors font-accent text-sm"
+          download
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+          </svg>
+          <span data-lang="el">Προσθήκη στο ημερολόγιο</span>
+          <span data-lang="en">Add to calendar</span>
+        </a>
+      </div>
 
       <!-- Event Details Card -->
       <div class="animate-on-scroll bg-white rounded-xl shadow-sm border border-stone-warm/10 p-4 md:p-6 mb-10">

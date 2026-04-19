@@ -1,0 +1,149 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+
+interface TimelineEntry {
+  year: string;
+  titleEl: string;
+  titleEn: string;
+  bodyEl: string;
+  bodyEn: string;
+  sourceLabel?: string;
+  sourceUrl?: string;
+}
+
+const timeline: TimelineEntry[] = [
+  {
+    year: '1813',
+    titleEl: 'Ο Πουκεβίλ καταγράφει το Βαρλάμι',
+    titleEn: 'Pouqueville records Varlami',
+    bodyEl:
+      'Ο Γάλλος περιηγητής François Pouqueville, πρόξενος του Ναπολέοντα στην αυλή του Αλή Πασά, αναφέρει το Βαρλάμι ως οικισμό 60 ελληνικών οικογενειών κατά την περίοδο της Οθωμανικής κυριαρχίας. Η αναφορά αποτελεί την πρώτη τεκμηριωμένη μαρτυρία για το χωριό.',
+    bodyEn:
+      'The French traveller François Pouqueville, Napoleon\'s consul at the court of Ali Pasha, records Varlami as a settlement of 60 Greek families during Ottoman rule. The account is the first documented reference to the village.',
+    sourceLabel: 'F. Pouqueville, Voyage de la Grèce (1820)',
+  },
+  {
+    year: '1895',
+    titleEl: 'Οθωμανικά κατάστιχα',
+    titleEn: 'Ottoman records',
+    bodyEl:
+      'Στα οθωμανικά κατάστιχα του 1895 το χωριό αναφέρεται με το όνομα «Βαρλάμι», ως τσιφλίκι του καζά (διοικητικής περιφέρειας) Ιωαννίνων, με 200 κατοίκους. Η αυξημένη καταγραφή δείχνει την σταθερή ανάπτυξη του οικισμού.',
+    bodyEn:
+      'In the Ottoman registers of 1895, the village is listed as "Varlami", a tsifliki (estate) of the Ioannina kaza (district), with 200 inhabitants. The increased population reflects the settlement\'s steady growth.',
+  },
+  {
+    year: '1919',
+    titleEl: 'Σύσταση κοινότητας',
+    titleEn: 'Community established',
+    bodyEl:
+      'Με το ΦΕΚ 184Α στις 19 Αυγούστου 1919, το Βαρλαάμ αναγνωρίζεται επίσημα ως οικισμός και ορίζεται έδρα της ομώνυμης κοινότητας. Η πράξη εντάσσει το χωριό στον νεοσύστατο ελληνικό διοικητικό χάρτη μετά την απελευθέρωση από τους Οθωμανούς (1913).',
+    bodyEn:
+      'With Government Gazette 184A on 19 August 1919, Varlaam is officially recognised as a settlement and designated the seat of the homonymous community — integrating the village into the newly established Greek administrative map following liberation from the Ottomans (1913).',
+    sourceLabel: 'ΦΕΚ 184Α / 19-08-1919',
+    sourceUrl: 'https://www.et.gr/',
+  },
+  {
+    year: '2011',
+    titleEl: 'Απογραφή — 112 κάτοικοι',
+    titleEn: 'Census — 112 residents',
+    bodyEl:
+      'Σύμφωνα με την απογραφή του 2011, ο πληθυσμός του χωριού ανέρχεται σε 112 μόνιμους κατοίκους. Το χωριό αποτελεί, κατά το σχέδιο <span class="has-tooltip underline decoration-terracotta/40 underline-offset-2 cursor-help" data-term="kallikratis">Καλλικράτης</span> (Ν. 3852/2010) και την τροποποίησή του <span class="has-tooltip underline decoration-terracotta/40 underline-offset-2 cursor-help" data-term="kleisthenis">Κλεισθένης Ι</span> (Ν. 4555/2018), την κοινότητα Βαρλαάμ της δημοτικής ενότητας Αγίου Δημητρίου του Δήμου Δωδώνης.',
+    bodyEn:
+      'According to the 2011 census, the village has 112 permanent residents. Under the <span class="has-tooltip underline decoration-terracotta/40 underline-offset-2 cursor-help" data-term="kallikratis">Kallikratis</span> plan (Law 3852/2010) and its <span class="has-tooltip underline decoration-terracotta/40 underline-offset-2 cursor-help" data-term="kleisthenis">Cleisthenes I</span> amendment (Law 4555/2018), it forms the community of Varlaam within the municipal unit of Agios Dimitrios in the Municipality of Dodoni.',
+  },
+  {
+    year: 'Σήμερα',
+    titleEl: 'Το Βαρλαάμ ζει',
+    titleEn: 'Varlaam today',
+    bodyEl:
+      'Σήμερα, το Βαρλαάμ παραμένει ζωντανό μέσα από τον Σύλλογο, τους αποδήμους και τους κατοίκους που κρατούν άσβεστη τη φλόγα του τόπου. Οι ετήσιες εκδηλώσεις — κοπή πίτας, Πάσχα, πανηγύρι του Δεκαπενταύγουστου — συγκεντρώνουν βαρλαμιώτες από κάθε γωνιά της Ελλάδας και του κόσμου.',
+    bodyEn:
+      'Today Varlaam lives on through its Association, diaspora and residents — all keeping the flame of the village alive. The annual gatherings — the New Year cake-cutting, Easter, and the mid-August feast — bring Varlamiotes together from every corner of Greece and beyond.',
+  },
+];
+---
+
+<BaseLayout
+  title="Ιστορία του Βαρλαάμ"
+  description="Χρονολόγιο του χωριού Βαρλαάμ Ιωαννίνων: από τον Πουκεβίλ (1813) και τα οθωμανικά κατάστιχα (1895) μέχρι τη σύσταση της κοινότητας (1919) και σήμερα."
+>
+
+  <div class="pt-20"></div>
+  <Breadcrumbs items={[
+    { el: 'Το Χωριό', en: 'The Village', href: '/village/' },
+    { el: 'Ιστορία', en: 'History' },
+  ]} />
+
+  <!-- Hero -->
+  <section class="relative py-24 md:py-32 bg-gradient-to-br from-charcoal via-stone-dark to-olive-dark overflow-hidden">
+    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 30% 50%, rgba(193,154,107,0.4) 0%, transparent 50%);"></div>
+    <div class="relative z-10 container mx-auto px-4 text-center max-w-3xl">
+      <div class="flex items-center justify-center mb-5 animate-fade-in">
+        <span class="block w-12 h-px bg-gold-warm/60"></span>
+        <span class="mx-4 text-gold-warm text-sm font-accent tracking-[0.3em] uppercase">
+          <span data-lang="el">Χρονολόγιο</span>
+          <span data-lang="en">Timeline</span>
+        </span>
+        <span class="block w-12 h-px bg-gold-warm/60"></span>
+      </div>
+      <h1 class="font-display text-4xl md:text-6xl font-bold text-white mb-5 animate-fade-up">
+        <span data-lang="el">Ιστορία του Βαρλαάμ</span>
+        <span data-lang="en">A history of Varlaam</span>
+      </h1>
+      <p class="font-accent text-lg md:text-xl text-gold-light/85 animate-fade-up" style="animation-delay: 0.2s;">
+        <span data-lang="el">1813 · 1895 · 1919 · 2011 · Σήμερα</span>
+        <span data-lang="en">1813 · 1895 · 1919 · 2011 · Today</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="py-20 md:py-28 bg-parchment">
+    <div class="container mx-auto px-4 max-w-4xl">
+      <ol class="relative border-l-2 border-terracotta/30 ml-4 md:ml-8 space-y-12">
+        {timeline.map((t, i) => (
+          <li class="relative pl-8 md:pl-12 animate-on-scroll" style={`animation-delay: ${i * 0.08}s;`}>
+            <span
+              class="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-parchment border-2 border-terracotta shadow-sm flex items-center justify-center"
+              aria-hidden="true"
+            >
+              <span class="w-2 h-2 rounded-full bg-terracotta"></span>
+            </span>
+            <div class="font-accent text-terracotta text-sm tracking-[0.2em] uppercase mb-1">{t.year}</div>
+            <h2 class="font-display text-2xl md:text-3xl font-bold text-charcoal mb-3">
+              <span data-lang="el">{t.titleEl}</span>
+              <span data-lang="en">{t.titleEn}</span>
+            </h2>
+            <p class="font-body text-charcoal/80 leading-relaxed">
+              <span data-lang="el" set:html={t.bodyEl}></span>
+              <span data-lang="en" set:html={t.bodyEn}></span>
+            </p>
+            {t.sourceLabel && (
+              <p class="mt-3 text-xs text-charcoal/75 font-accent italic">
+                <span data-lang="el">Πηγή: </span>
+                <span data-lang="en">Source: </span>
+                {t.sourceUrl ? (
+                  <a href={t.sourceUrl} target="_blank" rel="noopener" class="underline decoration-terracotta/40 hover:text-terracotta">{t.sourceLabel}</a>
+                ) : (
+                  <span>{t.sourceLabel}</span>
+                )}
+              </p>
+            )}
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Back link -->
+  <section class="pb-20 bg-parchment">
+    <div class="container mx-auto px-4 max-w-4xl text-center">
+      <a href="/village/" class="btn-secondary">
+        <span data-lang="el">← Πίσω στο Χωριό</span>
+        <span data-lang="en">← Back to the Village</span>
+      </a>
+    </div>
+  </section>
+
+</BaseLayout>

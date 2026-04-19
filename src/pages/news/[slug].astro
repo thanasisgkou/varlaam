@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -12,9 +13,46 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
+
+const site = Astro.site?.toString().replace(/\/$/, '') ?? 'https://varlaam.netlify.app';
+const articleUrl = `${site}/news/${entry.slug}/`;
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'NewsArticle',
+  headline: entry.data.title,
+  description: entry.data.excerpt,
+  datePublished: entry.data.date.toISOString(),
+  dateModified: entry.data.date.toISOString(),
+  url: articleUrl,
+  image: entry.data.image ? new URL(entry.data.image, site).toString() : `${site}/images/attractions/xirovouni/xirovouni-01.jpg`,
+  author: {
+    '@type': 'Organization',
+    name: entry.data.author,
+    url: site,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Σύλλογος Βαρλαάμ Ιωαννίνων',
+    url: site,
+    logo: {
+      '@type': 'ImageObject',
+      url: `${site}/favicon.svg`,
+    },
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': articleUrl,
+  },
+};
 ---
 
-<BaseLayout title={entry.data.title} description={entry.data.excerpt}>
+<BaseLayout title={entry.data.title} description={entry.data.excerpt} jsonLd={articleJsonLd}>
+
+  <div class="pt-20"></div>
+  <Breadcrumbs items={[
+    { el: 'Ανακοινώσεις', en: 'News', href: '/news/' },
+    { el: entry.data.title, en: entry.data.title },
+  ]} />
 
   <!-- Hero Banner -->
   <section class="relative py-28 md:py-36 bg-gradient-to-br from-charcoal via-stone-dark to-olive-dark overflow-hidden">

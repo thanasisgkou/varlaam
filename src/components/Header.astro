@@ -8,19 +8,20 @@ const navItems = [
   { el: 'Αξιοθέατα', en: 'Attractions', href: '/attractions/' },
   { el: 'Φωτογραφίες', en: 'Photos', href: '/gallery/' },
   { el: 'Ανακοινώσεις', en: 'News', href: '/news/' },
+  { el: 'Εκδηλώσεις', en: 'Events', href: '/events/' },
   { el: 'Σύλλογος', en: 'Association', href: '/association/' },
   { el: 'Απόδημοι', en: 'Diaspora', href: '/diaspora/' },
   { el: 'Επικοινωνία', en: 'Contact', href: '/contact/' },
 ];
 ---
 
-<header id="site-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
-  <div class="absolute inset-0 bg-parchment/90 backdrop-blur-md border-b border-stone-warm/30 opacity-0 transition-opacity duration-500" id="header-bg"></div>
+<header id="site-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+  <div class="absolute inset-0 bg-parchment/90 backdrop-blur-md border-b border-stone-warm/30 opacity-0 transition-opacity duration-300" id="header-bg"></div>
 
   <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
-    <div class="flex items-center justify-between h-20">
+    <div id="header-inner" class="flex items-center justify-between h-20 transition-[height] duration-300 ease-out">
       <a href="/" class="flex items-center gap-3 group">
-        <div class="w-10 h-10 rounded-full bg-olive flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+        <div id="header-logo" class="w-10 h-10 rounded-full bg-olive flex items-center justify-center transition-all duration-300 group-hover:scale-110">
           <span class="text-white font-display font-bold text-lg">B</span>
         </div>
         <div class="flex flex-col">
@@ -28,7 +29,7 @@ const navItems = [
             <span data-lang="el">Βαρλαάμ</span>
             <span data-lang="en">Varlaam</span>
           </span>
-          <span class="font-accent text-xs text-stone-dark italic tracking-wider">
+          <span id="header-tagline" class="font-accent text-xs text-stone-dark italic tracking-wider overflow-hidden transition-[max-height,opacity] duration-300" style="max-height:1rem;">
             <span data-lang="el">Ιωαννίνων</span>
             <span data-lang="en">Ioannina</span>
           </span>
@@ -93,11 +94,29 @@ const navItems = [
 
 <script>
   const headerBg = document.getElementById('header-bg');
+  const headerInner = document.getElementById('header-inner');
+  const headerLogo = document.getElementById('header-logo');
+  const headerTagline = document.getElementById('header-tagline');
   function updateHeader() {
-    if (window.scrollY > 50) {
+    const scrolled = window.scrollY > 50;
+    if (scrolled) {
       headerBg?.classList.replace('opacity-0', 'opacity-100');
+      headerInner?.classList.replace('h-20', 'h-14');
+      headerLogo?.classList.remove('w-10', 'h-10');
+      headerLogo?.classList.add('w-8', 'h-8');
+      if (headerTagline) {
+        headerTagline.style.maxHeight = '0';
+        headerTagline.style.opacity = '0';
+      }
     } else {
       headerBg?.classList.replace('opacity-100', 'opacity-0');
+      headerInner?.classList.replace('h-14', 'h-20');
+      headerLogo?.classList.add('w-10', 'h-10');
+      headerLogo?.classList.remove('w-8', 'h-8');
+      if (headerTagline) {
+        headerTagline.style.maxHeight = '1rem';
+        headerTagline.style.opacity = '1';
+      }
     }
   }
   window.addEventListener('scroll', updateHeader, { passive: true });
