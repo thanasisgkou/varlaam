@@ -1,6 +1,6 @@
 backend:
   name: git-gateway
-  branch: main
+  branch: master
 
 locale: 'el'
 
@@ -43,7 +43,8 @@ collections:
     extension: "json"
     format: "json"
     fields:
-      - { label: "Τίτλος", name: "title", widget: "string" }
+      - { label: "Τίτλος (EL)", name: "title", widget: "string" }
+      - { label: "Τίτλος (EN)", name: "titleEn", widget: "string", required: false }
       - label: "Κατηγορία"
         name: "category"
         widget: "select"
@@ -52,9 +53,40 @@ collections:
           - { label: "Εκδηλώσεις", value: "events" }
           - { label: "Παλιές Φωτογραφίες", value: "old-photos" }
           - { label: "Φύση", value: "nature" }
+          - { label: "Αξιοθέατα", value: "attractions" }
+      - { label: "Θέμα", name: "theme", widget: "string", required: false }
+      - { label: "Έτος", name: "year", widget: "number", required: false, value_type: "int", min: 1900, max: 2100 }
       - { label: "Εικόνα", name: "image", widget: "image" }
-      - { label: "Περιγραφή", name: "description", widget: "string", required: false }
+      - { label: "Περιγραφή (EL)", name: "description", widget: "string", required: false }
+      - { label: "Περιγραφή (EN)", name: "descriptionEn", widget: "string", required: false }
       - { label: "Ημερομηνία", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, required: false }
+
+  - name: "attractions"
+    label: "Αξιοθέατα"
+    folder: "src/content/attractions"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - { label: "Slug", name: "slug", widget: "string", hint: "π.χ. xirovouni — χωρίς κενά ή ελληνικά" }
+      - { label: "Τίτλος (EL)", name: "title", widget: "string" }
+      - { label: "Τίτλος (EN)", name: "titleEn", widget: "string" }
+      - { label: "Σειρά εμφάνισης", name: "order", widget: "number", default: 0, value_type: "int" }
+      - { label: "Περίληψη (EL)", name: "summary", widget: "text" }
+      - { label: "Περίληψη (EN)", name: "summaryEn", widget: "text" }
+      - { label: "Κείμενο (EL)", name: "body", widget: "text" }
+      - { label: "Κείμενο (EN)", name: "bodyEn", widget: "text" }
+      - label: "GPS"
+        name: "gps"
+        widget: "object"
+        required: false
+        fields:
+          - { label: "Lat", name: "lat", widget: "number", value_type: "float" }
+          - { label: "Lng", name: "lng", widget: "number", value_type: "float" }
+      - { label: "Εξωτερικός σύνδεσμος", name: "externalUrl", widget: "string", required: false }
+      - { label: "Φάκελος φωτογραφιών", name: "photoFolder", widget: "string", hint: "π.χ. /images/attractions/xirovouni" }
+      - { label: "Αριθμός φωτογραφιών", name: "photoCount", widget: "number", default: 0, value_type: "int" }
 
   - name: "diaspora-stories"
     label: "Ιστορίες Αποδήμων"
