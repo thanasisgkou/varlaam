@@ -73,9 +73,16 @@ const ogImage = new URL(image ?? '/images/attractions/xirovouni/xirovouni-01.jpg
   {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
 </head>
 <body class="min-h-screen flex flex-col">
+  <a
+    href="#main-content"
+    class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:rounded-md focus:bg-charcoal focus:text-parchment focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-gold-warm"
+  >
+    <span data-lang="el">Μετάβαση στο κύριο περιεχόμενο</span>
+    <span data-lang="en">Skip to main content</span>
+  </a>
   <div class="noise-overlay" aria-hidden="true"></div>
   <Header />
-  <main class="flex-1">
+  <main id="main-content" tabindex="-1" class="flex-1">
     <slot />
   </main>
   <Footer />

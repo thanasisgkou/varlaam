@@ -252,6 +252,46 @@ const latestNews = (await getCollection('news'))
     </div>
   </section>
 
+  <!-- Map Teaser (B·04) -->
+  <section class="py-20 bg-white border-t border-stone-warm/15">
+    <div class="container mx-auto px-4 max-w-6xl">
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 items-center">
+        <div class="lg:col-span-2 animate-on-scroll animate-slide-in-left">
+          <div class="inline-flex items-center gap-2 mb-4 px-3 py-1 rounded-full border border-stone-warm/30 bg-parchment/50 text-xs font-accent tracking-wider uppercase text-charcoal/75">
+            <span data-lang="el">Πού μας βρίσκετε</span>
+            <span data-lang="en">Where to find us</span>
+          </div>
+          <h2 class="font-display text-3xl md:text-4xl font-bold text-charcoal mb-4">
+            <span data-lang="el">Στην καρδιά της Ηπείρου</span>
+            <span data-lang="en">In the heart of Epirus</span>
+          </h2>
+          <p class="font-body text-charcoal/80 leading-relaxed mb-6">
+            <span data-lang="el">Στις ανατολικές πλαγιές του Ξηροβουνίου, 32,5 χλμ νότια από τα Ιωάννινα. Ο δρόμος είναι γραφικός — περνά μέσα από ηπειρώτικα χωριά και ανοιχτά τοπία.</span>
+            <span data-lang="en">On the eastern slopes of Mount Xirovouni, 32.5 km south of Ioannina. The road is picturesque, winding through Epirotan villages and open landscapes.</span>
+          </p>
+          <a href="/village/#how-to-get-here" class="btn-secondary">
+            <span data-lang="el">Πώς θα έρθετε →</span>
+            <span data-lang="en">How to get here →</span>
+          </a>
+        </div>
+
+        <div class="lg:col-span-3 animate-on-scroll animate-slide-in-right">
+          <div class="rounded-xl overflow-hidden shadow-lg border border-stone-warm/20">
+            <iframe
+              src="https://www.openstreetmap.org/export/embed.html?bbox=20.79%2C39.36%2C20.99%2C39.48&amp;layer=mapnik&amp;marker=39.4208%2C20.8934"
+              width="100%"
+              height="360"
+              style="border:0;"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Χάρτης Βαρλαάμ Ιωαννίνων — Map of Varlaam, Ioannina"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Diaspora CTA Section -->
   <section class="py-24 bg-parchment relative">
     <div class="container mx-auto px-4 max-w-4xl">

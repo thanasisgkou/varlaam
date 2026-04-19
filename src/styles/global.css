@@ -158,3 +158,18 @@
 /* i18n: show/hide translations based on <html lang="..."> */
 html[lang="el"] [data-lang="en"] { display: none !important; }
 html[lang="en"] [data-lang="el"] { display: none !important; }
+
+/* J·03 — visible focus ring for keyboard users */
+*:focus-visible {
+  outline: 2px solid #C9A84C;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline-color: #C9A84C;
+}

@@ -16,10 +16,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <span class="block w-12 h-px bg-gold-warm/50"></span>
       </div>
       <h1 class="font-display text-5xl md:text-7xl font-bold text-white mb-6 animate-fade-up">
-        Το Χωριό μας
+        <span data-lang="el">Το Χωριό μας</span>
+        <span data-lang="en">Our Village</span>
       </h1>
       <p class="font-accent text-xl text-gold-light/80 max-w-2xl mx-auto animate-fade-up" style="animation-delay: 0.2s;">
-        Ένα ταξίδι στην ιστορία και την ψυχή της Ηπείρου
+        <span data-lang="el">Ένα ταξίδι στην ιστορία και την ψυχή της Ηπείρου</span>
+        <span data-lang="en">A journey through the history and soul of Epirus</span>
       </p>
     </div>
   </section>
@@ -126,7 +128,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </section>
 
   <!-- Practical info (C·03) -->
-  <section class="py-20 bg-parchment border-t border-stone-warm/20">
+  <section id="how-to-get-here" class="py-20 bg-parchment border-t border-stone-warm/20">
     <div class="container mx-auto px-4 max-w-5xl">
       <div class="animate-on-scroll text-center mb-12">
         <h2 class="section-title">

@@ -15,12 +15,18 @@ const allNews = (await getCollection('news')).sort(
     <div class="relative z-10 container mx-auto px-4 text-center">
       <div class="flex items-center justify-center mb-6 animate-fade-in">
         <span class="block w-12 h-px bg-gold-warm/50"></span>
-        <span class="mx-4 text-gold-warm/70 text-sm font-accent tracking-[0.3em] uppercase">Ενημέρωση</span>
+        <span class="mx-4 text-gold-warm/70 text-sm font-accent tracking-[0.3em] uppercase">
+          <span data-lang="el">Ενημέρωση</span><span data-lang="en">Updates</span>
+        </span>
         <span class="block w-12 h-px bg-gold-warm/50"></span>
       </div>
-      <h1 class="font-display text-5xl md:text-7xl font-bold text-white mb-6 animate-fade-up">Νέα</h1>
+      <h1 class="font-display text-5xl md:text-7xl font-bold text-white mb-6 animate-fade-up">
+        <span data-lang="el">Ανακοινώσεις</span>
+        <span data-lang="en">News</span>
+      </h1>
       <p class="font-accent text-xl text-gold-light/80 max-w-2xl mx-auto animate-fade-up" style="animation-delay: 0.2s;">
-        Ανακοινώσεις, ειδήσεις και νέα από το Βαρλαάμ
+        <span data-lang="el">Ανακοινώσεις, ειδήσεις και νέα από το Βαρλαάμ</span>
+        <span data-lang="en">Announcements, news and updates from Varlaam</span>
       </p>
     </div>
   </section>
