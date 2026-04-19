@@ -1,0 +1,37 @@
+---
+interface Props {
+  size?: number;
+  /** true = dark background (use cream silhouette); false = light background (use kerameidi) */
+  dark?: boolean;
+  class?: string;
+}
+const { size = 40, dark = false, class: className = '' } = Astro.props;
+const fg = dark ? '#FAF7F0' : '#7A2E1F';
+const bgStart = dark ? '#7A2E1F' : '#FAF7F0';
+const bgEnd = dark ? '#5A1F12' : '#F0E8D4';
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 64 64"
+  width={size}
+  height={size}
+  class={className}
+  role="img"
+  aria-label="Βαρλαάμ Ιωαννίνων"
+>
+  <defs>
+    <linearGradient id="logomark-bg" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color={bgStart}/>
+      <stop offset="1" stop-color={bgEnd}/>
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="30" fill={dark ? 'url(#logomark-bg)' : 'transparent'} stroke={dark ? 'none' : '#7A2E1F'} stroke-width={dark ? 0 : 2}/>
+  <path d="M10 46 L22 30 L30 38 L40 22 L54 46 Z" fill={fg} opacity="0.9"/>
+  <g fill={fg}>
+    <rect x="38" y="28" width="4" height="6"/>
+    <polygon points="37,28 43,28 40,24"/>
+    <rect x="39.4" y="22" width="1.2" height="4"/>
+    <rect x="38.7" y="23" width="2.6" height="1"/>
+  </g>
+</svg>

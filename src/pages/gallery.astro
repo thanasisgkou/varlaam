@@ -188,6 +188,98 @@ const themes = [
     </div>
   </section>
 
+  <!-- Old photos submission (E·02) -->
+  <section class="py-20 bg-white border-t border-stone-warm/20">
+    <div class="container mx-auto px-4 max-w-3xl">
+      <div class="animate-on-scroll text-center mb-10">
+        <div class="inline-flex items-center gap-2 mb-4 px-3 py-1 rounded-full border border-stone-warm/30 bg-parchment/50 text-xs font-accent tracking-wider uppercase text-charcoal/75">
+          <span data-lang="el">Αρχείο αποδήμων</span>
+          <span data-lang="en">Diaspora archive</span>
+        </div>
+        <h2 class="section-title">
+          <span data-lang="el">Έχετε παλιές φωτογραφίες;</span>
+          <span data-lang="en">Got old photos?</span>
+        </h2>
+        <p class="section-subtitle">
+          <span data-lang="el">Βοηθήστε να χτίσουμε το οπτικό αρχείο του Βαρλαάμ</span>
+          <span data-lang="en">Help us build Varlaam's visual archive</span>
+        </p>
+        <div class="divider mx-auto mt-6"></div>
+      </div>
+
+      <form
+        name="old-photo"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        enctype="multipart/form-data"
+        action="/thank-you/"
+        class="space-y-5 bg-parchment/60 rounded-xl border border-stone-warm/20 p-8 md:p-10 animate-on-scroll"
+      >
+        <input type="hidden" name="form-name" value="old-photo" />
+        <p class="hidden"><label>Αφήστε κενό: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <label class="block">
+            <span class="font-accent text-xs uppercase tracking-wider text-charcoal/75">
+              <span data-lang="el">Ονοματεπώνυμο</span><span data-lang="en">Name</span> *
+            </span>
+            <input type="text" name="name" required maxlength="120" class="mt-1 w-full px-4 py-2.5 rounded-md border border-stone-warm/40 font-body focus:outline-none focus:ring-2 focus:ring-terracotta/40 focus:border-terracotta/40 transition-colors" />
+          </label>
+          <label class="block">
+            <span class="font-accent text-xs uppercase tracking-wider text-charcoal/75">Email *</span>
+            <input type="email" name="email" required maxlength="200" class="mt-1 w-full px-4 py-2.5 rounded-md border border-stone-warm/40 font-body focus:outline-none focus:ring-2 focus:ring-terracotta/40 focus:border-terracotta/40 transition-colors" />
+          </label>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <label class="block">
+            <span class="font-accent text-xs uppercase tracking-wider text-charcoal/75">
+              <span data-lang="el">Περίπου χρονολογία</span><span data-lang="en">Approximate date</span>
+            </span>
+            <input type="text" name="approx-year" maxlength="60" placeholder="π.χ. 1965, δεκαετία '70" class="mt-1 w-full px-4 py-2.5 rounded-md border border-stone-warm/40 font-body focus:outline-none focus:ring-2 focus:ring-terracotta/40 focus:border-terracotta/40 transition-colors" />
+          </label>
+          <label class="block">
+            <span class="font-accent text-xs uppercase tracking-wider text-charcoal/75">
+              <span data-lang="el">Τοποθεσία φωτογραφίας</span><span data-lang="en">Photo location</span>
+            </span>
+            <input type="text" name="photo-location" maxlength="120" placeholder="Πλατεία · εκκλησία · σπίτι…" class="mt-1 w-full px-4 py-2.5 rounded-md border border-stone-warm/40 font-body focus:outline-none focus:ring-2 focus:ring-terracotta/40 focus:border-terracotta/40 transition-colors" />
+          </label>
+        </div>
+
+        <label class="block">
+          <span class="font-accent text-xs uppercase tracking-wider text-charcoal/75">
+            <span data-lang="el">Τι δείχνει η φωτογραφία</span><span data-lang="en">What the photo shows</span>
+          </span>
+          <textarea name="caption" rows="4" maxlength="2000" placeholder="Ποιοι είναι στη φωτογραφία, με ποια αφορμή τραβήχτηκε, τι θυμάστε…" class="mt-1 w-full px-4 py-2.5 rounded-md border border-stone-warm/40 font-body focus:outline-none focus:ring-2 focus:ring-terracotta/40 focus:border-terracotta/40 transition-colors resize-y"></textarea>
+        </label>
+
+        <label class="block">
+          <span class="font-accent text-xs uppercase tracking-wider text-charcoal/75">
+            <span data-lang="el">Φωτογραφίες (έως 5, μέγιστο 10MB καθεμιά)</span>
+            <span data-lang="en">Photos (up to 5, max 10MB each)</span> *
+          </span>
+          <input type="file" name="photos" accept="image/*" multiple required class="mt-1 w-full text-sm font-body file:mr-3 file:py-2 file:px-4 file:rounded file:border-0 file:font-accent file:uppercase file:text-xs file:tracking-wider file:bg-terracotta file:text-white hover:file:bg-terracotta-dark file:cursor-pointer" />
+        </label>
+
+        <label class="flex items-start gap-3 text-sm text-charcoal/75">
+          <input type="checkbox" name="consent" required class="mt-1 w-4 h-4 accent-terracotta" />
+          <span>
+            <span data-lang="el">Δηλώνω ότι έχω δικαιώματα χρήσης των φωτογραφιών και συναινώ στη δημοσίευση στο αρχείο του Συλλόγου.</span>
+            <span data-lang="en">I confirm I have the rights to these photos and consent to their publication in the Association's archive.</span>
+          </span>
+        </label>
+
+        <div class="text-center pt-2">
+          <button type="submit" class="btn-primary">
+            <span data-lang="el">Αποστολή φωτογραφιών</span>
+            <span data-lang="en">Send photos</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+
   <!-- Lightbox -->
   <div
     id="lightbox"

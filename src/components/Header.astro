@@ -1,5 +1,6 @@
 ---
 import LangToggle from './LangToggle.astro';
+import Logomark from './Logomark.astro';
 const currentPath = Astro.url.pathname;
 
 const navItems = [
@@ -21,11 +22,11 @@ const navItems = [
   <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
     <div id="header-inner" class="flex items-center justify-between h-20 transition-[height] duration-300 ease-out">
       <a href="/" class="flex items-center gap-3 group">
-        <div id="header-logo" class="w-10 h-10 rounded-full bg-olive flex items-center justify-center transition-all duration-300 group-hover:scale-110">
-          <span class="text-white font-display font-bold text-lg">B</span>
+        <div id="header-logo" class="w-10 h-10 flex items-center justify-center transition-all duration-300 group-hover:scale-110">
+          <Logomark size={40} />
         </div>
         <div class="flex flex-col">
-          <span class="font-display font-bold text-lg leading-tight text-charcoal">
+          <span class="font-display font-bold text-lg leading-tight text-charcoal tracking-tight">
             <span data-lang="el">Βαρλαάμ</span>
             <span data-lang="en">Varlaam</span>
           </span>

@@ -210,10 +210,145 @@ const bulletins = (await getCollection('diaspora-bulletin'))
           <svg class="w-16 h-16 mx-auto text-stone-warm/30 mb-6" fill="currentColor" viewBox="0 0 24 24">
             <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151C7.546 6.068 5.983 8.789 5.983 11H10v10H0z"/>
           </svg>
-          <h3 class="font-display text-2xl text-charcoal/75 mb-2">Δεν υπάρχουν ιστορίες ακόμα</h3>
-          <p class="font-body text-charcoal/70">Μοιραστείτε τη δική σας ιστορία μέσω της φόρμας επικοινωνίας!</p>
+          <h3 class="font-display text-2xl text-charcoal/75 mb-2">
+            <span data-lang="el">Δεν υπάρχουν ιστορίες ακόμα</span>
+            <span data-lang="en">No stories yet</span>
+          </h3>
+          <p class="font-body text-charcoal/70">
+            <span data-lang="el">Γίνετε ο πρώτος — μοιραστείτε τη δική σας παρακάτω.</span>
+            <span data-lang="en">Be the first — share yours below.</span>
+          </p>
         </div>
       )}
+
+      <!-- Story submission form (G·02) -->
+      <div class="mt-16 animate-on-scroll" id="share-your-story">
+        <div class="bg-white rounded-xl shadow-sm border border-stone-warm/15 p-8 md:p-10">
+          <div class="text-center mb-8">
+            <h3 class="font-display text-2xl md:text-3xl font-bold text-charcoal mb-2">
+              <span data-lang="el">Μοιραστείτε την ιστορία σας</span>
+              <span data-lang="en">Share your story</span>
+            </h3>
+            <p class="font-body text-charcoal/75 max-w-2xl mx-auto">
+              <span data-lang="el">Μια ανάμνηση, μια οικογενειακή ιστορία, μια στιγμή από το Βαρλαάμ. Ο Σύλλογος ελέγχει τις υποβολές πριν τη δημοσίευση.</span>
+              <span data-lang="en">A memory, a family story, a moment from Varlaam. The Association reviews every submission before publishing.</span>
+            </p>
+          </div>
+
+          <form
+            name="diaspora-story"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            action="/thank-you/"
+            class="space-y-5 max-w-2xl mx-auto"
+          >
+            <input type="hidden" name="form-name" value="diaspora-story" />
+            <p class="hidden"><label>Αφήστε κενό / Leave empty: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <label class="block">
+                <span class="font-accent text-xs uppercase tracking-wider text-charcoal/75">
+                  <span data-lang="el">Ονοματεπώνυμο</span><span data-lang="en">Name</span> *
+                </span>
+                <input type="text" name="name" required maxlength="120" class="mt-1 w-full px-4 py-2.5 rounded-md border border-stone-warm/40 font-body focus:outline-none focus:ring-2 focus:ring-terracotta/40 focus:border-terracotta/40 transition-colors" />
+              </label>
+              <label class="block">
+                <span class="font-accent text-xs uppercase tracking-wider text-charcoal/75">
+                  <span data-lang="el">Τοποθεσία (πόλη)</span><span data-lang="en">Location (city)</span>
+                </span>
+                <input type="text" name="location" maxlength="120" placeholder="Αθήνα · Μελβούρνη · Στοκχόλμη…" class="mt-1 w-full px-4 py-2.5 rounded-md border border-stone-warm/40 font-body focus:outline-none focus:ring-2 focus:ring-terracotta/40 focus:border-terracotta/40 transition-colors" />
+              </label>
+            </div>
+
+            <label class="block">
+              <span class="font-accent text-xs uppercase tracking-wider text-charcoal/75">
+                <span data-lang="el">Email (προαιρετικό)</span><span data-lang="en">Email (optional)</span>
+              </span>
+              <input type="email" name="email" maxlength="200" class="mt-1 w-full px-4 py-2.5 rounded-md border border-stone-warm/40 font-body focus:outline-none focus:ring-2 focus:ring-terracotta/40 focus:border-terracotta/40 transition-colors" />
+              <span class="text-xs text-charcoal/70 mt-1 block">
+                <span data-lang="el">Για να σας ενημερώσουμε όταν δημοσιευτεί.</span>
+                <span data-lang="en">So we can let you know when it's published.</span>
+              </span>
+            </label>
+
+            <label class="block">
+              <span class="font-accent text-xs uppercase tracking-wider text-charcoal/75">
+                <span data-lang="el">Τίτλος</span><span data-lang="en">Title</span> *
+              </span>
+              <input type="text" name="title" required maxlength="200" class="mt-1 w-full px-4 py-2.5 rounded-md border border-stone-warm/40 font-body focus:outline-none focus:ring-2 focus:ring-terracotta/40 focus:border-terracotta/40 transition-colors" />
+            </label>
+
+            <label class="block">
+              <span class="font-accent text-xs uppercase tracking-wider text-charcoal/75">
+                <span data-lang="el">Η ιστορία σας</span><span data-lang="en">Your story</span> *
+              </span>
+              <textarea name="story" required rows="8" minlength="80" maxlength="5000" class="mt-1 w-full px-4 py-2.5 rounded-md border border-stone-warm/40 font-body focus:outline-none focus:ring-2 focus:ring-terracotta/40 focus:border-terracotta/40 transition-colors resize-y" placeholder="Ξεκινήστε από την παλιότερη ανάμνηση που σας έρχεται στο μυαλό…"></textarea>
+            </label>
+
+            <label class="flex items-start gap-3 text-sm text-charcoal/75">
+              <input type="checkbox" name="consent" required class="mt-1 w-4 h-4 accent-terracotta" />
+              <span>
+                <span data-lang="el">Δίνω τη συγκατάθεσή μου να δημοσιευτεί η ιστορία στον ιστότοπο του Συλλόγου (μετά από έλεγχο) και να αναφέρεται το όνομα και η τοποθεσία.</span>
+                <span data-lang="en">I consent to the Association publishing this story on the website (after review) and displaying my name and location.</span>
+              </span>
+            </label>
+
+            <div class="text-center pt-2">
+              <button type="submit" class="btn-primary">
+                <span data-lang="el">Υποβολή ιστορίας</span>
+                <span data-lang="en">Submit story</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Diaspora map opt-in (G·01) -->
+      <div class="mt-10 animate-on-scroll" id="diaspora-map-optin">
+        <div class="bg-parchment/70 rounded-xl border border-stone-warm/20 p-8 md:p-10">
+          <div class="text-center mb-6">
+            <h3 class="font-display text-xl md:text-2xl font-bold text-charcoal mb-2">
+              <span data-lang="el">Μπείτε στον χάρτη των αποδήμων</span>
+              <span data-lang="en">Pin yourself on the diaspora map</span>
+            </h3>
+            <p class="font-body text-charcoal/75 max-w-2xl mx-auto text-sm">
+              <span data-lang="el">Μόνο πόλη και χώρα — καμία διεύθυνση, κανένα προσωπικό δεδομένο. Βλέπουμε όλοι μαζί πού έχει απλωθεί το χωριό.</span>
+              <span data-lang="en">City and country only — no address, no personal data. Together we can see how far the village has spread.</span>
+            </p>
+          </div>
+
+          <form
+            name="diaspora-map"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            action="/thank-you/"
+            class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto"
+          >
+            <input type="hidden" name="form-name" value="diaspora-map" />
+            <p class="hidden"><label>Αφήστε κενό: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+
+            <input type="text" name="display-name" maxlength="80" placeholder="Όνομα (προαιρετικό)" class="px-4 py-2.5 rounded-md border border-stone-warm/40 font-body focus:outline-none focus:ring-2 focus:ring-olive/40" />
+            <input type="text" name="city" required maxlength="80" placeholder="Πόλη *" class="px-4 py-2.5 rounded-md border border-stone-warm/40 font-body focus:outline-none focus:ring-2 focus:ring-olive/40" />
+            <input type="text" name="country" required maxlength="80" placeholder="Χώρα *" class="px-4 py-2.5 rounded-md border border-stone-warm/40 font-body focus:outline-none focus:ring-2 focus:ring-olive/40" />
+            <div class="sm:col-span-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <label class="flex items-start gap-2 text-xs text-charcoal/75">
+                <input type="checkbox" name="map-consent" required class="mt-0.5 w-4 h-4 accent-olive" />
+                <span>
+                  <span data-lang="el">Συναινώ στην εμφάνιση της πόλης/χώρας μου στον χάρτη.</span>
+                  <span data-lang="en">I consent to displaying my city/country on the map.</span>
+                </span>
+              </label>
+              <button type="submit" class="btn-secondary">
+                <span data-lang="el">Προσθήκη στον χάρτη</span>
+                <span data-lang="en">Pin me</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
     </div>
   </section>
 
