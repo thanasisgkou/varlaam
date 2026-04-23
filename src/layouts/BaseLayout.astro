@@ -15,7 +15,7 @@ interface Props {
 const { title, description = 'Η επίσημη ιστοσελίδα του χωριού Βαρλαάμ Ιωαννίνων - Ήπειρος, Ελλάδα. Να μη συγχέεται με τη Μονή Βαρλαάμ Μετεώρων.', image, jsonLd } = Astro.props;
 const fullTitle = title === 'Αρχική' ? 'Βαρλαάμ Ιωαννίνων — Χωριό στην Ήπειρο' : `${title} | Βαρλαάμ Ιωαννίνων — Χωριό Ηπείρου`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const ogImage = new URL(image ?? '/images/attractions/xirovouni/xirovouni-01.jpg', Astro.site).toString();
+const ogImage = new URL(image ?? '/images/hero/varlaam-01.jpg', Astro.site).toString();
 ---
 
 <!DOCTYPE html>

@@ -11,17 +11,41 @@ const latestNews = (await getCollection('news'))
 
   <!-- Hero Section -->
   <section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-    <!-- Real village photo -->
-    <img
-      src="/images/attractions/xirovouni/xirovouni-01.jpg"
-      alt="Βαρλαάμ Ιωαννίνων — θέα από το Ξηροβούνι / Varlaam view from Xirovouni"
-      class="absolute inset-0 w-full h-full object-cover"
-      fetchpriority="high"
-    />
+    <!-- Rotating village photos -->
+    <div id="hero-carousel" class="absolute inset-0">
+      <img
+        src="/images/hero/varlaam-01.jpg"
+        alt="Βαρλαάμ Ιωαννίνων — χιονισμένο βουνό / Varlaam with snow-capped mountain"
+        class="hero-slide absolute inset-0 w-full h-full object-cover opacity-100 transition-opacity duration-[1500ms] ease-in-out"
+        fetchpriority="high"
+        data-slide="0"
+      />
+      <img
+        src="/images/hero/varlaam-02.jpg"
+        alt="Θέα προς το Ξηροβούνι / View towards Xirovouni"
+        class="hero-slide absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-[1500ms] ease-in-out"
+        loading="lazy"
+        data-slide="1"
+      />
+      <img
+        src="/images/hero/varlaam-03.jpg"
+        alt="Τα κεραμοσκεπή σπίτια του χωριού / Varlaam's tiled-roof houses"
+        class="hero-slide absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-[1500ms] ease-in-out"
+        loading="lazy"
+        data-slide="2"
+      />
+    </div>
     <!-- Dark gradient overlay for legibility -->
     <div class="absolute inset-0 bg-gradient-to-b from-charcoal/30 via-charcoal/55 to-charcoal/85"></div>
     <!-- Soft vignette -->
     <div class="absolute inset-0" style="background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.45) 100%);"></div>
+
+    <!-- Carousel indicators -->
+    <div class="absolute bottom-24 left-1/2 -translate-x-1/2 z-20 flex gap-2" role="tablist" aria-label="Hero slides">
+      <button type="button" class="hero-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300 data-[active=true]:bg-gold-warm data-[active=true]:w-6" data-goto="0" data-active="true" aria-label="Slide 1"></button>
+      <button type="button" class="hero-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300 data-[active=true]:bg-gold-warm data-[active=true]:w-6" data-goto="1" data-active="false" aria-label="Slide 2"></button>
+      <button type="button" class="hero-dot w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300 data-[active=true]:bg-gold-warm data-[active=true]:w-6" data-goto="2" data-active="false" aria-label="Slide 3"></button>
+    </div>
 
     <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
       <!-- Ornamental Line -->
@@ -326,5 +350,53 @@ const latestNews = (await getCollection('news'))
       </div>
     </div>
   </section>
+
+  <script is:inline>
+    (function () {
+      const slides = document.querySelectorAll('.hero-slide');
+      const dots = document.querySelectorAll('.hero-dot');
+      if (slides.length < 2) return;
+      let current = 0;
+      let timer;
+      const INTERVAL = 5500;
+
+      function show(next) {
+        if (next === current) return;
+        slides[current].style.opacity = '0';
+        slides[next].style.opacity = '1';
+        dots.forEach((d, i) => d.setAttribute('data-active', i === next ? 'true' : 'false'));
+        current = next;
+      }
+
+      function advance() {
+        show((current + 1) % slides.length);
+      }
+
+      function start() {
+        stop();
+        timer = window.setInterval(advance, INTERVAL);
+      }
+
+      function stop() {
+        if (timer) window.clearInterval(timer);
+      }
+
+      dots.forEach((dot) => {
+        dot.addEventListener('click', () => {
+          const target = parseInt(dot.getAttribute('data-goto') || '0', 10);
+          show(target);
+          start();
+        });
+      });
+
+      // Pause when tab hidden
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) stop();
+        else start();
+      });
+
+      start();
+    })();
+  </script>
 
 </BaseLayout>
