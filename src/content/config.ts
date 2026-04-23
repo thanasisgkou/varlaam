@@ -77,6 +77,20 @@ const diasporaBulletin = defineCollection({
   }),
 });
 
+const memories = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    category: z.enum(['summer', 'winter', 'dhloti', 'nicknames', 'dialect', 'first-time']),
+    author: z.string().default('Ανώνυμος/η'),
+    authorLocation: z.string().optional(),
+    year: z.string().optional(),
+    image: z.string().optional(),
+    approved: z.boolean().default(false),
+    submittedAt: z.coerce.date().optional(),
+  }),
+});
+
 export const collections = {
   news,
   events,
@@ -84,4 +98,5 @@ export const collections = {
   attractions,
   'diaspora-stories': diasporaStories,
   'diaspora-bulletin': diasporaBulletin,
+  memories,
 };

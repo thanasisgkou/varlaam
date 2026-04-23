@@ -1,0 +1,318 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const all = await getCollection('memories', (m) => m.data.approved);
+const memories = all.sort((a, b) => {
+  const da = a.data.submittedAt?.valueOf() ?? 0;
+  const db = b.data.submittedAt?.valueOf() ?? 0;
+  return db - da;
+});
+
+const categories = [
+  { id: 'all',        emoji: '✨', el: 'Όλες',                 en: 'All' },
+  { id: 'summer',     emoji: '🌞', el: 'Καλοκαίρια',            en: 'Summers' },
+  { id: 'winter',     emoji: '❄️', el: 'Χειμώνες',              en: 'Winters' },
+  { id: 'dhloti',     emoji: '🃏', el: 'Ο καλύτερος στη δηλωτή', en: 'Best at dhloti' },
+  { id: 'nicknames',  emoji: '📛', el: 'Τα παρατσούκλια',        en: 'Nicknames' },
+  { id: 'dialect',    emoji: '🗣️', el: 'Μιλάς Βαρλαμίτικα;',     en: 'Varlaami dialect' },
+  { id: 'first-time', emoji: '🎤', el: 'Πρώτη φορά',             en: 'First time' },
+] as const;
+
+const catMeta: Record<string, { emoji: string; el: string; en: string }> = {};
+for (const c of categories) catMeta[c.id] = { emoji: c.emoji, el: c.el, en: c.en };
+---
+
+<BaseLayout
+  title="Αναμνήσεις"
+  description="Ιστορίες και αναμνήσεις από το χωριό Βαρλαάμ Ιωαννίνων — καλοκαίρια, χειμώνες, παρατσούκλια, γλώσσα, δηλωτή."
+>
+
+  <!-- Hero -->
+  <section class="relative py-28 md:py-36 bg-gradient-to-br from-charcoal via-stone-dark to-olive-dark overflow-hidden">
+    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 30% 50%, rgba(193,154,107,0.4) 0%, transparent 50%);"></div>
+    <div class="relative z-10 container mx-auto px-4 text-center max-w-3xl">
+      <div class="flex items-center justify-center mb-6 animate-fade-in">
+        <span class="block w-12 h-px bg-gold-warm/60"></span>
+        <span class="mx-4 text-gold-warm text-sm font-accent tracking-[0.3em] uppercase">
+          <span data-lang="el">Η φωνή του χωριού</span>
+          <span data-lang="en">Voice of the village</span>
+        </span>
+        <span class="block w-12 h-px bg-gold-warm/60"></span>
+      </div>
+      <h1 class="font-display text-5xl md:text-7xl font-bold text-white mb-6 animate-fade-up">
+        <span data-lang="el">Αναμνήσεις</span>
+        <span data-lang="en">Memories</span>
+      </h1>
+      <p class="font-accent text-xl md:text-2xl text-gold-light/90 animate-fade-up" style="animation-delay: 0.2s;">
+        <span data-lang="el">Ιστορίες, χαρακτήρες και γλώσσα του Βαρλαάμ</span>
+        <span data-lang="en">Stories, characters and the language of Varlaam</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- Filters + Cards -->
+  <section class="py-20 bg-parchment">
+    <div class="container mx-auto px-4 max-w-6xl">
+
+      <!-- Filter chips -->
+      <div class="animate-on-scroll flex flex-wrap items-center justify-center gap-2 md:gap-3 mb-14">
+        {categories.map((c) => (
+          <button
+            class="memory-filter inline-flex items-center gap-2 px-4 py-2 rounded-full font-accent text-sm tracking-wide transition-all duration-300 border border-stone-warm/30 hover:border-terracotta/50 hover:bg-terracotta/10 hover:text-terracotta data-[active=true]:bg-terracotta data-[active=true]:text-white data-[active=true]:border-terracotta"
+            data-cat={c.id}
+            data-active={c.id === 'all' ? 'true' : 'false'}
+          >
+            <span aria-hidden="true">{c.emoji}</span>
+            <span data-lang="el">{c.el}</span>
+            <span data-lang="en">{c.en}</span>
+          </button>
+        ))}
+      </div>
+
+      <!-- Cards grid -->
+      {memories.length > 0 ? (
+        <div id="memories-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {memories.map(async (m) => {
+            const meta = catMeta[m.data.category];
+            const { Content } = await m.render();
+            return (
+              <article
+                class="memory-card animate-on-scroll card p-6 flex flex-col"
+                data-cat={m.data.category}
+              >
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="inline-flex items-center gap-1.5 text-xs font-accent tracking-wider uppercase text-terracotta bg-terracotta/10 px-2.5 py-1 rounded-full">
+                    <span aria-hidden="true">{meta?.emoji}</span>
+                    <span data-lang="el">{meta?.el}</span>
+                    <span data-lang="en">{meta?.en}</span>
+                  </span>
+                  {m.data.year && (
+                    <span class="text-xs font-accent text-charcoal/70">· {m.data.year}</span>
+                  )}
+                </div>
+
+                <h3 class="font-display text-xl text-charcoal mb-3 leading-snug">
+                  {m.data.title}
+                </h3>
+
+                <div class="prose prose-sm max-w-none prose-p:font-body prose-p:text-charcoal/80 prose-p:leading-relaxed prose-strong:text-charcoal flex-1">
+                  <Content />
+                </div>
+
+                <footer class="mt-5 pt-4 border-t border-stone-warm/20 flex items-center gap-2 text-xs text-charcoal/75 font-body">
+                  <svg class="w-3.5 h-3.5 text-terracotta/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                  </svg>
+                  <span>{m.data.author}</span>
+                  {m.data.authorLocation && (
+                    <>
+                      <span class="text-stone-warm">·</span>
+                      <span class="text-charcoal/75">{m.data.authorLocation}</span>
+                    </>
+                  )}
+                </footer>
+              </article>
+            );
+          })}
+        </div>
+      ) : (
+        <div class="text-center py-16 animate-on-scroll">
+          <p class="font-body text-charcoal/75 text-lg">
+            <span data-lang="el">Δεν υπάρχουν ακόμα αναμνήσεις. Γίνετε ο πρώτος που θα μοιραστεί μια!</span>
+            <span data-lang="en">No memories yet. Be the first to share one!</span>
+          </p>
+        </div>
+      )}
+
+      <div id="memories-empty" class="hidden text-center py-16">
+        <p class="font-body text-charcoal/75 text-lg">
+          <span data-lang="el">Δεν υπάρχει ακόμα κάτι σε αυτή την κατηγορία. <a href="#submit" class="text-terracotta underline">Γράψε την πρώτη!</a></span>
+          <span data-lang="en">Nothing in this category yet. <a href="#submit" class="text-terracotta underline">Be the first!</a></span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Submission form -->
+  <section id="submit" class="py-24 bg-white border-t border-stone-warm/20 scroll-mt-24">
+    <div class="container mx-auto px-4 max-w-3xl">
+      <div class="animate-on-scroll text-center mb-12">
+        <h2 class="section-title">
+          <span data-lang="el">Μοιραστείτε τη δική σας</span>
+          <span data-lang="en">Share your own</span>
+        </h2>
+        <p class="section-subtitle">
+          <span data-lang="el">Γράψτε την ιστορία σας — ο Σύλλογος θα την εγκρίνει και θα εμφανιστεί εδώ</span>
+          <span data-lang="en">Write your memory — the Association will review and publish it here</span>
+        </p>
+        <div class="divider mx-auto mt-6"></div>
+      </div>
+
+      <form
+        name="memories"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        action="/thank-you"
+        class="animate-on-scroll space-y-6 bg-parchment/50 rounded-xl p-6 md:p-10 border border-stone-warm/20"
+      >
+        <!-- Netlify Forms requires these -->
+        <input type="hidden" name="form-name" value="memories" />
+        <p class="hidden">
+          <label>Don't fill this: <input name="bot-field" /></label>
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div>
+            <label for="mem-name" class="block font-accent text-sm text-charcoal/80 mb-1.5 tracking-wide">
+              <span data-lang="el">Όνομα *</span>
+              <span data-lang="en">Name *</span>
+            </label>
+            <input
+              id="mem-name"
+              type="text"
+              name="name"
+              required
+              class="w-full px-4 py-2.5 rounded-lg border border-stone-warm/40 bg-white focus:outline-none focus:border-terracotta focus:ring-2 focus:ring-terracotta/20 font-body"
+            />
+          </div>
+
+          <div>
+            <label for="mem-location" class="block font-accent text-sm text-charcoal/80 mb-1.5 tracking-wide">
+              <span data-lang="el">Πόλη / Τοποθεσία</span>
+              <span data-lang="en">City / Location</span>
+            </label>
+            <input
+              id="mem-location"
+              type="text"
+              name="location"
+              placeholder="π.χ. Βαρλαάμ, Αθήνα, Μόναχο"
+              class="w-full px-4 py-2.5 rounded-lg border border-stone-warm/40 bg-white focus:outline-none focus:border-terracotta focus:ring-2 focus:ring-terracotta/20 font-body"
+            />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div>
+            <label for="mem-category" class="block font-accent text-sm text-charcoal/80 mb-1.5 tracking-wide">
+              <span data-lang="el">Κατηγορία *</span>
+              <span data-lang="en">Category *</span>
+            </label>
+            <select
+              id="mem-category"
+              name="category"
+              required
+              class="w-full px-4 py-2.5 rounded-lg border border-stone-warm/40 bg-white focus:outline-none focus:border-terracotta focus:ring-2 focus:ring-terracotta/20 font-body"
+            >
+              <option value="">— Διαλέξτε —</option>
+              {categories.filter((c) => c.id !== 'all').map((c) => (
+                <option value={c.id}>{c.emoji} {c.el}</option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label for="mem-year" class="block font-accent text-sm text-charcoal/80 mb-1.5 tracking-wide">
+              <span data-lang="el">Χρονολογία (προαιρετικά)</span>
+              <span data-lang="en">Year (optional)</span>
+            </label>
+            <input
+              id="mem-year"
+              type="text"
+              name="year"
+              placeholder="π.χ. 1985, δεκαετία '70"
+              class="w-full px-4 py-2.5 rounded-lg border border-stone-warm/40 bg-white focus:outline-none focus:border-terracotta focus:ring-2 focus:ring-terracotta/20 font-body"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label for="mem-title" class="block font-accent text-sm text-charcoal/80 mb-1.5 tracking-wide">
+            <span data-lang="el">Τίτλος *</span>
+            <span data-lang="en">Title *</span>
+          </label>
+          <input
+            id="mem-title"
+            type="text"
+            name="title"
+            required
+            maxlength="120"
+            class="w-full px-4 py-2.5 rounded-lg border border-stone-warm/40 bg-white focus:outline-none focus:border-terracotta focus:ring-2 focus:ring-terracotta/20 font-body"
+          />
+        </div>
+
+        <div>
+          <label for="mem-body" class="block font-accent text-sm text-charcoal/80 mb-1.5 tracking-wide">
+            <span data-lang="el">Η ιστορία σας *</span>
+            <span data-lang="en">Your story *</span>
+          </label>
+          <textarea
+            id="mem-body"
+            name="body"
+            required
+            rows="8"
+            minlength="50"
+            class="w-full px-4 py-3 rounded-lg border border-stone-warm/40 bg-white focus:outline-none focus:border-terracotta focus:ring-2 focus:ring-terracotta/20 font-body resize-y"
+          ></textarea>
+          <p class="text-xs text-charcoal/70 font-body mt-1.5">
+            <span data-lang="el">Γράψτε όπως την θυμάστε — δε χρειάζεται τέλεια ορθογραφία.</span>
+            <span data-lang="en">Write it as you remember it — no perfect spelling needed.</span>
+          </p>
+        </div>
+
+        <div>
+          <label for="mem-email" class="block font-accent text-sm text-charcoal/80 mb-1.5 tracking-wide">
+            <span data-lang="el">Email (μόνο για επικοινωνία — δεν δημοσιεύεται)</span>
+            <span data-lang="en">Email (for contact only — not published)</span>
+          </label>
+          <input
+            id="mem-email"
+            type="email"
+            name="email"
+            class="w-full px-4 py-2.5 rounded-lg border border-stone-warm/40 bg-white focus:outline-none focus:border-terracotta focus:ring-2 focus:ring-terracotta/20 font-body"
+          />
+        </div>
+
+        <div class="pt-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <p class="text-xs text-charcoal/70 font-body max-w-md">
+            <span data-lang="el">Υποβάλλοντας την ιστορία σας, συμφωνείτε να δημοσιευτεί στο varlaam.gr με το όνομά σας και την τοποθεσία.</span>
+            <span data-lang="en">By submitting, you agree that your story will be published on varlaam.gr with your name and location.</span>
+          </p>
+          <button type="submit" class="btn-primary">
+            <span data-lang="el">Υποβολή →</span>
+            <span data-lang="en">Submit →</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    const filters = document.querySelectorAll<HTMLElement>('.memory-filter');
+    const cards = document.querySelectorAll<HTMLElement>('.memory-card');
+    const emptyMsg = document.getElementById('memories-empty');
+    let active = 'all';
+
+    function apply() {
+      let visible = 0;
+      cards.forEach((c) => {
+        const cat = c.dataset.cat || '';
+        const ok = active === 'all' || active === cat;
+        c.style.display = ok ? '' : 'none';
+        if (ok) visible++;
+      });
+      if (emptyMsg) emptyMsg.classList.toggle('hidden', visible > 0 || cards.length === 0);
+    }
+
+    filters.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        filters.forEach((b) => b.setAttribute('data-active', 'false'));
+        btn.setAttribute('data-active', 'true');
+        active = btn.dataset.cat || 'all';
+        apply();
+      });
+    });
+  </script>
+
+</BaseLayout>

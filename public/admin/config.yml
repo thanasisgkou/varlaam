@@ -112,3 +112,28 @@ collections:
       - { label: "Ημερομηνία", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false }
       - { label: "Εγκεκριμένο", name: "approved", widget: "boolean", default: false }
       - { label: "Κείμενο", name: "body", widget: "markdown" }
+
+  - name: "memories"
+    label: "Αναμνήσεις"
+    folder: "src/content/memories"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Τίτλος", name: "title", widget: "string" }
+      - label: "Κατηγορία"
+        name: "category"
+        widget: "select"
+        options:
+          - { label: "🌞 Καλοκαίρια στο χωριό", value: "summer" }
+          - { label: "❄️ Χειμώνες με χιόνι", value: "winter" }
+          - { label: "🃏 Ο καλύτερος στη δηλωτή", value: "dhloti" }
+          - { label: "📛 Τα παρατσούκλια", value: "nicknames" }
+          - { label: "🗣️ Μιλάς Βαρλαμίτικα;", value: "dialect" }
+          - { label: "🎤 Πρώτη φορά", value: "first-time" }
+      - { label: "Αφηγητής", name: "author", widget: "string", default: "Ανώνυμος/η" }
+      - { label: "Τοποθεσία", name: "authorLocation", widget: "string", required: false, hint: "π.χ. κάτοικος, Αθήνα, Μόναχο" }
+      - { label: "Χρονολογία", name: "year", widget: "string", required: false, hint: "π.χ. 1985, δεκαετία '70" }
+      - { label: "Εικόνα", name: "image", widget: "image", required: false }
+      - { label: "Εγκεκριμένο", name: "approved", widget: "boolean", default: false, hint: "Γίνε true μόνο αφού ελέγξεις το κείμενο" }
+      - { label: "Ημ. υποβολής", name: "submittedAt", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, required: false }
+      - { label: "Κείμενο", name: "body", widget: "markdown" }
