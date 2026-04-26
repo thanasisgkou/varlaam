@@ -71,6 +71,11 @@ const ogImage = new URL(image ?? '/images/hero/varlaam-01.jpg', Astro.site).toSt
   })} />
 
   {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+
+  <!-- Netlify Identity widget — picks up #invite_token / #confirmation_token /
+       #recovery_token landing on the public site and routes the user to /admin/
+       after they finish onboarding. Loads once globally. -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" is:inline></script>
 </head>
 <body class="min-h-screen flex flex-col">
   <a
@@ -88,6 +93,23 @@ const ogImage = new URL(image ?? '/images/hero/varlaam-01.jpg', Astro.site).toSt
   <Footer />
   <BackToTop />
   <GlossaryTooltips />
+
+  <script is:inline>
+    // After completing invite / confirmation / recovery (URL fragment
+    // contains a token), Netlify Identity opens its modal automatically.
+    // Once the user finishes, send them to /admin/ instead of leaving
+    // them on the marketing homepage.
+    (function () {
+      if (!window.netlifyIdentity) return;
+      window.netlifyIdentity.on('init', function (user) {
+        if (!user) {
+          window.netlifyIdentity.on('login', function () {
+            document.location.href = '/admin/';
+          });
+        }
+      });
+    })();
+  </script>
 
   <script>
     // Scroll animation observer
