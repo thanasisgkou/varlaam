@@ -1,69 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 
-type EventAlbum = {
-  slug: string;
-  year: number;
-  theme: 'feast' | 'celebration' | 'village' | 'other';
-  title: string;
-  titleEn: string;
-  description: string;
-  descriptionEn: string;
-  folder: string;
-  prefix: string;
-  count: number;
-};
-
-const events: EventAlbum[] = [
-  {
-    slug: 'kopi-pitas-athina-2026',
-    year: 2026,
-    theme: 'celebration',
-    title: 'Κοπή Πίτας — Αθήνα',
-    titleEn: 'Cutting of the New Year Cake — Athens',
-    description: 'Η ετήσια κοπή της πρωτοχρονιάτικης πίτας του Συλλόγου για τους αποδήμους στην Αθήνα — μια συνάντηση αγάπης και αναμνήσεων.',
-    descriptionEn: 'The annual New Year cake-cutting event organised by the Association in Athens for the diaspora — a gathering of warmth and memories.',
-    folder: '/images/events/2026/kopi-pitas-athina',
-    prefix: 'kpa',
-    count: 12,
-  },
-  {
-    slug: 'kopi-pitas-varlaam-2026',
-    year: 2026,
-    theme: 'celebration',
-    title: 'Κοπή Πίτας — Βαρλαάμ',
-    titleEn: 'Cutting of the New Year Cake — Varlaam',
-    description: 'Η κοπή της πίτας στο ίδιο το χωριό, με τους κατοίκους και όσους επέλεξαν να γιορτάσουν στον τόπο τους.',
-    descriptionEn: 'The cake-cutting celebration held in the village itself, bringing together residents and visitors.',
-    folder: '/images/events/2026/kopi-pitas-varlaam',
-    prefix: 'kpv',
-    count: 6,
-  },
-  {
-    slug: 'mpirmpilato-2026',
-    year: 2026,
-    theme: 'feast',
-    title: 'Μπιρμπιλάτο',
-    titleEn: 'Mpirmpilato Feast',
-    description: 'Παραδοσιακή εκδήλωση του χωριού, μια παλιά τοπική συνήθεια που αναβιώνει κάθε χρόνο με φαγητό, μουσική και χορό.',
-    descriptionEn: 'A traditional village gathering — a cherished local custom revived each year with food, music and dance.',
-    folder: '/images/events/2026/mpirmpilato',
-    prefix: 'mpirmpilato',
-    count: 8,
-  },
-  {
-    slug: 'pasxa-2026',
-    year: 2026,
-    theme: 'feast',
-    title: 'Πάσχα στο Βαρλαάμ',
-    titleEn: 'Easter in Varlaam',
-    description: 'Οι εορτασμοί του Πάσχα στο χωριό — η ατμόσφαιρα της Μεγάλης Εβδομάδας, η Ανάσταση και το παραδοσιακό γλέντι.',
-    descriptionEn: 'Easter celebrations in the village — the atmosphere of Holy Week, the Resurrection and the traditional feast.',
-    folder: '/images/events/2026/pasxa',
-    prefix: 'pasxa',
-    count: 4,
-  },
-];
+const albumEntries = await getCollection('gallery-albums', (a) => a.data.photos.length > 0);
+const events = albumEntries
+  .map((a) => ({ slug: a.id.replace(/\.json$/, ''), ...a.data }))
+  .sort((a, b) => {
+    if (b.year !== a.year) return b.year - a.year;
+    return (a.order ?? 0) - (b.order ?? 0);
+  });
 
 const years = [...new Set(events.map((e) => e.year))].sort((a, b) => b - a);
 const themes = [
@@ -71,6 +16,7 @@ const themes = [
   { id: 'feast', el: 'Πανηγύρια & Γιορτές', en: 'Feasts & Festivals' },
   { id: 'celebration', el: 'Εκδηλώσεις Συλλόγου', en: 'Association events' },
   { id: 'village', el: 'Το Χωριό', en: 'The Village' },
+  { id: 'other', el: 'Άλλο', en: 'Other' },
 ];
 ---
 
@@ -132,46 +78,52 @@ const themes = [
       <!-- Event Albums -->
       <div class="space-y-20" id="gallery-albums">
         {events.map((e) => {
-          const photos = Array.from({ length: e.count }, (_, i) => `${e.folder}/${e.prefix}-${String(i + 1).padStart(2, '0')}.jpg`);
+          const total = e.photos.length;
           return (
             <article class="album animate-on-scroll" data-year={e.year} data-theme={e.theme} id={e.slug}>
               <div class="flex flex-wrap items-baseline justify-between gap-4 mb-6 pb-4 border-b border-stone-warm/30">
                 <div>
                   <h2 class="font-display text-2xl md:text-3xl font-bold text-charcoal">
                     <span data-lang="el">{e.title}</span>
-                    <span data-lang="en">{e.titleEn}</span>
+                    <span data-lang="en">{e.titleEn || e.title}</span>
                   </h2>
                   <p class="font-accent text-sm text-terracotta mt-1 tracking-wider">{e.year}</p>
                 </div>
                 <span class="text-xs font-accent text-charcoal/70 bg-white px-3 py-1 rounded-full border border-stone-warm/30">
-                  {e.count} <span data-lang="el">φωτογραφίες</span><span data-lang="en">photos</span>
+                  {total} <span data-lang="el">φωτογραφίες</span><span data-lang="en">photos</span>
                 </span>
               </div>
 
-              <p class="font-body text-charcoal/70 max-w-3xl mb-6 leading-relaxed">
-                <span data-lang="el">{e.description}</span>
-                <span data-lang="en">{e.descriptionEn}</span>
-              </p>
+              {(e.description || e.descriptionEn) && (
+                <p class="font-body text-charcoal/70 max-w-3xl mb-6 leading-relaxed">
+                  <span data-lang="el">{e.description}</span>
+                  <span data-lang="en">{e.descriptionEn || e.description}</span>
+                </p>
+              )}
 
               <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                {photos.map((src, i) => (
-                  <button
-                    type="button"
-                    class="lightbox-trigger group block aspect-square overflow-hidden rounded-sm bg-stone-warm/20 shadow-sm focus:outline-none focus:ring-2 focus:ring-terracotta/60"
-                    data-album={e.slug}
-                    data-index={i}
-                    data-src={src}
-                    data-caption-el={`${e.title} — ${e.year} (${i + 1}/${e.count})`}
-                    data-caption-en={`${e.titleEn || e.title} — ${e.year} (${i + 1}/${e.count})`}
-                  >
-                    <img
-                      src={src}
-                      alt={e.titleEn ? `${e.title} — ${e.titleEn} (${i + 1})` : `${e.title} (${i + 1})`}
-                      loading="lazy"
-                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                  </button>
-                ))}
+                {e.photos.map((p, i) => {
+                  const captionEl = p.caption || `${e.title} — ${e.year} (${i + 1}/${total})`;
+                  const captionEn = p.captionEn || `${e.titleEn || e.title} — ${e.year} (${i + 1}/${total})`;
+                  return (
+                    <button
+                      type="button"
+                      class="lightbox-trigger group block aspect-square overflow-hidden rounded-sm bg-stone-warm/20 shadow-sm focus:outline-none focus:ring-2 focus:ring-terracotta/60"
+                      data-album={e.slug}
+                      data-index={i}
+                      data-src={p.image}
+                      data-caption-el={captionEl}
+                      data-caption-en={captionEn}
+                    >
+                      <img
+                        src={p.image}
+                        alt={captionEl}
+                        loading="lazy"
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                    </button>
+                  );
+                })}
               </div>
             </article>
           );

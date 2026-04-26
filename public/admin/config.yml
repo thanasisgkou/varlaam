@@ -2,6 +2,11 @@ backend:
   name: git-gateway
   branch: master
 
+# Local development: when true and `npx decap-server` is running on port 8081,
+# the CMS edits files on disk directly. Has no effect in production unless the
+# proxy server is reachable. REMOVE before production launch to be safe.
+local_backend: true
+
 locale: 'el'
 
 media_folder: "public/images/uploads"
@@ -35,31 +40,39 @@ collections:
       - { label: "Εικόνα", name: "image", widget: "image", required: false }
       - { label: "Κείμενο", name: "body", widget: "markdown" }
 
-  - name: "gallery"
-    label: "Γκαλερί"
-    folder: "src/content/gallery"
+  - name: "gallery-albums"
+    label: "Γκαλερί — Άλμπουμ Εκδηλώσεων"
+    folder: "src/content/gallery-albums"
     create: true
     slug: "{{slug}}"
     extension: "json"
     format: "json"
+    summary: "{{year}} · {{title}}"
     fields:
       - { label: "Τίτλος (EL)", name: "title", widget: "string" }
       - { label: "Τίτλος (EN)", name: "titleEn", widget: "string", required: false }
-      - label: "Κατηγορία"
-        name: "category"
+      - { label: "Έτος", name: "year", widget: "number", value_type: "int", min: 1900, max: 2100 }
+      - label: "Θέμα"
+        name: "theme"
         widget: "select"
         options:
-          - { label: "Το Χωριό", value: "village" }
-          - { label: "Εκδηλώσεις", value: "events" }
-          - { label: "Παλιές Φωτογραφίες", value: "old-photos" }
-          - { label: "Φύση", value: "nature" }
-          - { label: "Αξιοθέατα", value: "attractions" }
-      - { label: "Θέμα", name: "theme", widget: "string", required: false }
-      - { label: "Έτος", name: "year", widget: "number", required: false, value_type: "int", min: 1900, max: 2100 }
-      - { label: "Εικόνα", name: "image", widget: "image" }
-      - { label: "Περιγραφή (EL)", name: "description", widget: "string", required: false }
-      - { label: "Περιγραφή (EN)", name: "descriptionEn", widget: "string", required: false }
-      - { label: "Ημερομηνία", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, required: false }
+          - { label: "🎉 Πανηγύρια & Γιορτές", value: "feast" }
+          - { label: "🎂 Εκδηλώσεις Συλλόγου", value: "celebration" }
+          - { label: "🏘️ Το Χωριό", value: "village" }
+          - { label: "📂 Άλλο", value: "other" }
+      - { label: "Σειρά εμφάνισης", name: "order", widget: "number", default: 0, value_type: "int", hint: "Όσο μικρότερος αριθμός, τόσο νωρίτερα εμφανίζεται μέσα στο ίδιο έτος" }
+      - { label: "Περιγραφή (EL)", name: "description", widget: "text", required: false }
+      - { label: "Περιγραφή (EN)", name: "descriptionEn", widget: "text", required: false }
+      - { label: "Εξώφυλλο (cover)", name: "cover", widget: "image", required: false, hint: "Αν αφεθεί κενό, χρησιμοποιείται η πρώτη φωτογραφία" }
+      - label: "Φωτογραφίες"
+        name: "photos"
+        widget: "list"
+        summary: "{{fields.image}}"
+        min: 1
+        fields:
+          - { label: "Εικόνα", name: "image", widget: "image" }
+          - { label: "Λεζάντα (EL)", name: "caption", widget: "string", required: false }
+          - { label: "Λεζάντα (EN)", name: "captionEn", widget: "string", required: false }
 
   - name: "attractions"
     label: "Αξιοθέατα"

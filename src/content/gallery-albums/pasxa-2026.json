@@ -1,0 +1,24 @@
+{
+  "title": "Πάσχα στο Βαρλαάμ",
+  "titleEn": "Easter in Varlaam",
+  "year": 2026,
+  "theme": "feast",
+  "order": 4,
+  "description": "Οι εορτασμοί του Πάσχα στο χωριό — η ατμόσφαιρα της Μεγάλης Εβδομάδας, η Ανάσταση και το παραδοσιακό γλέντι.",
+  "descriptionEn": "Easter celebrations in the village — the atmosphere of Holy Week, the Resurrection and the traditional feast.",
+  "cover": "/images/events/2026/pasxa/pasxa-01.jpg",
+  "photos": [
+    {
+      "image": "/images/events/2026/pasxa/pasxa-01.jpg"
+    },
+    {
+      "image": "/images/events/2026/pasxa/pasxa-02.jpg"
+    },
+    {
+      "image": "/images/events/2026/pasxa/pasxa-03.jpg"
+    },
+    {
+      "image": "/images/events/2026/pasxa/pasxa-04.jpg"
+    }
+  ]
+}

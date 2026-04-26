@@ -38,6 +38,27 @@ const gallery = defineCollection({
   }),
 });
 
+const galleryAlbums = defineCollection({
+  type: 'data',
+  schema: z.object({
+    title: z.string(),
+    titleEn: z.string().optional(),
+    year: z.number(),
+    theme: z.enum(['feast', 'celebration', 'village', 'other']),
+    description: z.string().optional(),
+    descriptionEn: z.string().optional(),
+    cover: z.string().optional(),
+    order: z.number().default(0),
+    photos: z.array(
+      z.object({
+        image: z.string(),
+        caption: z.string().optional(),
+        captionEn: z.string().optional(),
+      })
+    ).default([]),
+  }),
+});
+
 const attractions = defineCollection({
   type: 'data',
   schema: z.object({
@@ -95,6 +116,7 @@ export const collections = {
   news,
   events,
   gallery,
+  'gallery-albums': galleryAlbums,
   attractions,
   'diaspora-stories': diasporaStories,
   'diaspora-bulletin': diasporaBulletin,

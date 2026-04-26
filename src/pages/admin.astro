@@ -1,3 +1,7 @@
+---
+// Decap CMS admin page. Loaded as a standalone HTML doc — no BaseLayout,
+// no header/footer. Bootstraps the Decap CMS bundle which mounts into <body>.
+---
 <!DOCTYPE html>
 <html lang="el">
 <head>
@@ -8,7 +12,7 @@
 </head>
 <body>
   <!-- Decap CMS bootstraps into document.body, so the script must be after <body> opens -->
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" is:inline></script>
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js" is:inline></script>
 </body>
 </html>

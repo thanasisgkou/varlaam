@@ -1,0 +1,30 @@
+{
+  "title": "Κοπή Πίτας — Βαρλαάμ",
+  "titleEn": "Cutting of the New Year Cake — Varlaam",
+  "year": 2026,
+  "theme": "celebration",
+  "order": 2,
+  "description": "Η κοπή της πίτας στο ίδιο το χωριό, με τους κατοίκους και όσους επέλεξαν να γιορτάσουν στον τόπο τους.",
+  "descriptionEn": "The cake-cutting celebration held in the village itself, bringing together residents and visitors.",
+  "cover": "/images/events/2026/kopi-pitas-varlaam/kpv-01.jpg",
+  "photos": [
+    {
+      "image": "/images/events/2026/kopi-pitas-varlaam/kpv-01.jpg"
+    },
+    {
+      "image": "/images/events/2026/kopi-pitas-varlaam/kpv-02.jpg"
+    },
+    {
+      "image": "/images/events/2026/kopi-pitas-varlaam/kpv-03.jpg"
+    },
+    {
+      "image": "/images/events/2026/kopi-pitas-varlaam/kpv-04.jpg"
+    },
+    {
+      "image": "/images/events/2026/kopi-pitas-varlaam/kpv-05.jpg"
+    },
+    {
+      "image": "/images/events/2026/kopi-pitas-varlaam/kpv-06.jpg"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "title": "Μπιρμπιλάτο",
+  "titleEn": "Mpirmpilato Feast",
+  "year": 2026,
+  "theme": "feast",
+  "order": 3,
+  "description": "Παραδοσιακή εκδήλωση του χωριού, μια παλιά τοπική συνήθεια που αναβιώνει κάθε χρόνο με φαγητό, μουσική και χορό.",
+  "descriptionEn": "A traditional village gathering — a cherished local custom revived each year with food, music and dance.",
+  "cover": "/images/events/2026/mpirmpilato/mpirmpilato-01.jpg",
+  "photos": [
+    {
+      "image": "/images/events/2026/mpirmpilato/mpirmpilato-01.jpg"
+    },
+    {
+      "image": "/images/events/2026/mpirmpilato/mpirmpilato-02.jpg"
+    },
+    {
+      "image": "/images/events/2026/mpirmpilato/mpirmpilato-03.jpg"
+    },
+    {
+      "image": "/images/events/2026/mpirmpilato/mpirmpilato-04.jpg"
+    },
+    {
+      "image": "/images/events/2026/mpirmpilato/mpirmpilato-05.jpg"
+    },
+    {
+      "image": "/images/events/2026/mpirmpilato/mpirmpilato-06.jpg"
+    },
+    {
+      "image": "/images/events/2026/mpirmpilato/mpirmpilato-07.jpg"
+    },
+    {
+      "image": "/images/events/2026/mpirmpilato/mpirmpilato-08.jpg"
+    }
+  ]
+}
