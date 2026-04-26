@@ -2,7 +2,7 @@
 title: Καλώς ήρθατε στη νέα μας ιστοσελίδα
 date: 2026-03-26
 excerpt: Ο Σύλλογος Βαρλαάμ Ιωαννίνων σας καλωσορίζει στη νέα ιστοσελίδα του χωριού μας.
-image: /images/news/gemini_generated_image_nu0i8cnu0i8cnu0i.png
+image: ""
 author: Σύλλογος Βαρλαάμ
 ---
 
