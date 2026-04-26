@@ -17,7 +17,7 @@ const navItems = [
 ];
 ---
 
-<header id="site-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+<header id="site-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" data-scrolled="false">
   <div class="absolute inset-0 bg-parchment/90 backdrop-blur-md border-b border-stone-warm/30 opacity-0 transition-opacity duration-300" id="header-bg"></div>
 
   <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
@@ -27,11 +27,11 @@ const navItems = [
           <Logomark size={40} />
         </div>
         <div class="flex flex-col">
-          <span class="font-display font-bold text-lg leading-tight text-charcoal tracking-tight">
+          <span class="header-wordmark font-display font-bold text-lg leading-tight tracking-tight transition-colors duration-300">
             <span data-lang="el">Βαρλαάμ</span>
             <span data-lang="en">Varlaam</span>
           </span>
-          <span id="header-tagline" class="font-accent text-xs text-stone-dark italic tracking-wider overflow-hidden transition-[max-height,opacity] duration-300" style="max-height:1rem;">
+          <span id="header-tagline" class="header-tagline font-accent text-xs italic tracking-wider overflow-hidden transition-[max-height,opacity,color] duration-300" style="max-height:1rem;">
             <span data-lang="el">Ιωαννίνων</span>
             <span data-lang="en">Ioannina</span>
           </span>
@@ -39,21 +39,23 @@ const navItems = [
       </a>
 
       <nav class="hidden lg:flex items-center gap-1">
-        {navItems.map((item) => (
-          <a
-            href={item.href}
-            class:list={[
-              'px-3 py-2 font-body text-sm font-medium tracking-wide rounded-sm transition-all duration-300',
-              currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href))
-                ? 'text-terracotta'
-                : 'text-charcoal/70 hover:text-charcoal hover:bg-stone-warm/20',
-            ]}
-          >
-            <span data-lang="el">{item.el}</span>
-            <span data-lang="en">{item.en}</span>
-          </a>
-        ))}
-        <div class="ml-2 pl-2 border-l border-charcoal/20">
+        {navItems.map((item) => {
+          const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
+          return (
+            <a
+              href={item.href}
+              data-nav-link
+              class:list={[
+                'header-nav-link px-3 py-2 font-body text-sm font-medium tracking-wide rounded-sm transition-all duration-300',
+                isActive ? 'is-active' : '',
+              ]}
+            >
+              <span data-lang="el">{item.el}</span>
+              <span data-lang="en">{item.en}</span>
+            </a>
+          );
+        })}
+        <div class="ml-2 pl-2 border-l border-current/20 opacity-70">
           <LangToggle />
         </div>
       </nav>
@@ -66,9 +68,9 @@ const navItems = [
           aria-label="Μενού"
           aria-expanded="false"
         >
-          <span class="block w-6 h-0.5 bg-charcoal transition-all duration-300 origin-center group-[.open]:rotate-45 group-[.open]:translate-y-2"></span>
-          <span class="block w-6 h-0.5 bg-charcoal transition-all duration-300 group-[.open]:opacity-0"></span>
-          <span class="block w-6 h-0.5 bg-charcoal transition-all duration-300 origin-center group-[.open]:-rotate-45 group-[.open]:-translate-y-2"></span>
+          <span class="mobile-bar block w-6 h-0.5 transition-all duration-300 origin-center group-[.open]:rotate-45 group-[.open]:translate-y-2"></span>
+          <span class="mobile-bar block w-6 h-0.5 transition-all duration-300 group-[.open]:opacity-0"></span>
+          <span class="mobile-bar block w-6 h-0.5 transition-all duration-300 origin-center group-[.open]:-rotate-45 group-[.open]:-translate-y-2"></span>
         </button>
       </div>
     </div>
@@ -99,8 +101,10 @@ const navItems = [
   const headerInner = document.getElementById('header-inner');
   const headerLogo = document.getElementById('header-logo');
   const headerTagline = document.getElementById('header-tagline');
+  const siteHeader = document.getElementById('site-header');
   function updateHeader() {
     const scrolled = window.scrollY > 50;
+    siteHeader?.setAttribute('data-scrolled', scrolled ? 'true' : 'false');
     if (scrolled) {
       headerBg?.classList.replace('opacity-0', 'opacity-100');
       headerInner?.classList.replace('h-20', 'h-14');

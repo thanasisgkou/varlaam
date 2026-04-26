@@ -205,6 +205,54 @@
 html[lang="el"] [data-lang="en"] { display: none !important; }
 html[lang="en"] [data-lang="el"] { display: none !important; }
 
+/* Header dual-state styling — light over dark heroes, dark over scrolled
+   parchment background. The state is driven by [data-scrolled] on
+   #site-header (toggled in JS on scrollY > 50). */
+#site-header .header-wordmark { color: #FFFFFF; text-shadow: 0 1px 8px rgba(0,0,0,0.45); }
+#site-header .header-tagline  { color: rgba(255,255,255,0.78); text-shadow: 0 1px 8px rgba(0,0,0,0.5); }
+#site-header .mobile-bar      { background-color: #FFFFFF; }
+#site-header .header-nav-link {
+  color: rgba(255,255,255,0.85);
+  text-shadow: 0 1px 8px rgba(0,0,0,0.45);
+}
+#site-header .header-nav-link:hover { color: #FFFFFF; }
+#site-header .header-nav-link.is-active {
+  color: #E8D48B; /* gold-light reads cleanly on dark heroes */
+  text-shadow: 0 1px 8px rgba(0,0,0,0.5);
+}
+#site-header #lang-toggle {
+  border-color: rgba(255,255,255,0.45);
+  color: rgba(255,255,255,0.9);
+}
+#site-header #lang-toggle:hover {
+  background-color: rgba(255,255,255,0.95);
+  color: #2C2C2C;
+}
+
+/* Scrolled state — header has its own parchment backdrop, so revert to dark text */
+#site-header[data-scrolled="true"] .header-wordmark { color: #2C2C2C; text-shadow: none; }
+#site-header[data-scrolled="true"] .header-tagline  { color: #6F6450; text-shadow: none; }
+#site-header[data-scrolled="true"] .mobile-bar      { background-color: #2C2C2C; }
+#site-header[data-scrolled="true"] .header-nav-link {
+  color: rgba(44,44,44,0.7);
+  text-shadow: none;
+}
+#site-header[data-scrolled="true"] .header-nav-link:hover {
+  color: #2C2C2C;
+  background-color: rgba(212,197,169,0.2); /* stone-warm/20 */
+}
+#site-header[data-scrolled="true"] .header-nav-link.is-active {
+  color: #C67D4A; /* terracotta */
+}
+#site-header[data-scrolled="true"] #lang-toggle {
+  border-color: rgba(44,44,44,0.3);
+  color: rgba(44,44,44,0.7);
+}
+#site-header[data-scrolled="true"] #lang-toggle:hover {
+  background-color: #2C2C2C;
+  color: #FAF7F0;
+}
+
 /* J·03 — visible focus ring for keyboard users */
 *:focus-visible {
   outline: 2px solid #C9A84C;
