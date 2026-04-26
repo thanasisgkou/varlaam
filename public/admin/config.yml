@@ -2,10 +2,10 @@ backend:
   name: git-gateway
   branch: master
 
-# Local development: when true and `npx decap-server` is running on port 8081,
-# the CMS edits files on disk directly. Has no effect in production unless the
-# proxy server is reachable. REMOVE before production launch to be safe.
-local_backend: true
+# To preview the admin locally without Netlify Identity, temporarily
+# uncomment the line below AND run `npm run cms` in another terminal.
+# DO NOT commit it as enabled — it makes Decap try a localhost proxy first.
+# local_backend: true
 
 locale: 'el'
 site_url: "https://deft-lollipop-f6cfb0.netlify.app"
