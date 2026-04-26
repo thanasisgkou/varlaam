@@ -9,36 +9,77 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   body {
     @apply font-body text-charcoal bg-parchment;
     font-size: 17px;
     line-height: 1.7;
+    /* Proper kerning + ligatures — visible on Greek diacritics and ff/fi */
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-display;
-    line-height: 1.2;
+    line-height: 1.15;
+    letter-spacing: -0.012em;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "ss01" 1;
+  }
+
+  /* Greek caps need slightly looser tracking than Latin — Playfair's defaults
+     squeeze tonos/oxia. Counter that here. */
+  :lang(el) h1,
+  :lang(el) h2,
+  :lang(el) h3 {
+    letter-spacing: -0.005em;
   }
 
   ::selection {
-    @apply bg-terracotta/30 text-charcoal;
+    @apply bg-kerameidi/25 text-charcoal;
   }
 }
 
 @layer components {
   .section-title {
-    @apply font-display text-4xl md:text-5xl font-bold text-charcoal relative inline-block;
+    @apply font-display text-3xl md:text-4xl lg:text-5xl font-semibold text-charcoal relative inline-block;
+    letter-spacing: -0.015em;
   }
 
+  /* Letterpress-style rule under section titles — thinner, longer, kerameidi.
+     Replaces the previous chunky terracotta button pill. */
   .section-title::after {
     content: '';
-    @apply block w-16 h-1 bg-terracotta mt-4 rounded-full;
+    @apply block w-20 h-px bg-kerameidi mt-5;
   }
 
+  /* Use on inner pages (history, support, etc.) where a bar over every
+     section is too loud. Italic, no rule, slightly narrower scale. */
+  .section-title--quiet {
+    @apply font-display italic text-3xl md:text-4xl font-medium text-charcoal;
+    letter-spacing: -0.005em;
+  }
+  .section-title--quiet::after { display: none !important; }
+
   .section-subtitle {
-    @apply font-accent text-xl md:text-2xl text-stone-dark italic mt-3;
+    @apply font-accent text-lg md:text-xl text-stone-dark italic mt-3;
+    letter-spacing: 0.005em;
+  }
+
+  /* Kicker — the small uppercase ribbon above hero titles. Two flavours:
+     `.kicker` for default sections (just text + tracking), `.kicker--ruled`
+     for hero sections (line · text · line). Use `.kicker` when you want
+     less visual chatter. */
+  .kicker {
+    @apply font-accent text-xs uppercase tracking-[0.32em] text-kerameidi;
+  }
+  .kicker--ruled {
+    @apply inline-flex items-center gap-3 text-gold-warm;
+  }
+  .kicker--ruled::before,
+  .kicker--ruled::after {
+    content: '';
+    @apply block w-10 h-px bg-current opacity-70;
   }
 
   .btn-primary {
@@ -104,10 +145,15 @@
     animation: pageIn 0.5s ease-out;
   }
 
+  /* Editorial card — quiet border + soft shadow. The previous shadow-md
+     looked Bootstrappy on parchment; this reads more like a museum card. */
   .card {
-    @apply bg-white rounded-sm shadow-md overflow-hidden
+    @apply bg-white rounded-sm overflow-hidden
+           border border-stone-warm/30
+           shadow-[0_1px_2px_rgba(44,44,44,0.04),0_4px_12px_rgba(44,44,44,0.04)]
            transition-all duration-500
-           hover:shadow-xl hover:-translate-y-1;
+           hover:shadow-[0_2px_4px_rgba(44,44,44,0.06),0_12px_28px_rgba(122,46,31,0.08)]
+           hover:border-kerameidi/30 hover:-translate-y-0.5;
   }
 
   .card-image {
