@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "astro dev",
     "cms": "npx decap-server",
+    "images:compress": "node scripts/compress-images.mjs",
+    "prebuild": "node scripts/compress-images.mjs",
     "build": "astro build",
     "preview": "astro preview"
   },
