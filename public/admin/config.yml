@@ -8,134 +8,89 @@ backend:
 local_backend: true
 
 locale: 'el'
+site_url: "https://deft-lollipop-f6cfb0.netlify.app"
+display_url: "https://deft-lollipop-f6cfb0.netlify.app"
+logo_url: "/favicon.svg"
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
+# Show newest first in list views by default
 collections:
+
+  # ───────────────────────────────────────────────────────────────
+  # ΣΥΧΝΕΣ ΧΡΗΣΕΙΣ — αυτά τα τρία θα τα πιάνεις σχεδόν κάθε εβδομάδα
+  # ───────────────────────────────────────────────────────────────
+
   - name: "news"
-    label: "Νέα & Ανακοινώσεις"
+    label: "📰 Νέα & Ανακοινώσεις"
+    label_singular: "Ανακοίνωση"
+    description: "Αναρτήσεις για το χωριό — ό,τι θες να ξέρει η κοινότητα. Εμφανίζονται στο /news/."
     folder: "src/content/news"
     create: true
     slug: "{{slug}}"
+    media_folder: "/public/images/news"
+    public_folder: "/images/news"
+    summary: "{{date | date('YYYY-MM-DD')}} · {{title}}"
+    sortable_fields: ['date', 'title']
+    view_filters:
+      - { label: "Φέτος", field: "date", pattern: "2026" }
+      - { label: "Πέρσι", field: "date", pattern: "2025" }
     fields:
-      - { label: "Τίτλος", name: "title", widget: "string" }
-      - { label: "Ημερομηνία", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false }
-      - { label: "Περίληψη", name: "excerpt", widget: "string" }
-      - { label: "Εικόνα", name: "image", widget: "image", required: false }
+      - { label: "Τίτλος", name: "title", widget: "string", hint: "Καθαρός, σύντομος, χωρίς εισαγωγικά." }
+      - { label: "Ημερομηνία δημοσίευσης", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, default: "" }
+      - { label: "Περίληψη (1-2 προτάσεις)", name: "excerpt", widget: "text", pattern: ['.{20,}', 'Γράψτε τουλάχιστον 20 χαρακτήρες'] }
+      - { label: "Εικόνα προεπισκόπησης", name: "image", widget: "image", required: false, hint: "Η φωτογραφία που εμφανίζεται στις λίστες. Καλύτερα οριζόντια, >800px πλάτος." }
       - { label: "Συντάκτης", name: "author", widget: "string", default: "Σύλλογος Βαρλαάμ" }
-      - { label: "Κείμενο", name: "body", widget: "markdown" }
+      - { label: "Πλήρες κείμενο", name: "body", widget: "markdown", hint: "Γράψτε με παραγράφους. Μπορείτε να βάλετε εικόνες, λίστες, links." }
 
   - name: "events"
-    label: "Εκδηλώσεις"
+    label: "📅 Εκδηλώσεις"
+    label_singular: "Εκδήλωση"
+    description: "Πανηγύρια, κοπές πίτας, καθαρισμοί. Εμφανίζονται στο /events/. Παράγουν αυτόματα .ics για ημερολόγιο."
     folder: "src/content/events"
     create: true
     slug: "{{slug}}"
+    media_folder: "/public/images/events"
+    public_folder: "/images/events"
+    summary: "{{date | date('DD/MM/YYYY')}} · {{title}} ({{location}})"
+    sortable_fields: ['date', 'title']
     fields:
-      - { label: "Τίτλος", name: "title", widget: "string" }
-      - { label: "Ημερομηνία", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false }
-      - { label: "Τέλος", name: "endDate", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, required: false }
-      - { label: "Τοποθεσία", name: "location", widget: "string" }
-      - { label: "Περίληψη", name: "excerpt", widget: "string" }
-      - { label: "Εικόνα", name: "image", widget: "image", required: false }
-      - { label: "Κείμενο", name: "body", widget: "markdown" }
-
-  - name: "gallery-albums"
-    label: "Γκαλερί — Άλμπουμ Εκδηλώσεων"
-    folder: "src/content/gallery-albums"
-    create: true
-    slug: "{{slug}}"
-    extension: "json"
-    format: "json"
-    summary: "{{year}} · {{title}}"
-    fields:
-      - { label: "Τίτλος (EL)", name: "title", widget: "string" }
-      - { label: "Τίτλος (EN)", name: "titleEn", widget: "string", required: false }
-      - { label: "Έτος", name: "year", widget: "number", value_type: "int", min: 1900, max: 2100 }
-      - label: "Θέμα"
-        name: "theme"
-        widget: "select"
-        options:
-          - { label: "🎉 Πανηγύρια & Γιορτές", value: "feast" }
-          - { label: "🎂 Εκδηλώσεις Συλλόγου", value: "celebration" }
-          - { label: "🏘️ Το Χωριό", value: "village" }
-          - { label: "📂 Άλλο", value: "other" }
-      - { label: "Σειρά εμφάνισης", name: "order", widget: "number", default: 0, value_type: "int", hint: "Όσο μικρότερος αριθμός, τόσο νωρίτερα εμφανίζεται μέσα στο ίδιο έτος" }
-      - { label: "Περιγραφή (EL)", name: "description", widget: "text", required: false }
-      - { label: "Περιγραφή (EN)", name: "descriptionEn", widget: "text", required: false }
-      - { label: "Εξώφυλλο (cover)", name: "cover", widget: "image", required: false, hint: "Αν αφεθεί κενό, χρησιμοποιείται η πρώτη φωτογραφία" }
-      - label: "Φωτογραφίες"
-        name: "photos"
-        widget: "list"
-        summary: "{{fields.image}}"
-        min: 1
-        fields:
-          - { label: "Εικόνα", name: "image", widget: "image" }
-          - { label: "Λεζάντα (EL)", name: "caption", widget: "string", required: false }
-          - { label: "Λεζάντα (EN)", name: "captionEn", widget: "string", required: false }
-
-  - name: "attractions"
-    label: "Αξιοθέατα"
-    folder: "src/content/attractions"
-    create: true
-    slug: "{{slug}}"
-    extension: "json"
-    format: "json"
-    fields:
-      - { label: "Slug", name: "slug", widget: "string", hint: "π.χ. xirovouni — χωρίς κενά ή ελληνικά" }
-      - { label: "Τίτλος (EL)", name: "title", widget: "string" }
-      - { label: "Τίτλος (EN)", name: "titleEn", widget: "string" }
-      - { label: "Σειρά εμφάνισης", name: "order", widget: "number", default: 0, value_type: "int" }
-      - { label: "Περίληψη (EL)", name: "summary", widget: "text" }
-      - { label: "Περίληψη (EN)", name: "summaryEn", widget: "text" }
-      - { label: "Κείμενο (EL)", name: "body", widget: "text" }
-      - { label: "Κείμενο (EN)", name: "bodyEn", widget: "text" }
-      - label: "GPS"
-        name: "gps"
-        widget: "object"
-        required: false
-        fields:
-          - { label: "Lat", name: "lat", widget: "number", value_type: "float" }
-          - { label: "Lng", name: "lng", widget: "number", value_type: "float" }
-      - { label: "Εξωτερικός σύνδεσμος", name: "externalUrl", widget: "string", required: false }
-      - { label: "Φάκελος φωτογραφιών", name: "photoFolder", widget: "string", hint: "π.χ. /images/attractions/xirovouni" }
-      - { label: "Αριθμός φωτογραφιών", name: "photoCount", widget: "number", default: 0, value_type: "int" }
-
-  - name: "diaspora-stories"
-    label: "Ιστορίες Αποδήμων"
-    folder: "src/content/diaspora-stories"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Όνομα", name: "name", widget: "string" }
-      - { label: "Τοποθεσία", name: "location", widget: "string" }
-      - { label: "Ημερομηνία", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false }
-      - { label: "Περίληψη", name: "excerpt", widget: "string" }
-      - { label: "Φωτογραφία", name: "image", widget: "image", required: false }
-      - { label: "Ιστορία", name: "body", widget: "markdown" }
-
-  - name: "diaspora-bulletin"
-    label: "Πίνακας Ανακοινώσεων Αποδήμων"
-    folder: "src/content/diaspora-bulletin"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Τίτλος", name: "title", widget: "string" }
-      - { label: "Συντάκτης", name: "author", widget: "string" }
-      - { label: "Ημερομηνία", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false }
-      - { label: "Εγκεκριμένο", name: "approved", widget: "boolean", default: false }
-      - { label: "Κείμενο", name: "body", widget: "markdown" }
+      - { label: "Τίτλος εκδήλωσης", name: "title", widget: "string" }
+      - { label: "Ημερομηνία", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, hint: "Αν δεν ξέρετε ώρα, αφήστε όπως είναι." }
+      - { label: "Λήγει (αν διαρκεί πολλές μέρες)", name: "endDate", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, required: false }
+      - { label: "Τοποθεσία", name: "location", widget: "string", hint: "π.χ. Πλατεία Βαρλαάμ, Καφενείο Συλλόγου, Αθήνα" }
+      - { label: "Σύντομη περιγραφή", name: "excerpt", widget: "text" }
+      - { label: "Εικόνα προεπισκόπησης", name: "image", widget: "image", required: false }
+      - { label: "Πλήρες κείμενο/πρόγραμμα", name: "body", widget: "markdown" }
 
   - name: "memories"
-    label: "Αναμνήσεις"
+    label: "💭 Αναμνήσεις"
+    label_singular: "Ανάμνηση"
+    description: "Ιστορίες κατοίκων + αποδήμων. 6 κατηγορίες — καλοκαίρια, χειμώνες, παρατσούκλια, δηλωτή, βαρλαμίτικα, πρώτη φορά."
     folder: "src/content/memories"
     create: true
     slug: "{{slug}}"
+    media_folder: "/public/images/memories"
+    public_folder: "/images/memories"
+    summary: "{{title}} — {{author}}"
+    sortable_fields: ['submittedAt', 'title']
+    view_filters:
+      - { label: "🌞 Καλοκαίρια", field: "category", pattern: "summer" }
+      - { label: "❄️ Χειμώνες", field: "category", pattern: "winter" }
+      - { label: "🃏 Δηλωτή", field: "category", pattern: "dhloti" }
+      - { label: "📛 Παρατσούκλια", field: "category", pattern: "nicknames" }
+      - { label: "🗣️ Βαρλαμίτικα", field: "category", pattern: "dialect" }
+      - { label: "🎤 Πρώτη φορά", field: "category", pattern: "first-time" }
+      - { label: "Μη εγκεκριμένες", field: "approved", pattern: "false" }
+    view_groups:
+      - { label: "Κατηγορία", field: "category" }
     fields:
-      - { label: "Τίτλος", name: "title", widget: "string" }
+      - { label: "Τίτλος", name: "title", widget: "string", hint: "Σύντομος — π.χ. «Το πανηγύρι του '92»" }
       - label: "Κατηγορία"
         name: "category"
         widget: "select"
+        hint: "Διαλέξτε από τις 6 ενότητες της σελίδας Αναμνήσεις."
         options:
           - { label: "🌞 Καλοκαίρια στο χωριό", value: "summer" }
           - { label: "❄️ Χειμώνες με χιόνι", value: "winter" }
@@ -143,10 +98,141 @@ collections:
           - { label: "📛 Τα παρατσούκλια", value: "nicknames" }
           - { label: "🗣️ Μιλάς Βαρλαμίτικα;", value: "dialect" }
           - { label: "🎤 Πρώτη φορά", value: "first-time" }
-      - { label: "Αφηγητής", name: "author", widget: "string", default: "Ανώνυμος/η" }
-      - { label: "Τοποθεσία", name: "authorLocation", widget: "string", required: false, hint: "π.χ. κάτοικος, Αθήνα, Μόναχο" }
-      - { label: "Χρονολογία", name: "year", widget: "string", required: false, hint: "π.χ. 1985, δεκαετία '70" }
-      - { label: "Εικόνα", name: "image", widget: "image", required: false }
-      - { label: "Εγκεκριμένο", name: "approved", widget: "boolean", default: false, hint: "Γίνε true μόνο αφού ελέγξεις το κείμενο" }
-      - { label: "Ημ. υποβολής", name: "submittedAt", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, required: false }
+      - { label: "Αφηγητής/Αφηγήτρια", name: "author", widget: "string", default: "Ανώνυμος/η", hint: "Όνομα + επώνυμο, ή «Ανώνυμος/η» αν προτιμά" }
+      - { label: "Από πού;", name: "authorLocation", widget: "string", required: false, hint: "π.χ. κάτοικος, Αθήνα, Μόναχο, Αυστραλία" }
+      - { label: "Πότε; (χρονιά ή εποχή)", name: "year", widget: "string", required: false, hint: "π.χ. 1985, δεκαετία '70, καλοκαίρι 2010" }
+      - { label: "Φωτογραφία", name: "image", widget: "image", required: false }
+      - { label: "✓ ΕΓΚΕΚΡΙΜΕΝΗ — να εμφανιστεί δημόσια", name: "approved", widget: "boolean", default: false, hint: "ΣΗΜΑΝΤΙΚΟ: η ανάμνηση δεν εμφανίζεται στο site αν αυτό μείνει false." }
+      - { label: "Ημ. υποβολής", name: "submittedAt", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, required: false, hint: "Συμπληρώστε τη μέρα που τη γράφετε." }
+      - { label: "Η ιστορία", name: "body", widget: "markdown", hint: "Γράψτε όπως τη θυμάστε — δεν χρειάζεται τέλεια ορθογραφία." }
+
+  # ───────────────────────────────────────────────────────────────
+  # ΟΠΤΙΚΟ ΠΕΡΙΕΧΟΜΕΝΟ — μερικές φορές το χρόνο
+  # ───────────────────────────────────────────────────────────────
+
+  - name: "gallery-albums"
+    label: "📸 Γκαλερί — Άλμπουμ"
+    label_singular: "Άλμπουμ"
+    description: "Φωτογραφικά άλμπουμ από εκδηλώσεις. Κάθε άλμπουμ έχει N φωτογραφίες."
+    folder: "src/content/gallery-albums"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    media_folder: "/public/images/events/{{year}}/{{slug}}"
+    public_folder: "/images/events/{{year}}/{{slug}}"
+    summary: "{{year}} · {{title}} ({{photos.length}} φωτογραφίες)"
+    sortable_fields: ['year', 'order', 'title']
+    view_filters:
+      - { label: "2026", field: "year", pattern: "2026" }
+      - { label: "2025", field: "year", pattern: "2025" }
+    editor:
+      preview: false
+    fields:
+      - { label: "Τίτλος (EL)", name: "title", widget: "string", hint: "π.χ. «Πανηγύρι Δεκαπενταύγουστου»" }
+      - { label: "Τίτλος (EN)", name: "titleEn", widget: "string", required: false, hint: "Αγγλικός τίτλος για την αγγλική έκδοση. Αν δεν ξέρετε αγγλικά, αφήστε κενό." }
+      - { label: "Έτος", name: "year", widget: "number", value_type: "int", min: 1900, max: 2100, default: 2026 }
+      - label: "Θέμα"
+        name: "theme"
+        widget: "select"
+        default: "celebration"
+        hint: "Πανηγύρια = θρησκευτικές γιορτές · Σύλλογος = κοπή πίτας/εκδηλώσεις · Χωριό = γενικά στιγμιότυπα"
+        options:
+          - { label: "🎉 Πανηγύρια & Γιορτές", value: "feast" }
+          - { label: "🎂 Εκδηλώσεις Συλλόγου", value: "celebration" }
+          - { label: "🏘️ Το Χωριό", value: "village" }
+          - { label: "📂 Άλλο", value: "other" }
+      - { label: "Σειρά εμφάνισης", name: "order", widget: "number", default: 0, value_type: "int", hint: "Άφησέ το 0 αν δεν ξέρεις. Όσο μικρότερο, τόσο πιο πάνω εμφανίζεται." }
+      - { label: "Περιγραφή (EL)", name: "description", widget: "text", required: false, hint: "1-2 προτάσεις για την εκδήλωση." }
+      - { label: "Περιγραφή (EN)", name: "descriptionEn", widget: "text", required: false }
+      - { label: "Εξώφυλλο (cover)", name: "cover", widget: "image", required: false, hint: "Προαιρετικό. Αν αφεθεί κενό, η πρώτη φωτογραφία γίνεται εξώφυλλο." }
+      - label: "Φωτογραφίες"
+        name: "photos"
+        widget: "list"
+        summary: "{{fields.caption}}"
+        min: 1
+        hint: "Σύρετε τις φωτογραφίες ή πατήστε «Add Φωτογραφίες». Λεζάντες προαιρετικές."
+        fields:
+          - { label: "Εικόνα", name: "image", widget: "image" }
+          - { label: "Λεζάντα (EL)", name: "caption", widget: "string", required: false }
+          - { label: "Λεζάντα (EN)", name: "captionEn", widget: "string", required: false }
+
+  # ───────────────────────────────────────────────────────────────
+  # ΣΤΑΘΕΡΟ ΠΕΡΙΕΧΟΜΕΝΟ — αλλάζει σπάνια
+  # ───────────────────────────────────────────────────────────────
+
+  - name: "attractions"
+    label: "🏛️ Αξιοθέατα"
+    label_singular: "Αξιοθέατο"
+    description: "Σταθερές καρτέλες αξιοθέατων (Ξηροβούνι, Λούρος, Ορραον...). Αλλάζουν σπάνια."
+    folder: "src/content/attractions"
+    create: true
+    slug: "{{fields.slug}}"
+    extension: "json"
+    format: "json"
+    summary: "{{title}}"
+    sortable_fields: ['order', 'title']
+    editor:
+      preview: false
+    fields:
+      - { label: "Slug (αγγλικά πεζά, παύλες)", name: "slug", widget: "string", pattern: ['^[a-z0-9-]+$', 'Μόνο αγγλικά πεζά γράμματα, αριθμοί και παύλες — όχι κενά ή ελληνικά'], hint: "Π.χ. xirovouni — αυτός είναι ο τεχνικός κωδικός. Πρέπει να ταιριάζει με τον φάκελο φωτογραφιών παρακάτω." }
+      - { label: "Τίτλος (EL)", name: "title", widget: "string" }
+      - { label: "Τίτλος (EN)", name: "titleEn", widget: "string" }
+      - { label: "Σειρά", name: "order", widget: "number", default: 0, value_type: "int", hint: "Όσο μικρότερο, πιο ψηλά στη λίστα." }
+      - { label: "Περίληψη (EL)", name: "summary", widget: "text", hint: "1-2 προτάσεις. Εμφανίζεται στις λίστες." }
+      - { label: "Περίληψη (EN)", name: "summaryEn", widget: "text" }
+      - { label: "Πλήρες κείμενο (EL)", name: "body", widget: "markdown" }
+      - { label: "Πλήρες κείμενο (EN)", name: "bodyEn", widget: "markdown" }
+      - label: "GPS (προαιρετικό)"
+        name: "gps"
+        widget: "object"
+        required: false
+        hint: "Συντεταγμένες — αν τις έχετε από Google Maps. Δεξί κλικ σε ένα σημείο στο maps.google.com → εμφανίζεται lat,lng."
+        fields:
+          - { label: "Latitude", name: "lat", widget: "number", value_type: "float" }
+          - { label: "Longitude", name: "lng", widget: "number", value_type: "float" }
+      - { label: "Εξωτερικός σύνδεσμος", name: "externalUrl", widget: "string", required: false, hint: "Wikipedia, επίσημη σελίδα, κλπ." }
+      - { label: "Φάκελος φωτογραφιών", name: "photoFolder", widget: "string", hint: "π.χ. /images/attractions/xirovouni — πρέπει να ταιριάζει με το slug παραπάνω. ΜΗΝ το αλλάζετε αν δεν ξέρετε." }
+      - { label: "Πόσες φωτογραφίες έχει ο φάκελος", name: "photoCount", widget: "number", default: 0, value_type: "int", hint: "Ο αριθμός των φωτογραφιών που υπάρχουν στον φάκελο. Π.χ. αν είναι xirovouni-01.jpg μέχρι xirovouni-07.jpg, βάλτε 7." }
+
+  # ───────────────────────────────────────────────────────────────
+  # ΑΠΟΔΗΜΟΙ — ξεχωριστά γιατί έχει διαφορετικό ύφος
+  # ───────────────────────────────────────────────────────────────
+
+  - name: "diaspora-stories"
+    label: "🌍 Ιστορίες Αποδήμων (μεγάλα κείμενα)"
+    label_singular: "Ιστορία αποδήμου"
+    description: "Προσωπικές, αφηγηματικές ιστορίες αποδήμων με φωτογραφία και πολλές παραγράφους. Εμφανίζονται στο /diaspora/ ως κάρτες."
+    folder: "src/content/diaspora-stories"
+    create: true
+    slug: "{{slug}}"
+    media_folder: "/public/images/diaspora"
+    public_folder: "/images/diaspora"
+    summary: "{{name}} ({{location}}) — {{date | date('YYYY')}}"
+    sortable_fields: ['date', 'name']
+    fields:
+      - { label: "Όνομα αφηγητή", name: "name", widget: "string" }
+      - { label: "Πόλη / Χώρα", name: "location", widget: "string", hint: "π.χ. Αθήνα, Ελλάδα · Μόναχο, Γερμανία · Μελβούρνη, Αυστραλία" }
+      - { label: "Ημερομηνία υποβολής", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Σύντομη περιγραφή", name: "excerpt", widget: "text" }
+      - { label: "Φωτογραφία", name: "image", widget: "image", required: false }
+      - { label: "✓ ΕΓΚΕΚΡΙΜΕΝΗ — να εμφανιστεί δημόσια", name: "approved", widget: "boolean", default: false, hint: "ΣΗΜΑΝΤΙΚΟ: η ιστορία δεν εμφανίζεται στο site αν μείνει false." }
+      - { label: "Η ιστορία", name: "body", widget: "markdown" }
+
+  - name: "diaspora-bulletin"
+    label: "📋 Πίνακας Μηνυμάτων Διασποράς (σύντομα posts)"
+    label_singular: "Μήνυμα"
+    description: "Σύντομα μηνύματα/ανακοινώσεις από αποδήμους — συγχαρητήρια, αναζητήσεις, νέα. Διαφέρουν από τις «Ιστορίες» γιατί είναι μικρά."
+    folder: "src/content/diaspora-bulletin"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{date | date('YYYY-MM-DD')}} · {{author}} — {{title}}"
+    sortable_fields: ['date', 'title']
+    view_filters:
+      - { label: "Μη εγκεκριμένα", field: "approved", pattern: "false" }
+    fields:
+      - { label: "Τίτλος", name: "title", widget: "string" }
+      - { label: "Συντάκτης", name: "author", widget: "string" }
+      - { label: "Ημερομηνία", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "✓ ΕΓΚΕΚΡΙΜΕΝΟ — να εμφανιστεί δημόσια", name: "approved", widget: "boolean", default: false, hint: "ΣΗΜΑΝΤΙΚΟ: το μήνυμα δεν εμφανίζεται στο site αν μείνει false." }
       - { label: "Κείμενο", name: "body", widget: "markdown" }

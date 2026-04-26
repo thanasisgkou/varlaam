@@ -7,7 +7,8 @@
       "WebFetch(domain:www.gtp.gr)",
       "Bash(npm create:*)",
       "Bash(npx astro:*)",
-      "Bash(npm search:*)"
+      "Bash(npm search:*)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }

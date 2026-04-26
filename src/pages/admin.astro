@@ -1,18 +1,175 @@
 ---
-// Decap CMS admin page. Loaded as a standalone HTML doc — no BaseLayout,
-// no header/footer. Bootstraps the Decap CMS bundle which mounts into <body>.
+// Decap CMS admin page for the Varlaam village website.
+// Branded shell with parchment palette, serif headings, and a small
+// "back to site" anchor — kept minimal so it does not fight Decap's UI.
 ---
 <!DOCTYPE html>
 <html lang="el">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Διαχείριση — Βαρλαάμ Ιωαννίνων</title>
+  <title>Διαχείριση — Σύλλογος Βαρλαάμ Ιωαννίνων</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style is:inline>
+    :root {
+      --vlm-parchment: #FAF7F0;
+      --vlm-stone-light: #F5F0E8;
+      --vlm-stone-warm: #D4C5A9;
+      --vlm-stone-dark: #6F6450;
+      --vlm-charcoal: #2C2C2C;
+      --vlm-terracotta: #A0603A;
+      --vlm-olive-dark: #2E3B16;
+      --vlm-gold-warm: #C9A84C;
+    }
+
+    /* Branded body backdrop — visible while CMS bundle loads, and at edges */
+    html, body {
+      background: var(--vlm-parchment) !important;
+      color: var(--vlm-charcoal);
+      font-family: 'Source Sans 3', system-ui, -apple-system, sans-serif;
+    }
+
+    /* Loader screen before Decap mounts */
+    #vlm-boot {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.25rem;
+      background: var(--vlm-parchment);
+      z-index: 1;
+      transition: opacity 0.4s ease;
+    }
+    #vlm-boot.hidden { opacity: 0; pointer-events: none; }
+    #vlm-boot .mark {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--vlm-terracotta);
+      display: grid;
+      place-items: center;
+      color: var(--vlm-parchment);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-weight: 600;
+      font-size: 28px;
+      box-shadow: 0 6px 20px rgba(160, 96, 58, 0.25);
+    }
+    #vlm-boot .title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.75rem;
+      color: var(--vlm-charcoal);
+      letter-spacing: 0.02em;
+    }
+    #vlm-boot .sub {
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--vlm-stone-dark);
+    }
+    #vlm-boot .dot {
+      display: inline-block;
+      width: 6px; height: 6px;
+      margin: 0 3px;
+      background: var(--vlm-terracotta);
+      border-radius: 50%;
+      opacity: 0.4;
+      animation: vlmpulse 1.2s infinite ease-in-out;
+    }
+    #vlm-boot .dot:nth-child(2) { animation-delay: 0.18s; }
+    #vlm-boot .dot:nth-child(3) { animation-delay: 0.36s; }
+    @keyframes vlmpulse {
+      0%, 100% { opacity: 0.3; transform: translateY(0); }
+      50%      { opacity: 1;   transform: translateY(-3px); }
+    }
+
+    /* Persistent top-right link back to public site */
+    #vlm-back {
+      position: fixed;
+      top: 12px;
+      right: 16px;
+      z-index: 10000;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: 0.92rem;
+      color: var(--vlm-stone-dark);
+      text-decoration: none;
+      background: rgba(250, 247, 240, 0.85);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(111, 100, 80, 0.18);
+      border-radius: 999px;
+      transition: all 0.2s ease;
+    }
+    #vlm-back:hover {
+      color: var(--vlm-terracotta);
+      border-color: var(--vlm-terracotta);
+    }
+    #vlm-back svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* Try to nudge Decap's accent colours via CSS variables it sometimes
+       respects. Safe no-ops where it doesn't. */
+    [data-decap-cms-app] {
+      --primary-color: var(--vlm-terracotta) !important;
+      --primary-color-light: #B97A55 !important;
+      --primary-color-dark: #7C4628 !important;
+      --background-color: var(--vlm-parchment) !important;
+    }
+  </style>
 </head>
 <body>
-  <!-- Decap CMS bootstraps into document.body, so the script must be after <body> opens -->
+  <div id="vlm-boot" aria-hidden="true">
+    <div class="mark">Β</div>
+    <div class="title">Διαχείριση Βαρλαάμ Ιωαννίνων</div>
+    <div class="sub">Σύλλογος · CMS</div>
+    <div aria-label="Φόρτωση">
+      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+    </div>
+  </div>
+
+  <a id="vlm-back" href="/" target="_blank" rel="noopener" title="Άνοιγμα του site σε νέα καρτέλα">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M14 3h7v7M10 14L21 3M21 14v7H3V3h7"/>
+    </svg>
+    Δείτε το site
+  </a>
+
+  <!-- Decap CMS bootstraps into document.body -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" is:inline></script>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js" is:inline></script>
+
+  <script is:inline>
+    // Hide the boot splash once Decap has mounted (heuristic: when its app
+    // root appears in the DOM). Falls back to a 4s timer.
+    (function () {
+      var boot = document.getElementById('vlm-boot');
+      if (!boot) return;
+      function dismiss() { boot.classList.add('hidden'); setTimeout(function(){ boot.remove(); }, 600); }
+      var attempts = 0;
+      var iv = setInterval(function () {
+        attempts++;
+        // Decap renders into <div id="nc-root"> or similar
+        if (document.querySelector('#nc-root, [class*="App__StyledApp"], [class*="AppHeader"]')) {
+          clearInterval(iv);
+          dismiss();
+        } else if (attempts > 40) { // ~6s
+          clearInterval(iv);
+          dismiss();
+        }
+      }, 150);
+    })();
+  </script>
 </body>
 </html>

@@ -85,6 +85,7 @@ const diasporaStories = defineCollection({
     date: z.coerce.date(),
     excerpt: z.string(),
     image: z.string().optional(),
+    approved: z.boolean().default(true),
   }),
 });
 
