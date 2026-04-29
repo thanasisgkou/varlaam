@@ -1,7 +1,7 @@
 ---
-title: "🃏 Ο καλύτερος στη δηλωτή — παράδειγμα"
-category: "dhloti"
-author: "Σύλλογος Βαρλαάμ"
+title: "🃏 Ο καλύτερος στη δηλωτή "
+category: dhloti
+author: Σύλλογος Βαρλαάμ
 approved: true
 submittedAt: 2026-04-23
 ---
