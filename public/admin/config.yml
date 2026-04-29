@@ -26,8 +26,8 @@ media_library:
   name: cloudinary
   output_filename_only: false
   config:
-    cloud_name: REPLACE_WITH_YOUR_CLOUD_NAME
-    api_key: REPLACE_WITH_YOUR_API_KEY
+    cloud_name: dhrfwm5nv
+    api_key: '252991439336241'
     upload_preset: varlaam_uploads
     multiple: false
     default_transformations:
