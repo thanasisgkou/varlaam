@@ -12,3 +12,9 @@ public/images/uploads
 foto/
 *.docx
 Proposed Changes.html
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
