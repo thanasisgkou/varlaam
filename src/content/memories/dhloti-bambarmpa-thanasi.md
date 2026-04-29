@@ -1,5 +1,5 @@
 ---
-title: "🃏 Ο καλύτερος στη δηλωτή "
+title: 🃏 Ο καλύτερος στη δηλωτή - ένα παράδειγμα
 category: dhloti
 author: Σύλλογος Βαρλαάμ
 approved: true
