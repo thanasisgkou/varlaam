@@ -146,8 +146,10 @@
     Δείτε το site
   </a>
 
-  <!-- Decap CMS bootstraps into document.body -->
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" is:inline></script>
+  <!-- Decap CMS bootstraps into document.body. We use the GitHub backend
+       (config.yml `backend: name: github`) with our own OAuth proxy at
+       /api/auth + /api/callback (Cloudflare Pages Functions) — so the
+       Netlify Identity widget is no longer needed. -->
   <!-- Cloudinary media library — provides the upload + crop UI inside Decap.
        Loaded BEFORE decap-cms so it's available when Decap initialises. -->
   <script src="https://media-library.cloudinary.com/global/all.js" is:inline></script>

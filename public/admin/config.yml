@@ -1,15 +1,18 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: thanasisgkou/varlaam
   branch: master
+  base_url: https://varlaam.thanasisgkou.workers.dev
+  auth_endpoint: api/auth
 
-# To preview the admin locally without Netlify Identity, temporarily
-# uncomment the line below AND run `npm run cms` in another terminal.
+# To preview the admin locally without OAuth, temporarily uncomment the
+# line below AND run `npm run cms` in another terminal.
 # DO NOT commit it as enabled — it makes Decap try a localhost proxy first.
 # local_backend: true
 
 locale: 'el'
-site_url: "https://deft-lollipop-f6cfb0.netlify.app"
-display_url: "https://deft-lollipop-f6cfb0.netlify.app"
+site_url: "https://varlaam.thanasisgkou.workers.dev"
+display_url: "https://varlaam.thanasisgkou.workers.dev"
 logo_url: "/favicon.svg"
 
 # Cloudinary handles all NEW image uploads — bypassing git so each upload

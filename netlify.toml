@@ -1,8 +1,13 @@
-[build]
-  command = "npm run build"
-  publish = "dist"
+# This site has migrated off Netlify to Cloudflare Workers/Pages
+# (https://varlaam.thanasisgkou.workers.dev). The Netlify project still
+# exists as a backup; if Netlify ever resumes builds (after the
+# May credit reset), this config makes the build fail fast and cheap so
+# nothing actually deploys and credits are not consumed.
+#
+# To fully decommission Netlify: in the Netlify dashboard for this site,
+# go to Project configuration → Build & deploy → Continuous deployment
+# → "Stop builds" (or unlink the GitHub repo entirely).
 
-[[redirects]]
-  from = "/admin"
-  to = "/admin/index.html"
-  status = 200
+[build]
+  command = "echo 'This site has moved to Cloudflare. See varlaam.thanasisgkou.workers.dev. Netlify deploys are intentionally disabled.' && exit 1"
+  publish = "dist"
