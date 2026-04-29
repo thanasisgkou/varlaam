@@ -12,6 +12,30 @@ site_url: "https://deft-lollipop-f6cfb0.netlify.app"
 display_url: "https://deft-lollipop-f6cfb0.netlify.app"
 logo_url: "/favicon.svg"
 
+# Cloudinary handles all NEW image uploads — bypassing git so each upload
+# does not trigger a Netlify deploy. Existing /public/images/* files keep
+# working unchanged (they're referenced by relative paths).
+#
+# Replace the placeholders below with values from cloudinary.com:
+#   1. cloud_name → top of your Cloudinary dashboard
+#   2. api_key    → Settings → Access Keys
+#   3. (no secret needed — we use unsigned upload preset)
+#   4. Settings → Upload → Upload presets → New unsigned preset named
+#      "varlaam_uploads" with folder "varlaam"
+media_library:
+  name: cloudinary
+  output_filename_only: false
+  config:
+    cloud_name: REPLACE_WITH_YOUR_CLOUD_NAME
+    api_key: REPLACE_WITH_YOUR_API_KEY
+    upload_preset: varlaam_uploads
+    multiple: false
+    default_transformations:
+      - - quality: auto
+          fetch_format: auto
+
+# Fallback storage for any future widgets that don't honour media_library.
+# Image fields will use Cloudinary; non-image attachments still land here.
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 

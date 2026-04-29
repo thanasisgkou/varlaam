@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { getCollection } from 'astro:content';
+import { imageUrl } from '../../utils/image';
 
 export async function getStaticPaths() {
   const news = await getCollection('news');
@@ -59,7 +60,7 @@ const articleJsonLd = {
     {entry.data.image ? (
       <>
         <img
-          src={entry.data.image}
+          src={imageUrl(entry.data.image, { width: 1920 })}
           alt={entry.data.title}
           class="absolute inset-0 w-full h-full object-cover"
           fetchpriority="high"

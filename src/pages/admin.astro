@@ -148,6 +148,9 @@
 
   <!-- Decap CMS bootstraps into document.body -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" is:inline></script>
+  <!-- Cloudinary media library — provides the upload + crop UI inside Decap.
+       Loaded BEFORE decap-cms so it's available when Decap initialises. -->
+  <script src="https://media-library.cloudinary.com/global/all.js" is:inline></script>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js" is:inline></script>
 
   <script is:inline>
